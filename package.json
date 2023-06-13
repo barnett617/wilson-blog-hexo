@@ -1,7 +1,11 @@
 {
-  "name": "hexo-site",
+  "name": "wilson-blog",
   "version": "0.0.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barnett617/wilson-blog.git"
+  },
   "scripts": {
     "build": "hexo generate",
     "clean": "hexo clean",
@@ -22,7 +26,6 @@
     "hexo-renderer-marked": "^6.0.0",
     "hexo-renderer-stylus": "^3.0.0",
     "hexo-server": "^3.0.0",
-    "hexo-theme-fluid": "^1.9.4",
-    "hexo-theme-landscape": "^1.0.0"
+    "hexo-theme-fluid": "^1.9.4"
   }
 }
