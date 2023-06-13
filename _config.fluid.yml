@@ -797,6 +797,7 @@ about:
   banner_img: /img/about.jpeg
   banner_img_height: 60
   banner_mask_alpha: 0.3
+  subtitle: 'About Me'
   avatar: /img/avatar.jpg
   name: "Wilson"
   intro: "Building"
