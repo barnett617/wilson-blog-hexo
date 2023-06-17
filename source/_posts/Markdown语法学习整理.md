@@ -1,7 +1,6 @@
 ---
 title: Markdown语法学习整理
 date: 2017-11-17 10:09:16
-update: 2017-11-17 10:09:16
 categories: 其他
 tags: 
  - 其他
