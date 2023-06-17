@@ -119,4 +119,4 @@ tom
 而实际上在函数内部重写obj时，这个变量引用的是一个`局部对象变量`，该局部对象会在`函数执行完毕`之时销毁
 
 
-原文自 [个人github博客](https://github.com/barnett617/blog/blob/master/article004.md)，欢迎star
+原文自 [个人github博客](https://github.com/barnett617/wilson-blog)，欢迎star

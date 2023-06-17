@@ -48,13 +48,7 @@ categories:
 
 ## 二、github actions
 
-以 [这个](https://github.com/barnett617/smartshop) 项目为例，actions功能在这里
-
-![actions](http://trigolds.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20200819225856.png)
-
-按照github actions的指示操作后，会创建一个.github/workflows/blank.yml文件，如下：
-
-![yaml](http://trigolds.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20200819230216.png)
+按照github actions的指示操作后，会创建一个.github/workflows/blank.yml文件
 
 这个文件承载着整个github actions的配置，也就意味着当你在github某个仓库中包含.github/workflow/xxx.yml文件后，你在操作这个仓库时就会触发对应的action。比如我们如下配置可使得每次在对smartshop这个项目的master分支上进行push时触发如下动作：
 
@@ -119,15 +113,7 @@ jobs:
         target: "/home/webapp/"
 ```
 
-其中比较关键的也是开发者比较关心的是自己要部署的服务器信息，这部分内容当然是不会直接明文写在配置文件中的，所以在这里github actions利用了变量进行处理。而这个变量值的设置则是通过另一个地方进行保存，如下：
-
-![setting](http://trigolds.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20200819231114.png)
-
-![secrets](http://trigolds.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20200819231218.png)
-
-![update](http://trigolds.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20200819231230.png)
-
-这里即是blank.yml中所引用到的变量保存
+其中比较关键的也是开发者比较关心的是自己要部署的服务器信息，这部分内容当然是不会直接明文写在配置文件中的，所以在这里github actions利用了变量进行处理。而这个变量值的设置则是通过另一个地方进行保存
 
 ### 插曲一
 
