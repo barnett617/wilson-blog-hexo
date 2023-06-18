@@ -145,9 +145,6 @@ pip install tf-nightly
 
 #### 运行
 
-![](http://trigolds.com/tf1.png)
-
-
 参考链接:
 
 - <a href="https://packaging.python.org/guides/installing-using-linux-tools/#installing-pip-setuptools-wheel-with-linux-package-managers">Installing pip/setuptools/wheel with Linux Package Managers</a>

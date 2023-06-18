@@ -10,8 +10,6 @@ tags: 其他
 
 ### 背景
 
-<img src="http://trigolds.com/matlab0.jpg" width="500" height="400">
-
 怎么解释？作为初学者可能一下子看不懂，但是研究后你会发现，作为老手，你也不应该看懂，因为，这是个印刷错误！
 
 借此学习一下MATLAB的冒号符和矩阵定义
@@ -181,8 +179,6 @@ ans =
 
 ```
 
-![](http://trigolds.com/matlab4.png)
-
 类似这样的取值的方式，MATLAB帮助文档没有给出这样的语法，但使用起来不报错
 按照测试规律，只能暂且猜测其编译方式为按照（1:2:1）：3这样的结合律，即1:3
 
@@ -206,30 +202,6 @@ ans =
 A(1:2:3)会被解释为1和3，而这次索引没有加逗号，作为二维数组，会将其认为是行索引，即第一、三行，列索引未指定，则会默认取第一列
 
 --------------------------------------------------------
-
-那么最后，我们再来解释一开始的问题
-
-<img src="http://trigolds.com/matlab5.png" width="500" height
-="400">
-
-MATLAB验证：
-
-![](http://trigolds.com/matlab7.png)
-
-注意！这里是分号！
-
-如果你手残输成了这样呢!
-会是这样
-
-![](http://trigolds.com/matlab6.png)
-
-也没问题![](http://trigolds.com/matlab1.jpg)
-
-![](http://trigolds.com/matlab8.png)
-
-![](http://trigolds.com/matlab9.png)
-
-由此看出，分号前面的部分实际上是一个空向量
 
 在MATLAB编译器中，这种不规范的向量创建方式（空向量;非空向量）会成功创建后面的正常向量。
 

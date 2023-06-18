@@ -26,8 +26,6 @@ hexo是一种快速、简单并且强大的博客框架，你可以通过使用m
 
 先看官方给出的安装步骤
 
-![](http://trigolds.com/hexo0.png)
-
 ### 准备篇
 
 首先你要做好准备掌握以下几项东西：
@@ -48,8 +46,6 @@ git是一个伟大的版本控制软件，它的作用在于作为一个代码�
 
 当你安装好了git以后，可以鼠标右键唤出git
 
-![](http://trigolds.com/hexo1.png)
-
 ##### 方式一
 
 然后你就可以很方便的安装nodejs了，通过如下命令先安装nvm（此方式适用于专业人士，非专业人士请参考后面下载安装包的方式二）
@@ -60,13 +56,9 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | b
 
 nvm是nodejs version manager，nodejs版本管理器，用以在机器上安装并维护多个node的版本
 
-![](http://trigolds.com/hexo2.png)
-
 如果执行失败（看到很多error）,也可以通过我网盘的安装包进行<a href="http://pan.baidu.com/s/1c2KunAC">下载</a>
 
-当安装完成后，通过cmd窗口键入nvm，如果如下图所示，就证明安装成功了
-
-![](http://trigolds.com/hexo4.png)
+当安装完成后，通过cmd窗口键入nvm
 
 ##### 方式二
 
@@ -75,9 +67,7 @@ nvm是nodejs version manager，nodejs版本管理器，用以在机器上安装�
 
 访问<a href="https://nodejs.org/en/">nodejs官网</a>下载，或者通过我的网盘<a href="http://pan.baidu.com/s/1kV5SIR9">下载</a>安装包，安装方式如同安装其他软件一样
 
-安装成功后打开cmd窗口，键入node --version，若如下图所示则证明安装成功
-
-![](http://trigolds.com/hexo5.png)
+安装成功后打开cmd窗口，键入node --version
 
 nodejs是一个基于谷歌的**V8** Javascript引擎的Javascript运行环境。它利用一个事件驱动的、非阻塞I/O的模型使得其轻量并且高效。另外，nodejs的包生态系统<a href="https://www.npmjs.com/">npm</a>是世界上最大的开源库生态系统。
 
@@ -92,8 +82,6 @@ p.s. 关于nodejs和Javascript的关联，个人理解就是Javascript本来是�
 在你的电脑有了git和nodejs以后，就可以正式安装hexo了
 
 接下来你只需要在任何一个地方（比如桌面）右键鼠标唤出git bash
-
-![](http://trigolds.com/hexo1.png)
 
 然后粘贴这段命令
 
@@ -116,13 +104,9 @@ npm install -g hexo-cli
 
 ### 使用篇
 
-此时你可以选电脑上的任何一个目录（文件夹）作为自己博客的存放地，比如
-
-![](http://trigolds.com/hexo6.png)
+此时你可以选电脑上的任何一个目录（文件夹）作为自己博客的存放地
 
 然后在这里右键唤出git bash
-
-![](http://trigolds.com/hexo7.png)
 
 这个时候就用到**准备篇**里讲的git和bash命令的知识了，不过不要怕，其实经常用的也就那么几个命令，比如ls（就是list，列出当前目录的所有文件）、cd(change directory，切换目录)
 
@@ -134,10 +118,6 @@ hexo init 任意名称（比如 hexo init blog）
 这就是通过刚才安装的hexo里的hexo init（初始化）命令创建了一个hexo式的文件夹，点进去看看都有什么
 
 当然，你鼠标点进去只是在你的windows界面系统你这个当前用户进入到blog这个目录了，但git bash还停留在刚才的myblog那个目录，所以你需要在git bash里键入cd blog，来切换到blog目录，你可以再键入pwd（print working directory，打印出当前工作目录）来确认自己是否进到了blog目录
-
-上述操作如下图：
-
-![](http://trigolds.com/hexo8.png)
 
 然后输入npm install，会根据博客既定的依赖安装依赖包
 

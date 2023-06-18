@@ -34,21 +34,15 @@ npm start
 
 一切顺理成章，然而boom!
 
-![](http://trigolds.com/redux1.jpg)
-
 一脸懵逼
 
 什么原因呢？先是仔细看了报错信息，里面讲的还算清楚，告诉我不是npm的问题，于是按照推荐，打开具体的日志文件
-
-![](http://trigolds.com/redux2.jpg)
 
 也没看出什么明显的问题
 
 于是在error附近的日志信息里找几个关键字拉近google搜索一下
 
 在stackoverflow的<a href="https://stackoverflow.com/questions/30744964/what-does-the-elifecycle-node-js-error-mean">一篇帖子</a>中的找到灵感
-
-![](http://trigolds.com/redux3.jpg)
 
 没错，进程占用！经过上面几个人说的情况都不匹配后，这个原因我是感觉特别可能的
 
@@ -58,13 +52,9 @@ npm start
 netstat -ano | findstr 8000
 ```
 
-![](http://trigolds.com/redux4.jpg)
-
 (进程ID之前是3260，这是后来写本文时补的)
 
 果然被占用了，看一下哪个进程的PID是3260
-
-![](http://trigolds.com/redux5.jpg)
 
 之前这里有一个进程PID是3260，发现是一个应用程序，没什么用，kill掉
 
@@ -77,8 +67,6 @@ taskkill /PID 3260
 ```
 npm start
 ```
-
-![](http://trigolds.com/redux6.jpg)
 
 Nice!搞定
 

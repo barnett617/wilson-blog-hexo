@@ -23,14 +23,8 @@ macOS10.11上启动了一个SIP(System Integrity Protection，系统集成保护
 
 选择实用工具，打开终端
 
-![](http://trigolds.com/mac0.jpg)
-
 关闭SIP，重启
 
-![](http://trigolds.com/mac1.jpg)
-
 Bingo！
-
-![](http://trigolds.com/mac2.png)
 
 参考链接：<a href="http://trigolds.com/mac0.jpg">http://trigolds.com/mac0.jpg</a>

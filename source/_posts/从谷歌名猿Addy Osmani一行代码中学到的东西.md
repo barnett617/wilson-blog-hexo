@@ -24,9 +24,7 @@ categories: 前端
 [].forEach.call($$("*"),function(a){a.style.outline="1px solid #"+(~~(Math.random()*(1<<24))).toString(16)})
 ```
 
-将其贴到chrome的console中即可看到效果，如下：
-
-![](http://trigolds.com/console.png)
+将其贴到chrome的console中即可看到效果
 
 ### 代码解析
 
@@ -35,10 +33,6 @@ $$("*")
 document.querySelectorAll('*')
 document.all
 ```
-
-效果如下：
-
-![](http://trigolds.com/documentAll.png)
 
 以上三种写法是相同效果，都相当于通过选择器的方式获取页面所有元素。第三种是较不规范的方式，不建议使用。$$是现代浏览器API的一部分，比如$$('a')可以获取页面所有的a标签元素
 

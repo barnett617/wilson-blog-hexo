@@ -83,7 +83,7 @@ select max(evaluateDate) evalDate, productId from productcashpredict;
 
 ```
 
-既然这样，那总得有解决方案，我又问了抛问者YH，他们实际的使用场景是怎么查的，他甩出这样一张图：![](http://trigolds.com/yh5.png)
+既然这样，那总得有解决方案，我又问了抛问者YH，他们实际的使用场景是怎么查的，他甩出一张图。
 我看了半天，很是理解不了，至少觉得逻辑不甚清晰，我开始质疑这样查询的结果是否正确，于是又去寻求max和group by联合使用的正确写法，得到下面两种方案：
 
 于是我又建了一张表，来模拟真实场景

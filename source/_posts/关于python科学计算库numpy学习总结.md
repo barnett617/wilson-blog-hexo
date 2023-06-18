@@ -49,16 +49,13 @@ dsize：元素占位大小
 #### 生成特殊矩阵
 全零矩阵：np.zeros()
 
-![这里写图片描述](http://img.blog.csdn.net/20170815110941919?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2luYXRfMTY3OTE0ODc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-
 注意：ones()和zeros()函数的第一个参数是一个指向数列的指针，不能直接是一个数列，例如上图报错情况
 
 全一矩阵：np.ones(d,dtype=int)
 默认生成浮点型，可通过第二个参数指定元素数据类型
 
-![这里写图片描述](http://img.blog.csdn.net/20170815111443892?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2luYXRfMTY3OTE0ODc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-
 随机数数组
+
 np.random.rand(5)生成包含5个[0,1)区间的数的数组
 
 #### 数组计算
@@ -92,12 +89,9 @@ np.asmatrix(a)
 np.mat(a)
 ###### 直接生成
 np.matrix('1.0 2.0;3.0 4.0')
-![这里写图片描述](http://img.blog.csdn.net/20170815114116035?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2luYXRfMTY3OTE0ODc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 #### 生成指定长度的一维数组
 np.linspace(0,2,9)：生成从0开始，到2结束，包含9个元素的等差数列
-![这里写图片描述](http://img.blog.csdn.net/20170815114316434?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2luYXRfMTY3OTE0ODc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-
 
 #### **数组元素访问
 a = np.array([3.2, 1.5],[2.5, 4])
@@ -162,8 +156,6 @@ eig_value, eig_vector = nlg.eig(a)
 #### 拼接矩阵（使用场景：循环处理某些数据后的操作）
 按列拼接两个向量成一个矩阵
 
-![这里写图片描述](http://img.blog.csdn.net/20170815140056179?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2luYXRfMTY3OTE0ODc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-
 vstack
 hstack
 
@@ -173,16 +165,12 @@ b = np.random.rand(2,2)
 c = np.hstack([a,b])  水平拼接
 d = np.vstack([a,b])  垂直拼接
 
-![这里写图片描述](http://img.blog.csdn.net/20170815140731599?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2luYXRfMTY3OTE0ODc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-
 #### 缺失值
 nan作为缺失值的记录
 通过isnan判定
 a = np.random.rand(2,2)
 a[0, 1] = np.nan
 print (np.isnan(a))
-
-![这里写图片描述](http://img.blog.csdn.net/20170815141252078?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2luYXRfMTY3OTE0ODc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 nan_to_num可用来将nan替换成0
 pandas提供能指定nan替换值的函数
@@ -201,7 +189,3 @@ https://uqer.io/community/share/54ca15f9f9f06c276f651a56
 http://wiki.scipy.org/Tentative_NumPy_Tutorial
 
 Sheppard K. Introduction to Python for econometrics, statistics and data analysis. Self-published, University of Oxford, version, 2012, 2.
-
-附：Cheat Sheet of NumPy&SciPy&Pandas
-
-![这里写图片描述](http://img.blog.csdn.net/20170815141806139?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2luYXRfMTY3OTE0ODc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)

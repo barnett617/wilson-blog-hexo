@@ -84,8 +84,6 @@ var app2 = new Vue({
 })
 ```
 
-![](http://trigolds.com/vue2.jpg)
-
 `v-bind`称为**指令**，vue的指令都以`v-`为前缀，它们会在渲染的DOM上应用特殊的**响应式行为**
 
 此处指令v-bind:title="message"意指“将这个元素节点的title属性和Vue实例（new Vue()）的message属性保持一致”
@@ -148,11 +146,7 @@ var app4 = new Vue({
 })
 ```
 
-![](http://trigolds.com/vue4.jpg)
-
 在控制台内向app4这个Vue实例中的数组再添加一个对象
-
-![](http://trigolds.com/vue4-2.jpg)
 
 ### 处理用户输入
 
@@ -208,10 +202,6 @@ var app6 = new Vue({
 	}
 })
 ```
-
-![](http://trigolds.com/vue6.jpg)
-
-![](http://trigolds.com/vue6-2.jpg)
 
 该双向绑定对比Angular最简示例更加轻便
 

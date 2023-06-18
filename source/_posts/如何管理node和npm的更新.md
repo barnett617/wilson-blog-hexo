@@ -62,23 +62,15 @@ nvm install 8.5.0
 
 结束后会提示你可以通过命来切换刚下载的版本，此时你也可以在nvm的目录下看到不同版本的node文件夹
 
-![](http://trigolds.com/nvm1.jpg)
-
 如果不切换，仍会是当前安装的node版本
 
-![](http://trigolds.com/nvm2.jpg)
-
 可查看当前本地有哪些版本
-
-![](http://trigolds.com/nvm4.jpg)
 
 切换命令如提示：
 
 ```
 nvm use 8.5.0
 ```
-
-![](http://trigolds.com/nvm3.jpg)
 
 相应，删除某个版本
 

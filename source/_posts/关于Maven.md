@@ -260,8 +260,6 @@ classfier用来区分由相同POM构建，但内容不同的artifacts。这是�
 
 这个元素涉及到即将到来的（编译时、运行时、测试时）任务的类路径（classpath），同时也涉及如何限制可传递依赖，共有一下五个域变量：
 
-![](http://trigolds.com/maven_scope.png)
-
 1. compile：默认域，如果没特别指定，则使用compile。compile依赖将在所有的类路径可用，更甚，那些依赖会被传播到从属工程（compile、runtime、test）
 
 2. provided：和compile很像，但指明了你想用的JDK或者在运行时所提供的容器。仅在编译和测试的类路径可用，并且不可传递（compile、test）

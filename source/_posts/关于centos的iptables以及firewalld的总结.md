@@ -96,21 +96,15 @@ iptables service每一个单独修改意味着清除所有原有规则，重新�
 
 firewalld不会创建新的规则，仅运行规则中的不同之处（因为可以在运行时修改而不丢失现有连接）
 
-原理关系如下：
-
-![](http://trigolds.com/iptables2.png)
-
 #### 使用
 
 上图可看出对于iptables防火墙centos有两种实现方式，即iptables service(service)或firewalld(daemon&service)
 
 实际场景分别如下：
 
-centos5.x或centos6.x默认使用iptables-services，如下
-![](http://trigolds.com/iptables5.png)
+centos5.x或centos6.x默认使用iptables-services
 
-centos7默认使用firewalld,如下
-![](http://trigolds.com/iptables4.png)
+centos7默认使用firewalld
 
 > Tip：若安装了systemctl，使用"service 服务名 status"查看服务状态会被重定向为"systemctl status 服务名"
 
@@ -146,8 +140,6 @@ systemctl enable ip6tables
 systemctl status firewalld
 firewall-cmd --state
 ```
-
-![](http://trigolds.com/iptables6.png)
 
 2.安装firewalld（可选：图形化用户接口工具firewall-config）
 ```

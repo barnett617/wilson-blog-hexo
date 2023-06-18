@@ -37,11 +37,7 @@ Git允许同一组下的人们同一时刻在相同的文档上工作（通常�
 
 初级教程：<a href="https://try.github.io/levels/1/challenges/1">Try Git</a>
 
-![](http://trigolds.com/git0.png)
-
 高级教程：<a href="http://gitreal.codeschool.com/levels/1/challenges/1">gitreal</a>
-
-![](http://trigolds.com/git12.png)
 
 官方书籍：<a href="https://git-scm.com/book/zh/v2">Pro Git</a>
 
@@ -51,9 +47,7 @@ Git允许同一组下的人们同一时刻在相同的文档上工作（通常�
 ```
 git init
 ```
-init命令会创建一系列git结构的文件，如下图：
-
-![](http://trigolds.com/git11.png)
+init命令会创建一系列git结构的文件
 
 仅对一个制定目录创建git结构时使用，用于将某个目录交给git管理
 
@@ -62,8 +56,6 @@ init命令会创建一系列git结构的文件，如下图：
 git status
 ```
 可在任何时间阶段使用， 以查看当前git管理下的文件状态
-
-![](http://trigolds.com/git-status.png)
 
 3.将文件交予git管理
 ```

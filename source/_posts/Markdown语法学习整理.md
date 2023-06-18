@@ -112,11 +112,11 @@ markdown这么做充分体现其兼容HTML的做法
 
 上面这段话的意思就是在html文件里，遇到&或是<，需要以&amp;amp;或是&amp;lt;这样的HTML实体来表示之后，才能正常地编写html code，但是在markdown里不需要这一步，
 
-<span><code>4 &</code></span>
+`<span><code>4 &</code></span>`
 
-<code>4 < 5</code>
+`<code>4 < 5</code>`
 
-<code><code>
+`<code><code>`
 
 参考链接：
 

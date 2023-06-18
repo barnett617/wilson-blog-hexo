@@ -213,7 +213,7 @@ new Vue({
 
 ### 生命周期图
 
-![](http://trigolds.com/lifecycle.png)
+![vue lifecycle](/img/post/vue_lifecycle.png)
 
 参考链接：
 

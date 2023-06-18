@@ -72,23 +72,13 @@ df
 
 8. 解压安装包（若直接解压可能会失败，因为这里解压会创建vmware-tools-distrib目录，而当前路径为只读，不允许mkdir）
 
-![](http://trigolds.com/vm3.png)
-
 9. 所以需要将VMware Tools拷贝到其他目录再解压
-
-![](http://trigolds.com/vm4.png)
 
 可看到成功解压
 
-![](http://trigolds.com/vm5.png)
-
 10. 进入解压后的软件目录并安装
 
-![](http://trigolds.com/vm6.png)
-
 11. 安装完成
-
-![](http://trigolds.com/vm7.png)
 
 Bingo! Well done！
 

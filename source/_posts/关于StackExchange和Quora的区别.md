@@ -14,9 +14,6 @@ tags: 其他
 
 <!--more-->
 
-网站首页如下：
-![](http://trigolds.com/stackexchange0.png)
-
 当更加深入了解二者关系之余发现一篇关于对比StackExchange和Quora二者区别的帖子写得很清楚，特将其翻译如下：
 
 ### 正文

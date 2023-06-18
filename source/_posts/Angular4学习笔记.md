@@ -77,8 +77,6 @@ npm i
 npm start
 ```
 
-![](http://trigolds.com/angular0.jpg)
-
 - 基于Angular CLI
 
 ```
@@ -93,23 +91,13 @@ npm install --save-dev @angular/cli@latest
 ng --version
 ```
 
-![](http://trigolds.com/angular1.jpg)
-
 ```
 ng new projectname
 ```
 
-![](http://trigolds.com/angular2.jpg)
-
-![](http://trigolds.com/angular3.jpg)
-
 切换到刚创建的工程目录
 
-![](http://trigolds.com/angular4.jpg)
-
 浏览器访问localhost:4200
-
-![](http://trigolds.com/angular5.jpg)
 
 参考链接：
 
