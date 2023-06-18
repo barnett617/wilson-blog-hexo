@@ -6,6 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/barnett617/wilson-blog.git"
   },
+  "homepage": "https://barnett617.github.io/wilson-blog/",
   "scripts": {
     "build": "hexo generate",
     "clean": "hexo clean",
