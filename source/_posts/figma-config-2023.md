@@ -138,4 +138,4 @@ Variables rather than Design Tokens
 
 未完待续
 
-《Figma Config 2023 观后感上篇——开发模式、AI在路上》
+《Figma Config 2023 观后感下篇——开发模式、AI》在路上...
