@@ -10,7 +10,7 @@ tags:
 
 > 视频源：https://config.figma.com/
 
-![desktop](/img/post/desk.png)
+![desktop](/img/post/figma-config-2023-01/desk.png)
 
 # 开场动画信息点
 
@@ -54,9 +54,9 @@ Variables rather than Design Tokens
 
 变量设置框里有一个“即将上线”的功能——代码高亮
 
-![code highlight](/img/post/figma1.jpg)
+![code highlight](/img/post/figma-config-2023-01/figma1.jpg)
 
-以上提供的能力已经可以用于设计系统
+以上提供的能力已经可被用于建立设计系统，那么接下来我们看看变量可以有哪些应用
 
 ## 应用场景
 
@@ -67,6 +67,8 @@ Variables rather than Design Tokens
 但这不止像演示中所呈现的亮暗色模式下的颜色定义，很明显它支持定义更多套的主题色配置，每套配置都在使用相同的颜色变量，但每个变量在每套主题下使用的颜色是不同的，这有点像design tokens，但确实更接近于主题色的定义，因此这个配置项区别于变量，单独成为一个配置框完全合理
 
 一旦定义好不同颜色主题的配置，在容器级别的图层选择 Color modes，即可轻松实现快捷的”一键换肤“效果。
+
+![Color modes](/img/post/figma-config-2023-01/color-modes.jpg)
 
 相比传统设计场景需要针对不同颜色主题需要提供多套设计，这一改变将使得*设计师*和*前端工程师*的使用效率都大大提高，想必当前端还原设计稿时也希望直接在同一个容器看到它在不同颜色模式下所对应的标注信息。
 
@@ -124,7 +126,7 @@ Variables rather than Design Tokens
 
 这一交互其实源自苹果应用的开发，熟悉苹果App开发的人应该知道，苹果官方提供了专用的工具用于开发苹果系列的产品，叫做Xcode。当你在Xcode内运行代码后，就会在弹出一个独立窗体用于展示你的App，然后你可以在不需要切换标签页的情况下直接预览到你应用此刻的效果，从而在此基础上进行调整。
 
-![xcode](/img/post/xcode.jpg)
+![xcode](/img/post/figma-config-2023-01/xcode.jpg)
 
 将这种交互应用在原型功能上，可以说是将原型使用者的体验与开发者更加接近了
 
@@ -136,6 +138,4 @@ Variables rather than Design Tokens
 
 当你在购物车将所有商品的数量减少为0时，页面应该展示空态，而这些判断都是通过条件判断所定义的
 
-未完待续
-
-《Figma Config 2023 观后感下篇——开发模式、AI》在路上...
+未完待续，详见 [下篇——开发模式](/wilson-blog/2023/07/03/figma-config-2023-02/) 
