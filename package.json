@@ -1,12 +1,12 @@
 {
-  "name": "wilson-blog",
+  "name": "wilson-blog-hexo",
   "version": "0.0.0",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/barnett617/wilson-blog.git"
+    "url": "git+https://github.com/barnett617/wilson-blog-hexo.git"
   },
-  "homepage": "https://barnett617.github.io/wilson-blog/",
+  "homepage": "https://barnett617.github.io/wilson-blog-hexo/",
   "scripts": {
     "build": "hexo generate",
     "clean": "hexo clean",

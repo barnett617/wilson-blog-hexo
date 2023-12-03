@@ -138,4 +138,4 @@ Variables rather than Design Tokens
 
 当你在购物车将所有商品的数量减少为0时，页面应该展示空态，而这些判断都是通过条件判断所定义的
 
-未完待续，详见 [下篇——开发模式](/wilson-blog/2023/07/03/figma-config-2023-02/) 
+未完待续，详见 [下篇——开发模式](/wilson-blog-hexo/2023/07/03/figma-config-2023-02/) 
