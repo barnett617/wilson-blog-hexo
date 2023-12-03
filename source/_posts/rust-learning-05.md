@@ -1,5 +1,5 @@
 ---
-title: rust-learning-05
+title: 学习Rust语法-使用包、预置库和模块管理不断增长的项目
 date: 2023-08-31 22:54:51
 tags: [rust]
 ---
