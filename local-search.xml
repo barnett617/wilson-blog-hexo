@@ -4,7 +4,7 @@
   
   
   <entry>
-    <title></title>
+    <title>使用Hugo搭建博客站点</title>
     <link href="/wilson-blog-hexo/2023/12/03/hugo-blog/"/>
     <url>/wilson-blog-hexo/2023/12/03/hugo-blog/</url>
     
@@ -17,7 +17,7 @@
   
   
   <entry>
-    <title>rust-learning-05</title>
+    <title>学习Rust语法-使用包、预置库和模块管理不断增长的项目</title>
     <link href="/wilson-blog-hexo/2023/08/31/rust-learning-05/"/>
     <url>/wilson-blog-hexo/2023/08/31/rust-learning-05/</url>
     
@@ -36,7 +36,7 @@
   
   
   <entry>
-    <title>rust-learning-04</title>
+    <title>学习Rust语法-使用 if let 管理简约控制流</title>
     <link href="/wilson-blog-hexo/2023/08/31/rust-learning-04/"/>
     <url>/wilson-blog-hexo/2023/08/31/rust-learning-04/</url>
     
@@ -55,7 +55,7 @@
   
   
   <entry>
-    <title>通过类比其他编程语言的方式学习Rust语法-03</title>
+    <title>学习Rust语法-枚举和模式匹配</title>
     <link href="/wilson-blog-hexo/2023/07/11/rust-learning-03/"/>
     <url>/wilson-blog-hexo/2023/07/11/rust-learning-03/</url>
     
@@ -74,7 +74,7 @@
   
   
   <entry>
-    <title>通过类比其他编程语言的方式学习Rust语法-02</title>
+    <title>学习Rust语法-结构体</title>
     <link href="/wilson-blog-hexo/2023/07/10/rust-learning-02/"/>
     <url>/wilson-blog-hexo/2023/07/10/rust-learning-02/</url>
     
