@@ -1,0 +1,731 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="本文中部分print输出可能会报错，原因为python3的print通过函数方式使用，与python2中的print通过解释执行不同，需要使用print()进行控制台打印">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于python科学计算库numpy学习总结">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2017/08/16/%E5%85%B3%E4%BA%8Epython%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97%E5%BA%93numpy%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="本文中部分print输出可能会报错，原因为python3的print通过函数方式使用，与python2中的print通过解释执行不同，需要使用print()进行控制台打印">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-08-16T16:20:15.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.943Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>关于python科学计算库numpy学习总结 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="关于python科学计算库numpy学习总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2017-08-16 16:20" pubdate>
+          Wednesday, August 16, 2017 4:20 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          3 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">关于python科学计算库numpy学习总结</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>本文中部分print输出可能会报错，原因为python3的print通过函数方式使用，与python2中的print通过解释执行不同，需要使用print()进行控制台打印</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="安装numpy"><a href="#安装numpy" class="headerlink" title="安装numpy"></a>安装numpy</h3><p>python3 -m pip install -U pip更新pip<br>pip install numpy</p>
+<h4 id="安装方式II"><a href="#安装方式II" class="headerlink" title="安装方式II"></a>安装方式II</h4><p>pip install ipython<br>ipython –pylab</p>
+<p>pylab模式下会自动导入SciPy,NumPy,Matplotlib模块</p>
+<h3 id="引入numpy"><a href="#引入numpy" class="headerlink" title="引入numpy"></a>引入numpy</h3><p>import numpy as py</p>
+<h3 id="使用numpy"><a href="#使用numpy" class="headerlink" title="使用numpy"></a>使用numpy</h3><p>arange()函数用于创建同类型多维数组（homogeneous multidimensional array）</p>
+<p>用arange创建的数组使用type()查看类型为ndarray</p>
+<p>reshape()函数用于重新构造数组成为其他维度数组</p>
+<p>例如：np.arange(20).reshape(4,5)</p>
+<p>[[ 0  1  2  3  4]<br> [ 5  6  7  8  9]<br> [10 11 12 13 14]<br> [15 16 17 18 19]]</p>
+<h4 id="arrry数组相关属性："><a href="#arrry数组相关属性：" class="headerlink" title="arrry数组相关属性："></a>arrry数组相关属性：</h4><p>ndim：维度<br>shape：各维度大小<br>size：元素个数<br>dtype：元素类型<br>dsize：元素占位大小</p>
+<h4 id="生成特殊矩阵"><a href="#生成特殊矩阵" class="headerlink" title="生成特殊矩阵"></a>生成特殊矩阵</h4><p>全零矩阵：np.zeros()</p>
+<p>注意：ones()和zeros()函数的第一个参数是一个指向数列的指针，不能直接是一个数列，例如上图报错情况</p>
+<p>全一矩阵：np.ones(d,dtype&#x3D;int)<br>默认生成浮点型，可通过第二个参数指定元素数据类型</p>
+<p>随机数数组</p>
+<p>np.random.rand(5)生成包含5个[0,1)区间的数的数组</p>
+<h4 id="数组计算"><a href="#数组计算" class="headerlink" title="数组计算"></a>数组计算</h4><p>a &#x3D; np.array([1.0, 2],[2, 4])<br>a<br>[[ 1.  2.]<br> [ 2.  4.]]<br> 由于数组是【同质】的，python会自动将整型转换为浮点型</p>
+<ul>
+<li><p>np.exp(a)：自然常数e（约等于2.7）的a次方</p>
+</li>
+<li><p>np.sqrt(a)：a的开方</p>
+</li>
+<li><p>np.square(a)：a的平方</p>
+</li>
+<li><p>np.power(a,3)：a的3次方</p>
+</li>
+<li><p>a.sum()：所有元素之和</p>
+</li>
+<li><p>a.max()：最大元素</p>
+</li>
+<li><p>a.min()：最小元素</p>
+</li>
+<li><p>a.max(axis&#x3D;1)：每行最大</p>
+</li>
+<li><p>a.min(axis&#x3D;0)：每列最小</p>
+</li>
+</ul>
+<h4 id="数组与矩阵（matrix）"><a href="#数组与矩阵（matrix）" class="headerlink" title="数组与矩阵（matrix）"></a>数组与矩阵（matrix）</h4><h5 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h5><ul>
+<li>矩阵是二维数组，矩阵乘法相求左侧矩阵列数等于右侧矩阵行数</li>
+<li>数组可以是任意正整数维数，乘法要求两侧数组行列数均相同</li>
+</ul>
+<h5 id="相互转换"><a href="#相互转换" class="headerlink" title="相互转换"></a>相互转换</h5><h6 id="数组转矩阵"><a href="#数组转矩阵" class="headerlink" title="数组转矩阵"></a>数组转矩阵</h6><p>np.asmatrix(a)<br>np.mat(a)</p>
+<h6 id="直接生成"><a href="#直接生成" class="headerlink" title="直接生成"></a>直接生成</h6><p>np.matrix(‘1.0 2.0;3.0 4.0’)</p>
+<h4 id="生成指定长度的一维数组"><a href="#生成指定长度的一维数组" class="headerlink" title="生成指定长度的一维数组"></a>生成指定长度的一维数组</h4><p>np.linspace(0,2,9)：生成从0开始，到2结束，包含9个元素的等差数列</p>
+<h4 id="数组元素访问"><a href="#数组元素访问" class="headerlink" title="**数组元素访问"></a>**数组元素访问</h4><p>a &#x3D; np.array([3.2, 1.5],[2.5, 4])<br>print a[0][1]<br>1.5<br>print a[0,1]<br>1.5</p>
+<p>注意：<br>若b&#x3D;a是将b和a同时指向同一个array，若修改a或者b的某个元素，a和b都会改变<br>若想a和b不会关联修改，则需要b &#x3D; a.copy()为b单独生成一份拷贝</p>
+<p>a:<br>[[ 0  1  2  3  4]<br> [ 5  6  7  8  9]<br> [10 11 12 13 14]<br> [15 16 17 18 19]]</p>
+<p>a[: , [1,3]]：访问a的所有行的2、4列</p>
+<h5 id="访问符合条件的元素"><a href="#访问符合条件的元素" class="headerlink" title="**访问符合条件的元素"></a>**访问符合条件的元素</h5><p>a[: , 2][a[: , 0] &gt; 5]</p>
+<p>解释：<br>a [x] [y]表示访问符合x、y条件的a的元素，[: , 2]表示取所有行的第3列，[a[: , 0] &gt; 5]表示取第一列大于5的行（即第3、4行），最终即表示取第3、4行的第3列，即得结果array([12, 17])这个“子”数组</p>
+<p>numpy.where()查找符合条件的位置<br>例如：loc &#x3D; np.where(a &#x3D;&#x3D; 11)<br>print loc<br>(array([2]), array([1]))</p>
+<p>结果是一个表示坐标的元组，元组第一个数组表示查询结果的行坐标，第二个数组表示结果的列坐标<br>print a[loc[0][0], loc[1][0]]<br>11</p>
+<p>上式为通过位置反求元素11<br>注意：where求出的结果为元组，不能通过loc[x,y]的方式获取元素（该获取方式为数组的方式，因为元组没有索引），只能通过loc[x][y]的方式获取</p>
+<h3 id="数组其他操作"><a href="#数组其他操作" class="headerlink" title="数组其他操作"></a>数组其他操作</h3><h4 id="矩阵转置"><a href="#矩阵转置" class="headerlink" title="矩阵转置"></a>矩阵转置</h4><p>a &#x3D; np.random.rand(2,4)<br>a &#x3D; np.transpose(a)将a数组转置</p>
+<p>b &#x3D; np.random.rand(2,4)<br>b &#x3D; np.mat(b)<br>print b.T    转置矩阵</p>
+<h4 id="矩阵求逆"><a href="#矩阵求逆" class="headerlink" title="矩阵求逆"></a>矩阵求逆</h4><p>import numpy.linalg as nlg<br>a &#x3D; np.random.rand(2,2)<br>a &#x3D; np.mat(a)<br>ia &#x3D; nlg.inv(a)  得逆矩阵<br>print a * ia</p>
+<p>[[ 1.  0.]<br> [ 0.  1.]]</p>
+<h4 id="特征值和特征向量"><a href="#特征值和特征向量" class="headerlink" title="特征值和特征向量"></a>特征值和特征向量</h4><p>a &#x3D; np.random.rand(3,3)<br>eig_value, eig_vector &#x3D; nlg.eig(a)</p>
+<h4 id="拼接矩阵（使用场景：循环处理某些数据后的操作）"><a href="#拼接矩阵（使用场景：循环处理某些数据后的操作）" class="headerlink" title="拼接矩阵（使用场景：循环处理某些数据后的操作）"></a>拼接矩阵（使用场景：循环处理某些数据后的操作）</h4><p>按列拼接两个向量成一个矩阵</p>
+<p>vstack<br>hstack</p>
+<p>实例：<br>a &#x3D; np.random.rand(2,2)<br>b &#x3D; np.random.rand(2,2)<br>c &#x3D; np.hstack([a,b])  水平拼接<br>d &#x3D; np.vstack([a,b])  垂直拼接</p>
+<h4 id="缺失值"><a href="#缺失值" class="headerlink" title="缺失值"></a>缺失值</h4><p>nan作为缺失值的记录<br>通过isnan判定<br>a &#x3D; np.random.rand(2,2)<br>a[0, 1] &#x3D; np.nan<br>print (np.isnan(a))</p>
+<p>nan_to_num可用来将nan替换成0<br>pandas提供能指定nan替换值的函数</p>
+<p>print(np.nan_to_num(a))<br>[[ 0.54266589  0.        ]<br> [ 0.92468339  0.70599254]]</p>
+<p>更多Numpy函数见<br><a target="_blank" rel="noopener" href="http://wiki.scipy.org/Numpy_Example_List">http://wiki.scipy.org/Numpy_Example_List</a><br><a target="_blank" rel="noopener" href="http://docs.scipy.org/doc/numpy">http://docs.scipy.org/doc/numpy</a></p>
+<p>参考文献<br><a target="_blank" rel="noopener" href="https://uqer.io/community/share/54ca15f9f9f06c276f651a56">https://uqer.io/community/share/54ca15f9f9f06c276f651a56</a></p>
+<p><a target="_blank" rel="noopener" href="http://wiki.scipy.org/Tentative_NumPy_Tutorial">http://wiki.scipy.org/Tentative_NumPy_Tutorial</a></p>
+<p>Sheppard K. Introduction to Python for econometrics, statistics and data analysis. Self-published, University of Oxford, version, 2012, 2.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/wilson-blog/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/python/">#python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>关于python科学计算库numpy学习总结</div>
+      <div>https://barnett617.github.io/wilson-blog/2017/08/16/关于python科学计算库numpy学习总结/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 16, 2017</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2017/08/16/%E5%85%B3%E4%BA%8ELinux%E5%90%AF%E5%8A%A8%E6%96%87%E4%BB%B6rc-local%E7%9A%84%E8%A7%A3%E6%83%91/" title="关于Linux启动文件rc.local的解惑">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">关于Linux启动文件rc.local的解惑</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2017/08/12/mysql%E8%BF%9C%E7%AB%AF%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%BA%93%E9%97%B4%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA/" title="mysql远端数据库与本地数据库间导入导出">
+                        <span class="hidden-mobile">mysql远端数据库与本地数据库间导入导出</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

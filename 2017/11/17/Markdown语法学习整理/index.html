@@ -1,0 +1,748 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="虽说markdown用了一段时间，但还未曾专门地阅读文档对其进行过相对系统的学习。刚才使用分割线时发现分割线下面的文字变成标题般字体，专门查了一波，发现还是有必要系统学习一下md语法，以节省日后使用时的查阅时间。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markdown语法学习整理">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2017/11/17/Markdown%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="虽说markdown用了一段时间，但还未曾专门地阅读文档对其进行过相对系统的学习。刚才使用分割线时发现分割线下面的文字变成标题般字体，专门查了一波，发现还是有必要系统学习一下md语法，以节省日后使用时的查阅时间。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-11-17T10:09:16.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.939Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="其他">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Markdown语法学习整理 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Markdown语法学习整理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2017-11-17 10:09" pubdate>
+          Friday, November 17, 2017 10:09 AM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          2 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Markdown语法学习整理</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>虽说markdown用了一段时间，但还未曾专门地阅读文档对其进行过相对系统的学习。刚才使用分割线时发现分割线下面的文字变成标题般字体，专门查了一波，发现还是有必要系统学习一下md语法，以节省日后使用时的查阅时间。</p>
+<span id="more"></span>
+
+<h3 id="宗旨"><a href="#宗旨" class="headerlink" title="宗旨"></a>宗旨</h3><p>易读易写</p>
+<p>一份使用markdown格式撰写的文档理应可以直接以纯文本发布，也就意味着markdown的一系列标签语法对于纯文本来说应该是<strong>低浸入</strong>、无感知的，用户阅读不会因为增加了md标签而变得晦涩。</p>
+<p>这点区别于HTML语言至少还需要掌握HTML编程语法，才能理解部分标签的使用规则。</p>
+<h3 id="灵感"><a href="#灵感" class="headerlink" title="灵感"></a>灵感</h3><p>markdown最大灵感源自纯文本电子邮件的格式（可能人们对于纯文本的电子邮件格式觉得太过单调，于是通过添加一些小标记，来增加丰富的格式）</p>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><ul>
+<li>成为一种适用于网络的书写语言</li>
+</ul>
+<blockquote>
+<p>markdown并非要取代HTML，甚至也没有要和它相近。</p>
+</blockquote>
+<blockquote>
+<p>相比HTML，markdown语法种类少，仅对应HTML标记的一小部分</p>
+</blockquote>
+<ul>
+<li>让文档更容易读、写、随意改</li>
+</ul>
+<blockquote>
+<p>易读的前提就是md的标记需要尽量的没有侵入感，比如一篇纯文本文档增加md标记后不会影响原始阅读感受</p>
+</blockquote>
+<blockquote>
+<p>易写易改的要求则是md的语法标记需要同HTML一样“语义化”，能够见标知意</p>
+</blockquote>
+<h3 id="兼容HTML"><a href="#兼容HTML" class="headerlink" title="兼容HTML"></a>兼容HTML</h3><h4 id="区块标签"><a href="#区块标签" class="headerlink" title="区块标签"></a>区块标签</h4><p>一些HTML区块元素比如<code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;pre&gt;</code>、<code>&lt;p&gt;</code>等，<strong>必须</strong>在其前后加上空行与其他内容隔开，<strong>并且开始标签与结束标签不能用制表符（Tab）或空格来进行缩进</strong>。<br>（下面实例的缩进实现方式是通过HTML的pre标签，使其内部的markdown语法失效）</p>
+<blockquote>
+<p>比如这里的HTML标签如果我想要以标签的样子显示在屏幕上，那我其实需要在文本里通过md标记来编辑，类似使用code标签、转义字符（通过转义字符来“画出”尖括号，code标签可以使其成为块状文本）</p>
+</blockquote>
+<p>另外，markdown生成器不会在HTML区块标签外加上不必要的<code>&lt;p&gt;</code>标签，区别于对于HTML文本进行编辑时，若你写了大段内容而未加任何标签的话，HTML生成器会为你在内容前后加上<code>&lt;p&gt;</code>标签</p>
+<p>实例如下：</p>
+<pre><code class="hljs">段落A
+
+&lt;table&gt;
+        &lt;tr&gt;
+                &lt;td&gt;Foo&lt;/td&gt;
+        &lt;/tr&gt;
+&lt;/table&gt;
+
+段落B
+</code></pre>
+
+<blockquote>
+<p>注意！在HTML区块标签区间的Markdown语法将不会被处理</p>
+</blockquote>
+<h4 id="区段（行内）标签"><a href="#区段（行内）标签" class="headerlink" title="区段（行内）标签"></a>区段（行内）标签</h4><p>HTML行内标签比如&lt;span&gt;、&lt;cite&gt;、&lt;del&gt;可以在Markdown的段落、列表或是标题内随意使用，比如直接使用&lt;a&gt;标签撰写超链接、使用&lt;img&gt;标签取代md的</p>
+<pre><code class="hljs">
+![](图片地址)
+</code></pre>
+
+<p>（当想要md标签直接显示在屏幕上，而不被markdown生成器处理，可以将其写在HTML区块标签内）</p>
+<p>总结：HTML区块内的md标签不生效，HTML区段内的md标签生效</p>
+<h3 id="特殊字符自动转换"><a href="#特殊字符自动转换" class="headerlink" title="特殊字符自动转换"></a>特殊字符自动转换</h3><p><a target="_blank" rel="noopener" href="https://balabala&balabala">balabala</a></p>
+<p>上面这个a标签超链接href中的<a target="_blank" rel="noopener" href="https://balabala&balabala会被解析成https//balabala%26balabala/">https://balabala&amp;balabala会被解析成https://balabala%26balabala/</a></p>
+<p>（这一点我看到的时候，瞬间感觉到头皮发麻，因为我之前博客里的参考链接都是使用HTML的a标签，也就意味着如果连接内包含&amp;字符的话，其实应该要改写成<code>&amp;amp;</code>才能被正确的解析）转义还真是门学问-_-||</p>
+<p>如果你下在页面显示出AT&amp;T，其实需要在md文件中写成AT&amp;amp;T，而想要显示AT&amp;amp;T，则要在md中写成AT**&amp;amp;**apm;T，别绕晕，总之需要通过<code>&amp;amp;</code>这个转义符来“渲染”&amp;符，即遇到想要显示<code>&amp;</code>的地方使用<code>&amp;amp;</code>来转义，理清之后会觉得转义很有意思 : ）</p>
+<p>那么究竟markdown对于<code>&amp;</code>的处理方式是如何的呢？答案是：视情况而定</p>
+<ul>
+<li>不做转换</li>
+</ul>
+<blockquote>
+<p>当<code>&amp;</code>是HTML字符实体的一部分时，它会不做干涉</p>
+</blockquote>
+<blockquote>
+<p>比如你在md内写到&amp;copy;</p>
+</blockquote>
+<blockquote>
+<p>会被解析成&copy;</p>
+</blockquote>
+<p>（注意：当想你的md某段内容包含md标签时，请不要在外部套上HTML区块标签，因为那会使md标签失效）</p>
+<ul>
+<li>转换</li>
+</ul>
+<blockquote>
+<p>而如果你在md中写的<code>&amp;</code>不是HTML字符实体的一部分的话，它就会被转换成&amp;amp;</p>
+</blockquote>
+<p>markdown这么做充分体现其兼容HTML的做法</p>
+<p>（当多行引用标记连续使用时，若其中某一行进行缩进，会在引用的基础上增加层次）</p>
+<p>4 &lt; 5</p>
+<p>4 &lt; 5</p>
+<p>在code范围内，不论是行内还是区块，&lt;和&amp;两个符号都<strong>一定</strong>会被转换成HTML实体，这项特性可以使你轻易地使用md写HTML code，相比在HTML文档中需要把所有的&lt;和&amp;转换为HTML实体才能在HTML文件内写HTML code</p>
+<p>上面这段话的意思就是在html文件里，遇到&amp;或是&lt;，需要以&amp;amp;或是&amp;lt;这样的HTML实体来表示之后，才能正常地编写html code，但是在markdown里不需要这一步，</p>
+<p><code>&lt;span&gt;&lt;code&gt;4 &amp;&lt;/code&gt;&lt;/span&gt;</code></p>
+<p><code>&lt;code&gt;4 &lt; 5&lt;/code&gt;</code></p>
+<p><code>&lt;code&gt;&lt;code&gt;</code></p>
+<p>参考链接：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.appinn.com/markdown/">http://www.appinn.com/markdown/</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/wilson-blog/categories/%E5%85%B6%E4%BB%96/" class="category-chain-item">其他</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/%E5%85%B6%E4%BB%96/">#其他</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Markdown语法学习整理</div>
+      <div>https://barnett617.github.io/wilson-blog/2017/11/17/Markdown语法学习整理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 17, 2017</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2017/11/17/%E4%BD%BF%E7%94%A8%E5%88%86%E6%94%AF%E5%A4%87%E4%BB%BDhexo%E5%8D%9A%E5%AE%A2/" title="使用分支备份hexo博客">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">使用分支备份hexo博客</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2017/11/17/git%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" title="git学习总结">
+                        <span class="hidden-mobile">git学习总结</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

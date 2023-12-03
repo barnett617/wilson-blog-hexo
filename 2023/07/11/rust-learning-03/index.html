@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="枚举和模式匹配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过类比其他编程语言的方式学习Rust语法-03">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2023/07/11/rust-learning-03/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="枚举和模式匹配">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-11T22:37:39.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.943Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="rust">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>通过类比其他编程语言的方式学习Rust语法-03 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="通过类比其他编程语言的方式学习Rust语法-03"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-11 22:37" pubdate>
+          Tuesday, July 11, 2023 10:37 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          3 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">通过类比其他编程语言的方式学习Rust语法-03</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>枚举和模式匹配</p>
+<span id="more"></span>
+
+<h1 id="枚举定义"><a href="#枚举定义" class="headerlink" title="枚举定义"></a>枚举定义</h1><p>枚举和结构体类似，但它可以定义在多个值可能性下的某一种。</p>
+<p>比如 IP 地址目前只有 ipv4 和 ipv6 两种，当定义一个 IP 地址时它只可能是这两种中的一种。</p>
+<p>因此对于 IP 地址的类型范围就可以一个枚举，表示该类型所有的可能。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">enum</span> <span class="hljs-title class_">IpAddrKind</span> &#123;<br>    V4,<br>    V6,<br>&#125;<br><br><span class="hljs-keyword">let</span> <span class="hljs-variable">four</span> = IpAddrKind::V4;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">six</span> = IpAddrKind::V6;<br></code></pre></td></tr></table></figure>
+
+<p>对于 four 和 six，它们的类型都是 IpAddrKind，但又各自唯一。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">route</span>(ip_kind: IpAddrKind) &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这在作为函数参数类型时能够体现出来。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-title function_ invoke__">route</span>(IpAddrKind::V4);<br><span class="hljs-title function_ invoke__">route</span>(IpAddrKind::V6);<br></code></pre></td></tr></table></figure>
+
+<h2 id="枚举使用"><a href="#枚举使用" class="headerlink" title="枚举使用"></a>枚举使用</h2><figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">enum</span> <span class="hljs-title class_">IpAddrKind</span> &#123;<br>    V4,<br>    V6,<br>&#125;<br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">IpAddr</span> &#123;<br>    kind: IpAddrKind,<br>    address: <span class="hljs-type">String</span>,<br>&#125;<br><br><span class="hljs-keyword">let</span> <span class="hljs-variable">home</span> = IpAddr &#123;<br>    kind: IpAddrKind::V4,<br>    address: <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;127.0.0.1&quot;</span>),<br>&#125;;<br><br><span class="hljs-keyword">let</span> <span class="hljs-variable">loopback</span> = IpAddr &#123;<br>    kind: IpAddrKind::V6,<br>    address: <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;::1&quot;</span>),<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">enum</span> <span class="hljs-title class_">IpAddr</span> &#123;<br>    <span class="hljs-title function_ invoke__">V4</span>(<span class="hljs-type">String</span>),<br>    <span class="hljs-title function_ invoke__">V6</span>(<span class="hljs-type">String</span>),<br>&#125;<br><br><span class="hljs-keyword">let</span> <span class="hljs-variable">home</span> = IpAddr::<span class="hljs-title function_ invoke__">V4</span>(<span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;127.0.0.1&quot;</span>));<br><span class="hljs-keyword">let</span> <span class="hljs-variable">loopback</span> = IpAddr::<span class="hljs-title function_ invoke__">V6</span>(<span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;::1&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+<p>这样简写，无需声明结构体，这里的枚举像是一个函数。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">enum</span> <span class="hljs-title class_">IpAddr</span> &#123;<br>    <span class="hljs-title function_ invoke__">V4</span>(<span class="hljs-type">u8</span>, <span class="hljs-type">u8</span>, <span class="hljs-type">u8</span>, <span class="hljs-type">u8</span>),<br>    <span class="hljs-title function_ invoke__">V6</span>(<span class="hljs-type">String</span>),<br>&#125;<br><br><span class="hljs-keyword">let</span> <span class="hljs-variable">home</span> = IpAddr::<span class="hljs-title function_ invoke__">V4</span>(<span class="hljs-number">127</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>);<br><br><span class="hljs-keyword">let</span> <span class="hljs-variable">loopback</span> = IpAddr::<span class="hljs-title function_ invoke__">V6</span>(<span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;::1&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">enum</span> <span class="hljs-title class_">Message</span> &#123;<br>    Quit,<br>    Move &#123; x: <span class="hljs-type">i32</span>, y: <span class="hljs-type">i32</span> &#125;,<br>    <span class="hljs-title function_ invoke__">Write</span>(<span class="hljs-type">String</span>),<br>    <span class="hljs-title function_ invoke__">ChangeColor</span>(<span class="hljs-type">i32</span>, <span class="hljs-type">i32</span>, <span class="hljs-type">i32</span>),<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这样的枚举声明类似于以下定义四个结构体的方式</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">QuitMessage</span>; <span class="hljs-comment">// unit struct</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">MoveMessage</span> &#123;<br>    x: <span class="hljs-type">i32</span>,<br>    y: <span class="hljs-type">i32</span>,<br>&#125;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">WriteMessage</span>(<span class="hljs-type">String</span>); <span class="hljs-comment">// tuple struct</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">ChangeColorMessage</span>(<span class="hljs-type">i32</span>, <span class="hljs-type">i32</span>, <span class="hljs-type">i32</span>); <span class="hljs-comment">// tuple struct</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="枚举对比结构体"><a href="#枚举对比结构体" class="headerlink" title="枚举对比结构体"></a>枚举对比结构体</h2><figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Message</span> &#123;<br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">call</span>(&amp;<span class="hljs-keyword">self</span>) &#123;<br><br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">let</span> <span class="hljs-variable">m</span> = Message::<span class="hljs-title function_ invoke__">Write</span>(<span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;hello&quot;</span>));<br>m.<span class="hljs-title function_ invoke__">call</span>();<br></code></pre></td></tr></table></figure>
+
+<h2 id="选项枚举"><a href="#选项枚举" class="headerlink" title="选项枚举"></a>选项枚举</h2><p>Option 是标准库内定义的类型，可用于表示某个值可能是某个值或者什么都不是。</p>
+<p>比如当你访问一个非空列表的第一项时，你得到的就是列表第一项的值。</p>
+<p>当你访问一个空列表的第一项时，你得到的就是什么都不是。</p>
+<p>这种类型系统术语中的概念意味着编译器发现你处理了所有你应该处理的情况。</p>
+<p>编程语言的设计一般会考虑你需要包含哪些功能，但那些未被包含的功能同样重要。Rust 不像其他编程语言，它没有 null 值。</p>
+<p>null 值的问题在于你可能把它当做非 null 值使用，这样你会得到意想不到的错误。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">enum</span> <span class="hljs-title class_">Option</span>&lt;T&gt; &#123;<br>    <span class="hljs-literal">None</span>,<br>    <span class="hljs-literal">Some</span>&lt;T&gt;,<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>选项枚举的价值在于当某个值的类型是选项枚举时，你需要处理它为 null 的情况，而在非 null 的情况你可以放心的使用。</p>
+<h1 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h1><p>模式匹配允许你在值匹配到各个条件时执行基于该值情况的逻辑，模式可以是字面量、变量名或通配符等。匹配的强大之处在于模式的可表达性以及编译器可以确保所有情况都会被处理。</p>
+<blockquote>
+<p>类似 JS 的 switch 语句</p>
+</blockquote>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-meta">#[derive(Debug)]</span><br><span class="hljs-keyword">enum</span> <span class="hljs-title class_">UsState</span> &#123;<br>    Alabama<br>    Alaska,<br>&#125;<br><br><span class="hljs-keyword">enum</span> <span class="hljs-title class_">Coin</span> &#123;<br>    Penny,<br>    Nickel,<br>    Dime,<br>    <span class="hljs-title function_ invoke__">Quarter</span>(UsState),<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">value_in_cents</span>(coin: Coin) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">u8</span> &#123;<br>    <span class="hljs-keyword">match</span> coin &#123;<br>        Coin::Penny =&gt; &#123;<br>            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Lucky penny!&quot;</span>);<br>            <span class="hljs-number">1</span><br>        &#125;,<br>        Coin::Nickel =&gt; <span class="hljs-number">5</span>,<br>        Coin::Dime =&gt; <span class="hljs-number">10</span>,<br>        Coin: <span class="hljs-title function_ invoke__">Quarter</span>(state) =&gt; &#123;<br>            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;State quarter from &#123;:?&#125;!&quot;</span>, state);<br>            <span class="hljs-number">25</span><br>        &#125;,<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">plus_one</span>(x: <span class="hljs-type">Option</span>&lt;<span class="hljs-type">i32</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Option</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;<br>    <span class="hljs-keyword">match</span> x &#123;<br>        <span class="hljs-literal">None</span> =&gt; <span class="hljs-literal">None</span>,<br>        <span class="hljs-title function_ invoke__">Some</span>(i) =&gt; <span class="hljs-title function_ invoke__">Some</span>(i + <span class="hljs-number">1</span>),<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">let</span> <span class="hljs-variable">five</span> = <span class="hljs-title function_ invoke__">Some</span>(<span class="hljs-number">5</span>);<br><span class="hljs-keyword">let</span> <span class="hljs-variable">six</span> = <span class="hljs-title function_ invoke__">plus_one</span>(five);<br><span class="hljs-keyword">let</span> <span class="hljs-variable">none</span> = <span class="hljs-title function_ invoke__">plus_one</span>(<span class="hljs-literal">None</span>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="匹配需要完备"><a href="#匹配需要完备" class="headerlink" title="匹配需要完备"></a>匹配需要完备</h2><p>当匹配条件未声明完备（处理所有情况）时，编译器会报错并提示未处理的情况。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">let</span> <span class="hljs-variable">dice_roll</span> = <span class="hljs-number">9</span>;<br><span class="hljs-keyword">match</span> dice_roll &#123;<br>    <span class="hljs-number">3</span> =&gt; <span class="hljs-title function_ invoke__">add_fancy_hat</span>(),<br>    <span class="hljs-number">7</span> =&gt; <span class="hljs-title function_ invoke__">remove_fancy_hat</span>(),<br>    other =&gt; <span class="hljs-title function_ invoke__">move_player</span>(other),<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">add_fancy_hat</span>() &#123;&#125;<br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">remove_fancy_hat</span>() &#123;&#125;<br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">move_player</span>(num_spaces: <span class="hljs-type">u8</span>) &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里的 other 表示除已经定义的匹配外，剩余的情况都会走到这里，这种情况可以任意定义匹配名称，比如这里使用了 other。</p>
+<p>如果不想显式地声明剩余情况，可以使用“_”表示“其他情况”，然后声明对应的处理函数或者什么都不做</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">let</span> <span class="hljs-variable">dice_roll</span> = <span class="hljs-number">9</span>;<br><span class="hljs-keyword">match</span> dice_roll &#123;<br>    <span class="hljs-number">3</span> =&gt; <span class="hljs-title function_ invoke__">add_fancy_hat</span>(),<br>    <span class="hljs-number">7</span> =&gt; <span class="hljs-title function_ invoke__">remove_fancy_hat</span>(),<br>    _ =&gt; <span class="hljs-title function_ invoke__">reroll</span>(),<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">add_fancy_hat</span>() &#123;&#125;<br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">remove_fancy_hat</span>() &#123;&#125;<br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">reroll</span>() &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs rs"><span class="hljs-keyword">let</span> <span class="hljs-variable">dice_roll</span> = <span class="hljs-number">9</span>;<br><span class="hljs-keyword">match</span> dice_roll &#123;<br>    <span class="hljs-number">3</span> =&gt; <span class="hljs-title function_ invoke__">add_fancy_hat</span>(),<br>    <span class="hljs-number">7</span> =&gt; <span class="hljs-title function_ invoke__">remove_fancy_hat</span>(),<br>    _ =&gt; (),<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">add_fancy_hat</span>() &#123;&#125;<br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">remove_fancy_hat</span>() &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/rust/">#rust</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>通过类比其他编程语言的方式学习Rust语法-03</div>
+      <div>https://barnett617.github.io/wilson-blog/2023/07/11/rust-learning-03/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 11, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2023/08/31/rust-learning-04/" title="rust-learning-04">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">rust-learning-04</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2023/07/10/rust-learning-02/" title="通过类比其他编程语言的方式学习Rust语法-02">
+                        <span class="hidden-mobile">通过类比其他编程语言的方式学习Rust语法-02</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="关于WEB中宽高的一些整理屏幕宽高（screen.width &amp; screen.height）屏幕宽高的计量单位是设备像素（但IE8对其计量单位使用CSS像素）   由此可见  截图工具对于截图的计量（值和单位）基本与 screen.width &amp; screen.height 一致（差1） 截图工具是对于用户的设备屏幕上的某个区域进行选择 screen的属性更偏向于表示物理设备的属">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于WEB中宽高的一些整理">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2019/04/12/web-height/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="关于WEB中宽高的一些整理屏幕宽高（screen.width &amp; screen.height）屏幕宽高的计量单位是设备像素（但IE8对其计量单位使用CSS像素）   由此可见  截图工具对于截图的计量（值和单位）基本与 screen.width &amp; screen.height 一致（差1） 截图工具是对于用户的设备屏幕上的某个区域进行选择 screen的属性更偏向于表示物理设备的属">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/web-height/web-height-01.jpeg">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/web-height/web-height-02.jpeg">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/web-height/web-height-03.jpeg">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/web-height/web-height-04.jpeg">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/web-height/web-height-05.jpeg">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/web-height/web-height-06.jpeg">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/web-height/web-height-07.jpeg">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/web-height/web-height-08.jpeg">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/web-height/web-height-09.jpeg">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/web-height/web-height-10.jpeg">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/web-height/web-height-11.jpeg">
+<meta property="article:published_time" content="2019-04-12T15:31:00.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.943Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="Wilson">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://barnett617.github.io/wilson-blog/img/post/web-height/web-height-01.jpeg">
+  
+  
+  
+  <title>关于WEB中宽高的一些整理 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="关于WEB中宽高的一些整理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-04-12 15:31" pubdate>
+          Friday, April 12, 2019 3:31 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          1 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">关于WEB中宽高的一些整理</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="关于WEB中宽高的一些整理"><a href="#关于WEB中宽高的一些整理" class="headerlink" title="关于WEB中宽高的一些整理"></a>关于WEB中宽高的一些整理</h1><h2 id="屏幕宽高（screen-width-screen-height）"><a href="#屏幕宽高（screen-width-screen-height）" class="headerlink" title="屏幕宽高（screen.width &amp; screen.height）"></a>屏幕宽高（screen.width &amp; screen.height）</h2><p>屏幕宽高的计量单位是<code>设备像素</code>（但IE8对其计量单位使用<code>CSS像素</code>）</p>
+<p><img src="/wilson-blog/img/post/web-height/web-height-01.jpeg" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p><img src="/wilson-blog/img/post/web-height/web-height-02.jpeg" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p>由此可见</p>
+<ol>
+<li>截图工具对于截图的计量（值和单位）基本与 screen.width &amp; screen.height 一致（差1）</li>
+<li>截图工具是对于用户的设备屏幕上的某个区域进行选择</li>
+<li><code>screen</code>的属性更偏向于表示物理设备的属性参数</li>
+<li><code>window</code>的属性更偏向于表示WEB的参数</li>
+</ol>
+<p>进一步观察</p>
+<p><code>screen</code>还有4个更加“实用”的属性</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">screen.availHeight</span><br><span class="hljs-keyword"></span><span class="hljs-number">877</span><br><span class="hljs-keyword">screen.availWidth</span><br><span class="hljs-keyword"></span><span class="hljs-number">1440</span><br><span class="hljs-keyword">screen.availLeft</span><br><span class="hljs-keyword"></span><span class="hljs-number">0</span><br><span class="hljs-keyword">screen.availTop</span><br><span class="hljs-keyword"></span><span class="hljs-number">23</span><br></code></pre></td></tr></table></figure>
+
+<p>为什么说实用呢，因为这些屏幕的实际宽高并不一定在用户应用中都能被使用，比如这里可以看到<code>screen.availTop</code>有23的长度是不在可用范围呢，那这段长度是什么呢，见下图</p>
+<p><img src="/wilson-blog/img/post/web-height/web-height-03.jpeg" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p>其实是设备（电脑）系统本身的状态栏高度，这一部分高度在浏览器未全屏显示的时候的确是不算在应用（浏览器）高度内的，同时很明显可以看到<code>screen.availHeight + screen.availTop = 877 + 23 = 900 = screen.height</code>，这三个属性的值形成一个完整的闭环，详细的描述了设备屏幕在不同使用场景下的参数</p>
+<h2 id="窗体宽高（window-width-window-height）"><a href="#窗体宽高（window-width-window-height）" class="headerlink" title="窗体宽高（window.width &amp; window.height）"></a>窗体宽高（window.width &amp; window.height）</h2><p>窗体宽高的计量单位使用<code>CSS像素</code>（但不被IE支持，并且欧朋浏览器对其计量单位使用<code>设备像素</code>）</p>
+<p>以上所说的计量单位区分是因为在浏览器中访问这些对象属性的时候返回值只是一个数字，而没有单位，其在不同的环境中（浏览器类型）计算方式并不同</p>
+<p><img src="/wilson-blog/img/post/web-height/web-height-04.jpeg" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p><img src="/wilson-blog/img/post/web-height/web-height-05.jpeg" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p>以下两张图可见</p>
+<p>window.innerHeight &amp; window.innerWidth是随着浏览器视窗当前的真实展现宽高变化的</p>
+<p><img src="/wilson-blog/img/post/web-height/web-height-06.jpeg" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p><img src="/wilson-blog/img/post/web-height/web-height-07.jpeg" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<h2 id="滑动偏移量（Scrolling-offset）"><a href="#滑动偏移量（Scrolling-offset）" class="headerlink" title="滑动偏移量（Scrolling offset）"></a>滑动偏移量（Scrolling offset）</h2><p>实验如图</p>
+<p><img src="/wilson-blog/img/post/web-height/web-height-08.jpeg" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p>当前位置时</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-built_in">window</span>.pageYOffset<br><span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/wilson-blog/img/post/web-height/web-height-09.jpeg" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p>而滑动到此位置时</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-built_in">window</span>.pageYOffset<br><span class="hljs-number">416</span><br></code></pre></td></tr></table></figure>
+
+<p>两次之前的滑动差值第二次减去第一次的416其实是屏幕在Y轴上的滚动量，并且由于这是计算视窗滑动量，所以在不同的浏览器上计算方式没有差别</p>
+<p><img src="/wilson-blog/img/post/web-height/web-height-10.jpeg" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p>存在如下一个关系</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs stylus">document<span class="hljs-selector-class">.documentElement</span><span class="hljs-selector-class">.clientHeight</span><br><span class="hljs-number">797</span><br>window<span class="hljs-selector-class">.innerHeight</span><br><span class="hljs-number">797</span><br>window<span class="hljs-selector-class">.outerHeight</span><br><span class="hljs-number">877</span><br>screen<span class="hljs-selector-class">.availHeight</span><br><span class="hljs-number">877</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/wilson-blog/img/post/web-height/web-height-11.jpeg" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p>还有一个反应WEB文档真实宽高的属性</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">document<span class="hljs-selector-class">.documentElement</span><span class="hljs-selector-class">.scrollHeight</span><br><span class="hljs-number">12061</span><br></code></pre></td></tr></table></figure>
+
+
+<p>参考文章</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.quirksmode.org/mobile/viewports.html#link12">A tale of two viewports — part one</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>关于WEB中宽高的一些整理</div>
+      <div>https://barnett617.github.io/wilson-blog/2019/04/12/web-height/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 12, 2019</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2019/05/07/%E7%94%A8Python%E7%94%9F%E6%88%90%E6%9F%B1%E7%8A%B6%E5%9B%BE%E3%80%81%E6%8A%98%E7%BA%BF%E5%9B%BE%E3%80%81%E9%A5%BC%E7%8A%B6%E5%9B%BE%E6%9D%A5%E7%BB%9F%E8%AE%A1%E8%87%AA%E5%B7%B1%E7%9A%84%E6%89%8B%E6%9C%BA%E8%AF%9D%E8%B4%B9/" title="用Python生成柱状图、折线图、饼状图来统计自己的手机话费">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">用Python生成柱状图、折线图、饼状图来统计自己的手机话费</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2019/02/12/JS%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%EF%BC%88%E6%8C%89%E5%80%BC%E4%BC%A0%E9%80%92%EF%BC%89/" title="JS的方法参数传递（按值传递）">
+                        <span class="hidden-mobile">JS的方法参数传递（按值传递）</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,796 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="js异步编程的4种方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js异步编程">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2018/03/06/js%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="js异步编程的4种方式">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-03-06T19:10:33.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.939Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>js异步编程 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="js异步编程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-03-06 19:10" pubdate>
+          Tuesday, March 6, 2018 7:10 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          2 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">js异步编程</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>js异步编程的<strong>4</strong>种方式</p>
+<span id="more"></span>
+
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>js语言执行环境——单线程（Single Thread）</p>
+<h2 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h2><p>一次只能执行一个任务，超过一个的就只能<strong>排队</strong></p>
+<h3 id="单线程优势"><a href="#单线程优势" class="headerlink" title="单线程优势"></a>单线程优势</h3><ul>
+<li><p>实现简单</p>
+</li>
+<li><p>执行环境单纯</p>
+</li>
+</ul>
+<h3 id="单线程劣势"><a href="#单线程劣势" class="headerlink" title="单线程劣势"></a>单线程劣势</h3><p>存在<strong>耗时很长</strong>的任务会拖慢<strong>整个程序</strong>的运行</p>
+<h3 id="单线程带来的问题"><a href="#单线程带来的问题" class="headerlink" title="单线程带来的问题"></a>单线程带来的问题</h3><p>浏览器无响应（假死）</p>
+<h4 id="浏览器假死原因分析"><a href="#浏览器假死原因分析" class="headerlink" title="浏览器假死原因分析"></a>浏览器假死原因分析</h4><p>某段js代码（某个任务）长时间运行（比如死循环）</p>
+<h4 id="js对于单线程劣势的解决方案"><a href="#js对于单线程劣势的解决方案" class="headerlink" title="js对于单线程劣势的解决方案"></a>js对于单线程劣势的解决方案</h4><p>执行模式分为：同步（Synchronous）和异步（Asynchronus）</p>
+<h5 id="同步模式"><a href="#同步模式" class="headerlink" title="同步模式"></a>同步模式</h5><ul>
+<li><p>后一个任务等待前一个任务结束</p>
+</li>
+<li><p>程序执行顺序同任务排列顺序</p>
+</li>
+</ul>
+<h5 id="异步模式"><a href="#异步模式" class="headerlink" title="异步模式"></a>异步模式</h5><ul>
+<li><p>每个任务有1个或多个回调函数（callback）</p>
+</li>
+<li><p>前一个任务结束，不是继续执行后一个任务，而是执行回调</p>
+</li>
+<li><p>后一个任务不等前一个任务结束就执行</p>
+</li>
+<li><p>程序的执行顺序和任务排列顺序不一致</p>
+</li>
+</ul>
+<h4 id="异步模式使用"><a href="#异步模式使用" class="headerlink" title="异步模式使用"></a>异步模式使用</h4><p>浏览器端<strong>耗时长</strong>的任务都应该<strong>异步执行</strong></p>
+<p>避免浏览器失去效应</p>
+<h4 id="异步模式实践"><a href="#异步模式实践" class="headerlink" title="异步模式实践"></a>异步模式实践</h4><p>Ajax</p>
+<h2 id="异步编程的4种方式（实践）"><a href="#异步编程的4种方式（实践）" class="headerlink" title="异步编程的4种方式（实践）"></a>异步编程的4种方式（实践）</h2><h3 id="1-回调函数（最基本）"><a href="#1-回调函数（最基本）" class="headerlink" title="1.回调函数（最基本）"></a>1.回调函数（最基本）</h3><h4 id="实际场景"><a href="#实际场景" class="headerlink" title="实际场景"></a>实际场景</h4><p>两个函数f1()、f2()，f1()耗时长</p>
+<h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><p>把f2()函数写成f1()函数的回调函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">f1</span>(<span class="hljs-params">callback</span>) &#123;<br>	<span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>		<span class="hljs-comment">// code of f1</span><br>		<span class="hljs-title function_">callback</span>();<br>	&#125;, <span class="hljs-number">1000</span>);<br>&#125;<br><br><span class="hljs-title function_">f1</span>(f2);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>f1不会阻塞程序执行</p>
+</li>
+<li><p>先执行程序主逻辑，耗时操作推迟执行</p>
+</li>
+</ul>
+<h6 id="回调函数存在的问题"><a href="#回调函数存在的问题" class="headerlink" title="回调函数存在的问题"></a>回调函数存在的问题</h6><ul>
+<li><p>不利于代码阅读和维护</p>
+</li>
+<li><p>各部分间耦合高（Coupling）</p>
+</li>
+<li><p>流程变乱</p>
+</li>
+<li><p>每个任务仅支持一个回调函数</p>
+</li>
+</ul>
+<h3 id="2-事件监听（信号）"><a href="#2-事件监听（信号）" class="headerlink" title="2.事件监听（信号）"></a>2.事件监听（信号）</h3><p>使用<strong>事件驱动</strong>模式——任务的执行不取决于代码顺序，而是事件的发生</p>
+<p>为f1绑定一个事件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">f1.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;done&#x27;</span>, f2);<br></code></pre></td></tr></table></figure>
+
+<p>解释：当f1发生done事件时执行f2</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">f1</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>		f1.<span class="hljs-title function_">trigger</span>(<span class="hljs-string">&#x27;done&#x27;</span>);<br>	&#125;, <span class="hljs-number">1000</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>f1.trigger(‘done’)表示当执行完其上的内容，立即触发done事件（即执行f2）</p>
+<h4 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h4><ul>
+<li><p>容易理解</p>
+</li>
+<li><p>每个事件可指定多个回调函数</p>
+</li>
+<li><p>可以去耦合（decoupling）</p>
+</li>
+<li><p>有利于实现模块化</p>
+</li>
+</ul>
+<h4 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h4><ul>
+<li><p>整个程序变成<strong>事件驱动</strong>的</p>
+</li>
+<li><p>运行流程不清晰</p>
+</li>
+</ul>
+<h3 id="3-发布-订阅模式-或-观察者模式（publish-subscribe-pattern-or-observer-pattern）"><a href="#3-发布-订阅模式-或-观察者模式（publish-subscribe-pattern-or-observer-pattern）" class="headerlink" title="3.发布&#x2F;订阅模式 或 观察者模式（publish&#x2F;subscribe pattern or observer pattern）"></a>3.发布&#x2F;订阅模式 或 观察者模式（publish&#x2F;subscribe pattern or observer pattern）</h3><p>制造一个信号中心，某任务完成后向信号中心<strong>发布（publish）</strong>一个信号，其他任务可向信号中心<strong>订阅（subscribe）</strong>这个信号，从而得知自己什么时候执行</p>
+<h4 id="该模式的多种实现"><a href="#该模式的多种实现" class="headerlink" title="该模式的多种实现"></a>该模式的多种实现</h4><ul>
+<li>Ben Alman’s gist <a target="_blank" rel="noopener" href="https://gist.github.com/661855">https://gist.github.com/661855</a> (recommended)</li>
+<li>Rick Waldron’s jQuery-core style take on the above <a target="_blank" rel="noopener" href="https://gist.github.com/705311">https://gist.github.com/705311</a></li>
+<li>Peter Higgins’ plugin (<a target="_blank" rel="noopener" href="http://github.com/phiggins42/bloody-jquery-plugins/blob/master/pubsub.js">http://github.com/phiggins42/bloody-jquery-plugins/blob/master/pubsub.js</a>).</li>
+<li>Ben Truyman’s gist <a target="_blank" rel="noopener" href="https://gist.github.com/826794">https://gist.github.com/826794</a></li>
+</ul>
+<p>参考：<a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/magazine/hh201955.aspx">https://msdn.microsoft.com/en-us/magazine/hh201955.aspx</a></p>
+<p>这里举例第一种，是jQuery的一个插件</p>
+<ol>
+<li>f2向jQuery（信号中心）订阅done信号</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">jQuery.<span class="hljs-title function_">subscribe</span>(<span class="hljs-string">&quot;done&quot;</span>, f2);<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>f1向jQuery（信号中心）发布done信号</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">f1</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>			jQuery.<span class="hljs-title function_">publish</span>(<span class="hljs-string">&quot;done&quot;</span>);<br>	&#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果f2只要执行一次，可以在执行后取消订阅</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">jQuery.<span class="hljs-title function_">unsubscribe</span>(<span class="hljs-string">&quot;done&quot;</span>, f2);<br></code></pre></td></tr></table></figure>
+
+<h4 id="发布订阅模式优劣分析"><a href="#发布订阅模式优劣分析" class="headerlink" title="发布订阅模式优劣分析"></a>发布订阅模式优劣分析</h4><p>与事件监听类似，但可通过信号中心清晰了解到存在多少信号（发布者发布了多少信号）、每个信号有多少订阅者，从而监控程序的执行</p>
+<h3 id="4-Promises对象"><a href="#4-Promises对象" class="headerlink" title="4.Promises对象"></a>4.Promises对象</h3><p>Promises对象是CommonJS工作组提出的一种规范，目的旨在为<strong>异步编程</strong>提供统一的接口</p>
+<h4 id="Promises实现异步编程的思想"><a href="#Promises实现异步编程的思想" class="headerlink" title="Promises实现异步编程的思想"></a>Promises实现异步编程的思想</h4><ul>
+<li><p>每一个异步任务<strong>返回</strong>一个Promise对象</p>
+</li>
+<li><p>该对象有一个<strong>then</strong>方法，允许指定回调函数</p>
+</li>
+</ul>
+<h5 id="实例操作"><a href="#实例操作" class="headerlink" title="实例操作"></a>实例操作</h5><p>为f1指定回调函数为f2</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title function_">f1</span>().<span class="hljs-title function_">then</span>(f2);<br></code></pre></td></tr></table></figure>
+
+<p>jQuery的实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">f1</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">var</span> dfd = $.<span class="hljs-title class_">Deferred</span>();<br>	<span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>		dfd.<span class="hljs-title function_">resolve</span>();<br>	&#125;, <span class="hljs-number">1000</span>);<br>	<span class="hljs-keyword">return</span> dfd.<span class="hljs-property">promise</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="优点分析"><a href="#优点分析" class="headerlink" title="优点分析"></a>优点分析</h5><ul>
+<li><p>回调函数变成了<strong>链式</strong>写法，程序流程清晰</p>
+</li>
+<li><p>有配套的<a target="_blank" rel="noopener" href="http://api.jquery.com/category/deferred-object/">整套方法</a>，可实现强大的功能</p>
+</li>
+</ul>
+<h5 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h5><h6 id="指定多个回调函数"><a href="#指定多个回调函数" class="headerlink" title="指定多个回调函数"></a>指定多个回调函数</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title function_">f1</span>().<span class="hljs-title function_">then</span>(f2).<span class="hljs-title function_">then</span>(f3);<br></code></pre></td></tr></table></figure>
+
+<h6 id="指定发生错误时的回调函数"><a href="#指定发生错误时的回调函数" class="headerlink" title="指定发生错误时的回调函数"></a>指定发生错误时的回调函数</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title function_">f1</span>().<span class="hljs-title function_">then</span>(f2).<span class="hljs-title function_">fail</span>(f3);<br></code></pre></td></tr></table></figure>
+
+<h5 id="Promises使用的优缺点"><a href="#Promises使用的优缺点" class="headerlink" title="Promises使用的优缺点"></a>Promises使用的优缺点</h5><h6 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h6><ul>
+<li><p>一个任务已完成，再添加回调函数，该回调函数会立刻执行</p>
+</li>
+<li><p>不用担心是否错过某个<strong>事件</strong>或<strong>信号</strong></p>
+</li>
+</ul>
+<h6 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h6><ul>
+<li>难以理解和编写</li>
+</ul>
+<p>参考链接：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2012/12/asynchronous%EF%BC%BFjavascript.html">http://www.ruanyifeng.com/blog/2012/12/asynchronous%EF%BC%BFjavascript.html</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/wilson-blog/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/javascript/">#javascript</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>js异步编程</div>
+      <div>https://barnett617.github.io/wilson-blog/2018/03/06/js异步编程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 6, 2018</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/08/23/git-use/" title="再品Git, 深度解读">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">再品Git, 深度解读</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/02/25/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%85%B3%E4%BA%8E%E8%BF%90%E8%A1%8Credux%E7%A4%BA%E4%BE%8B%E5%90%AF%E5%8A%A8%E9%94%99%E8%AF%AF%E7%9A%84%E5%88%86%E6%9E%90/" title="记一次关于运行redux示例启动错误的分析">
+                        <span class="hidden-mobile">记一次关于运行redux示例启动错误的分析</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

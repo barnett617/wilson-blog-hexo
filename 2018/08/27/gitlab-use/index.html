@@ -1,0 +1,803 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="服务器搭建Gitlab 创作于2018年左右，最初创建时间已丢失  环境 ubuntu16.04  安装gitlab-ee步骤(无特殊说明，安装过程中采用默认配置项) 安装和配置必要依赖  12sudo apt-get updatesudo apt-get install -y curl openssh-server ca-certificates   安装邮件服务器  1sudo apt-get">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器搭建Gitlab">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2018/08/27/gitlab-use/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="服务器搭建Gitlab 创作于2018年左右，最初创建时间已丢失  环境 ubuntu16.04  安装gitlab-ee步骤(无特殊说明，安装过程中采用默认配置项) 安装和配置必要依赖  12sudo apt-get updatesudo apt-get install -y curl openssh-server ca-certificates   安装邮件服务器  1sudo apt-get">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-08-27T09:30:00.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.939Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="Wilson">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>服务器搭建Gitlab - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="服务器搭建Gitlab"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-08-27 09:30" pubdate>
+          Monday, August 27, 2018 9:30 AM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          3 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">服务器搭建Gitlab</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="服务器搭建Gitlab"><a href="#服务器搭建Gitlab" class="headerlink" title="服务器搭建Gitlab"></a>服务器搭建Gitlab</h1><blockquote>
+<p>创作于2018年左右，最初创建时间已丢失</p>
+</blockquote>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>ubuntu16.04</li>
+</ul>
+<h2 id="安装gitlab-ee步骤-无特殊说明，安装过程中采用默认配置项"><a href="#安装gitlab-ee步骤-无特殊说明，安装过程中采用默认配置项" class="headerlink" title="安装gitlab-ee步骤(无特殊说明，安装过程中采用默认配置项)"></a>安装gitlab-ee步骤(无特殊说明，安装过程中采用默认配置项)</h2><ol>
+<li>安装和配置必要依赖</li>
+</ol>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">sudo apt-<span class="hljs-keyword">get</span> <span class="hljs-keyword">update</span><br>sudo apt-<span class="hljs-keyword">get</span> install -y curl openssh-<span class="hljs-keyword">server</span> ca-certificates<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>安装邮件服务器</li>
+</ol>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima">sudo apt-<span class="hljs-built_in">get</span> install -y <span class="hljs-built_in">postfix</span><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>下载gitlab安装包并安装</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">curl https:<span class="hljs-regexp">//</span>packages.gitlab.com<span class="hljs-regexp">/install/</span>repositories<span class="hljs-regexp">/gitlab/gi</span>tlab-ee/script.deb.sh | sudo bash<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>设置访问路径(此处有坑)</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo <span class="hljs-attribute">EXTERNAL_URL</span>=<span class="hljs-string">&quot;http://gitlab.example.com&quot;</span> apt-<span class="hljs-built_in">get</span> install gitlab-ee<br></code></pre></td></tr></table></figure>
+
+<p>这里的方式是在安装gitlab企业版的命令上通过参数的方式指定访问地址，官网示例中直接给的是一个域名地址，此操作其实会在gitlab安装后的<code>/etc/gitlab/gitlab.rb</code>文件里有个<code>EXTERNAL_URL</code>的配置项（整个gitlab的所有配置都在此）</p>
+<p>所以当然这里也就可以只进行安装，即</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install gitlab-ee<br></code></pre></td></tr></table></figure>
+
+<p>然后再修改默认的配置文件，把<code>EXTERNAL_URL</code>改成gitlab的访问地址</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">vi <span class="hljs-regexp">/etc/gi</span>tlab/gitlab.rb<br></code></pre></td></tr></table></figure>
+
+<p>重新加载配置文件</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">sudo gitlab-ctl reconfigure</span><br></code></pre></td></tr></table></figure>
+
+<p>重启gitlab服务</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">sudo gitlab-ctl restart</span><br></code></pre></td></tr></table></figure>
+
+<p>问题来了，如果你这里<code>EXTERNAL_URL</code>配置为机器的IP，即</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">EXTERNAL_URL</span>=<span class="hljs-string">&quot;http://xx.xx.xx.xx&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>那么默认访问的是<code>http://xx.xx.xx.xx</code>的80端口，而80端口可能被占用，或受ECS限制，需要单独配置80端口的访问权限，所以这里可以自定义访问的端口，方法也很简单，就是在IP地址后面加上端口，例如：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">EXTERNAL_URL</span>=<span class="hljs-string">&quot;http://xx.xx.xx.xx:8800&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后还有关键的一步，就是开放端口对外的访问权限，这里以ubuntu16.04为例</p>
+<p>安装iptables</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install iptables<br></code></pre></td></tr></table></figure>
+
+<p>添加规则</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">iptables -<span class="hljs-selector-tag">I</span> <span class="hljs-selector-tag">INPUT</span> -<span class="hljs-selector-tag">p</span> tcp <span class="hljs-attr">--dport</span> <span class="hljs-number">8800</span> -j ACCEPT<br></code></pre></td></tr></table></figure>
+
+<p>保存规则</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">iptables-save</span><br></code></pre></td></tr></table></figure>
+
+<p>这样操作后，服务器重启后会失效，需要持久化规则</p>
+<p>安装iptables-persistent</p>
+<figure class="highlight gml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gml">sudo apt-get install iptables-<span class="hljs-variable language_">persistent</span><br>sudo netfilter-<span class="hljs-variable language_">persistent</span> save<br>sudo netfilter-<span class="hljs-variable language_">persistent</span> reload<br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>初始化账号</li>
+</ol>
+<p>访问配置好的gitlab地址，例如<code>http://xx.xx.xx.xx:8800</code>，会提示设置密码，这里设置的即是管理员root的密码，重设后使用如下账号登录管理员账号</p>
+<p>用户名：root</p>
+<p>密码：重设后的密码</p>
+<ol start="6">
+<li>初始化组、用户、项目</li>
+</ol>
+<p>创建一个group，点击顶部扳手图标（admin area），添加用户，添加用户后保存，然后再通过Edit修改可设置初始密码（用户使用该账号登录后会提示修改密码）</p>
+<ol start="7">
+<li><p>将用户添加进组，创建项目</p>
+</li>
+<li><p>用户初始操作</p>
+</li>
+</ol>
+<p>登录gitlab地址，点击Setting，添加本地已有的或生成的SSH-KEY</p>
+<ol start="9">
+<li>完成</li>
+</ol>
+<h2 id="卸载gitlab-ee"><a href="#卸载gitlab-ee" class="headerlink" title="卸载gitlab-ee"></a>卸载gitlab-ee</h2><p>这才是个大坑，比安装麻烦（卸载干净不容易），官网也没找到官方的卸载步骤</p>
+<p>还好*nix系统秉承一切皆文件，并且提供了一系列强大工具，比如ls、find、grep，可以全局查找进行手动清理</p>
+<ol>
+<li>停服务</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">sudo gitlab-ctl stop <br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>进程操作（可选）</li>
+</ol>
+<p>查看进程</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">ps</span> -ef|<span class="hljs-keyword">grep</span> gitlab<br></code></pre></td></tr></table></figure>
+
+<p>找到守护进程<code>runsvdir -P /opt/gitlab/service log</code>的PID并停掉</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">kill</span> -<span class="hljs-number">9</span> 端口号<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>删除gitlab相关文件</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">find</span> / -name gitlab |xargs rm -rf <br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>删除包含gitlab的相关目录和文件</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">find</span> / -name *gitlab*|xargs rm -rf<br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>删除uninstall时生成的备份文件（可选）</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">ls <span class="hljs-regexp">/root/gi</span>tlab*<br>rm -rf <span class="hljs-regexp">/root/gi</span>tlab*<br></code></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>Done</li>
+</ol>
+<h2 id="安装gitlab-ce"><a href="#安装gitlab-ce" class="headerlink" title="安装gitlab-ce"></a>安装gitlab-ce</h2><p>1、2步同企业版(简略如下)</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima">sudo apt-<span class="hljs-built_in">get</span> install curl openssh-server ca-certificates <span class="hljs-built_in">postfix</span><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>下载gitlab-ce包</li>
+</ol>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">curl</span> -O https://downloads-packages.s3.amazonaws.com/ubuntu-<span class="hljs-number">14</span>.<span class="hljs-number">04</span>/gitlab_7.<span class="hljs-number">4</span>.<span class="hljs-number">2</span>-omnibus-<span class="hljs-number">1</span>_amd64.deb<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>或者直接下载安装脚本</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">curl -sS https:<span class="hljs-regexp">//</span>packages.gitlab.com<span class="hljs-regexp">/install/</span>repositories<span class="hljs-regexp">/gitlab/gi</span>tlab-ce/script.deb.sh | sudo bash<br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>上面的脚本执行后会添加gitlab服务器配置到<code>/etc/apt/sources.list.d</code>目录，并且添加配置文件<code>gitlab_gitlab-ce.list</code>到<code>/etc/apt/sources.list.d</code>目录，内容如下</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># this file was generated by packages.gitlab.com for</span><br><span class="hljs-comment"># the repository at https://packages.gitlab.com/gitlab/gitlab-ce</span><br><br>deb https:<span class="hljs-regexp">//</span>packages.gitlab.com<span class="hljs-regexp">/gitlab/gi</span>tlab-ce<span class="hljs-regexp">/ubuntu/</span> xenial main<br>deb-src https:<span class="hljs-regexp">//</span>packages.gitlab.com<span class="hljs-regexp">/gitlab/gi</span>tlab-ce<span class="hljs-regexp">/ubuntu/</span> xenial main<br></code></pre></td></tr></table></figure>
+
+<p>可通过<code>more /etc/apt/sources.list.d/gitlab_gitlab-ce.list</code>查看</p>
+<blockquote>
+<p>后缀为deb的为包，使用curl -O 下载到本地当前文件夹，名称为deb包的文件名，使用<code>-o</code>参数可以自定义下载到本地的文件名，例如<code>curl -o mygettext.html http://www.gnu.org/software/gettext/manual/gettext.html</code>，后缀为deb.sh的为安装脚本，需要通过管道调用bash来运行安装脚本，例如<code>curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash</code></p>
+</blockquote>
+<ol start="6">
+<li>安装gitlab-ce</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install gitlab-ce<br></code></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>修改配置文件，把<code>EXTERNAL_URL</code>改成gitlab的访问地址</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">vi <span class="hljs-regexp">/etc/gi</span>tlab/gitlab.rb<br></code></pre></td></tr></table></figure>
+
+<ol start="8">
+<li>重新加载配置文件</li>
+</ol>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">sudo gitlab-ctl reconfigure</span><br></code></pre></td></tr></table></figure>
+
+<ol start="9">
+<li>重启gitlab服务</li>
+</ol>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">sudo gitlab-ctl restart</span><br></code></pre></td></tr></table></figure>
+
+<ol start="10">
+<li><p>其他操作见企业版安装（比如开放外部访问端口等）</p>
+</li>
+<li><p>访问配置好的地址</p>
+</li>
+<li><p>账号初始化</p>
+</li>
+</ol>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://about.gitlab.com/installation/#ubuntu">gitlab官方文档——安装篇</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2ec5d16db02b">ubuntu开放指定端口</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-mac-os-x">使用本地已有ssh-key或生成ssh-key</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/restran/p/4063880.html">社区版gitlab部署</a></li>
+<li><a target="_blank" rel="noopener" href="https://forum.gitlab.com/t/complete-uninstall-gitlab-ce-from-ubuntu-14/6232/2">gitlab论坛关于卸载gitlab社区版</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/huhuhuemail/article/details/80519433">CentOs 7 安装 GitLab、完全卸载GitLab</a></li>
+<li><a target="_blank" rel="noopener" href="https://beginor.github.io/2016/05/07/gitlab-ce-installation-record.html">Ubuntu16.04安装gitlab-ce</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>服务器搭建Gitlab</div>
+      <div>https://barnett617.github.io/wilson-blog/2018/08/27/gitlab-use/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 27, 2018</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/09/03/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AC%AC3%E7%89%88%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89-1/" title="JavaScript高级程序设计第3版笔记（一）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JavaScript高级程序设计第3版笔记（一）</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/08/27/koa-vue-forum/" title="一周时间使用Vue+Koa全栈开发论坛项目">
+                        <span class="hidden-mobile">一周时间使用Vue+Koa全栈开发论坛项目</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

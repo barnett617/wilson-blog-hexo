@@ -1,0 +1,702 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="关于HTML5中语义方面的改变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML5语义提升篇">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2018/02/16/HTML5%E8%AF%AD%E4%B9%89%E6%8F%90%E5%8D%87%E7%AF%87/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="关于HTML5中语义方面的改变">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-02-16T15:54:37.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.939Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="HTML5">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>HTML5语义提升篇 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTML5语义提升篇"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-02-16 15:54" pubdate>
+          Friday, February 16, 2018 3:54 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          3 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HTML5语义提升篇</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>关于HTML5中语义方面的改变</p>
+<span id="more"></span>
+
+<h2 id="使用HTML的section和outline"><a href="#使用HTML的section和outline" class="headerlink" title="使用HTML的section和outline"></a>使用HTML的section和outline</h2><blockquote>
+<p>重要点：现在不再有在图形浏览器或辅助技术用户代理的已知的提纲算法，虽然这个算法在其他软件，比如一致性检验器中被实现。所以<a target="_blank" rel="noopener" href="https://www.w3.org/TR/html5/sections.html#outline">提纲</a>算法不能再被依赖于传递文档结构给用户。作者被建议去使用标题头<a target="_blank" rel="noopener" href="https://www.w3.org/TR/html5/sections.html#rank">秩</a>(h1-h6)去传递文档结构</p>
+</blockquote>
+<p>HTML5特征带来了许多新元素给web开发者，允许他们去描述一个web文档的结构以一种标准的语义。这个文档描述了这些元素和如何使用它们去定义所想要的任何文档内容的轮廓。</p>
+<h3 id="HTML4中的文档结构"><a href="#HTML4中的文档结构" class="headerlink" title="HTML4中的文档结构"></a>HTML4中的文档结构</h3><p>一个文档的结构，比如，&lt;body&gt;和&lt;&#x2F;body&gt;之间的语义结构，是呈现网页给用户的最基本。HTML4使用一个文档的部分概念（notion of section）和子部分来描述它的结构。一个部分被一个&lt;div&gt;元素定义，伴随着其内的标题元素（&lt;h1&gt;,&lt;h2&gt;,&lt;h3&gt;,&lt;h4&gt;,&lt;h5&gt;或者&lt;h6&gt;）定义了它的标题。这些元素的关系引领了文档的结构和它的轮廓</p>
+<p>所以如下的标记：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;section&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;forest-elephants&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Forest elephants<span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>In this section, we discuss the lesser known forest elephants.<br>		...this section continues...<br>	<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;subsection&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;forest-habitat&quot;</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Habitat<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Forest elephants do not live in trees but among them.<br>		...this subsection continues...<br>	<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>d<br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>引导如下的轮廓：（不含隐式等级号展示）</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">1</span>. Forest elephants<br>   <span class="hljs-attribute">1</span>.<span class="hljs-number">1</span> Habitat<br></code></pre></td></tr></table></figure>
+
+<p>并非一定需要&lt;div&gt;元素去定义一个新的部分块。仅需存在一个标题元素就足以意味着一个新的部分块。所以：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs html5">&lt;h1&gt;Forest elephants&lt;h1&gt;<br>	&lt;p&gt;In this section, we discuss the lesser known forest elephants.<br>		...this section continues...<br>	&lt;h2&gt;Habitat&lt;/h2&gt;<br>	&lt;p&gt;Forest elephants do not live in trees but among them.<br>	...this subsection continues...<br>	&lt;h2&gt;Diet&lt;/h2&gt;<br>&lt;h1&gt;Mongolian gerbils&lt;/h1&gt;<br></code></pre></td></tr></table></figure>
+
+<p>引领出如下的轮廓：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">1</span>. Forest elephants<br>   <span class="hljs-attribute">1</span>.<span class="hljs-number">1</span> Habitat<br>   <span class="hljs-attribute">1</span>.<span class="hljs-number">2</span> Diet<br><span class="hljs-attribute">2</span>. Mongolian gerbils<br></code></pre></td></tr></table></figure>
+
+<h3 id="HTML5所解决的问题"><a href="#HTML5所解决的问题" class="headerlink" title="HTML5所解决的问题"></a>HTML5所解决的问题</h3><p>HTML4定义了文档的结构与其暗示轮廓算法非常粗糙并带来了大量的问题：</p>
+<ol>
+<li><p>对于定义语义块的&lt;div&gt;用法，未给class参数定义特定的值使轮廓算法自动化变得不可能（那个&lt;div&gt;部分究竟是页的轮廓，定义了一个块还是一个块？或是它只是呈现了一个&lt;div&gt;，仅用来编辑样式）。在其他方面，HTML4规格在<strong>什么是一个部分块</strong>和它的<strong>域是如何定义</strong>上非常不准确。轮廓的自动生成是重要的，尤其对于<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Assistive_technology">辅助技术</a>，可能会适应这种根据文档结构呈现信息给用户的方式。HTML5移除了来自轮廓算法的&lt;div&gt;元素的需要，通过引入一个新的元素&lt;section&gt;。HTML Section Element</p>
+</li>
+<li><p>合并多个文档是困难的：包含一个子文档进一个主文档意味着改变HTML头元素的等级，所以轮廓会保持。这在HTML5中被解决，以其新介绍的块元素(&lt;article&gt;,&lt;section&gt;,&lt;nav&gt;和&lt;aside&gt;)，总会是其相邻最近祖先块的子块，不管通过内部的头元素定义了什么块</p>
+</li>
+<li><p>在HTML4中，每一个块都是文档轮廓的一部分。但文档通常不是那么线性。一个文档可以有特殊的部分，包含着不属于其一部分的信息，虽然和主线关联，比如一个广告块或者一个解释说明盒子。HTML5介绍了&lt;aside&gt;元素允许这样的块元素不成为主轮廓的部分</p>
+</li>
+<li><p>再一次的，在HTML4中，因为每一个部分都是文档轮廓的一部分，没可能会有块包含与文档无关的信息，除了对于整个站点的元素，比如图标、菜单、内容表格或是版权信息和合法通知。为了这个目的，HTML5引入了三个新元素：&lt;nav&gt;用来表示链接集合，比如一个内容表格，&lt;footer&gt;和&lt;header&gt;用来表示站点相关信息。注意&lt;header&gt;和&lt;footer&gt;不是像&lt;section&gt;一样在为内容划分块，而是它们存在用来语义地标记块的部分（头部分和尾部分）</p>
+</li>
+</ol>
+<p>更通常的，HTML5带来了块和头部的<strong>预测</strong>特征，允许文档轮廓被预测，并被浏览器用来提高<strong>用户体验</strong></p>
+<h3 id="HTML5轮廓算法"><a href="#HTML5轮廓算法" class="headerlink" title="HTML5轮廓算法"></a>HTML5轮廓算法</h3><p>让我们考虑下潜藏在HTML处理部分和轮廓的方式下的算法</p>
+<h4 id="定义部分"><a href="#定义部分" class="headerlink" title="定义部分"></a>定义部分</h4><p>所有的内容都躺在&lt;body&gt;元素中的内容都是一个块部分。HTML5中的块可以嵌套。除了主块，被&lt;body&gt;所定义的元素，块限定被定义地或明确或含蓄。明确定义的块部分是&lt;body&gt;,&lt;section&gt;,&lt;article&gt;,&lt;aside&gt;和&lt;nav&gt;标签内的内容</p>
+<blockquote>
+<p>每个部分可以有其自己的头层级。所以，甚至一个嵌套的部分也可以有一个&lt;h1&gt;，见后续实例</p>
+</blockquote>
+<p>让我们看一个例子——这里我们有一个拥有一个顶层部分和一个尾部定义的文档。在顶级部分我们有三个子块，以两个&lt;section&gt;和一个&lt;aside&gt;元素定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs html5">&lt;section&gt;<br><br>	&lt;h1&gt;Forest elephants&lt;/h1&gt;<br><br>	&lt;section&gt;<br>		&lt;h1&gt;Introduction&lt;/h1&gt;<br>		&lt;p&gt;In this section, we discuss the lesser known forest elephants.&lt;/p&gt;<br>	&lt;/section&gt;<br><br>	&lt;section&gt;<br>		&lt;h1&gt;Habitat&lt;/h1&gt;<br>		&lt;p&gt;Forest elephants do not live in trees but among them.&lt;/p&gt;<br>	&lt;/section&gt;<br><br>	&lt;aside&gt;<br>		&lt;p&gt;advertising block&lt;/p&gt;<br>	&lt;/aide&gt;<br><br>&lt;/section&gt;<br><br>&lt;footer&gt;<br>	&lt;p&gt;(c) 2010 The Example company&lt;/p&gt;<br>&lt;/footer&gt;<br></code></pre></td></tr></table></figure>
+
+<p>这导致了如下的轮廓：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">1</span>. Forest elephants<br>   <span class="hljs-attribute">1</span>.<span class="hljs-number">1</span> Introduction<br>   <span class="hljs-attribute">1</span>.<span class="hljs-number">2</span> Habitat<br></code></pre></td></tr></table></figure>
+
+<h4 id="定义头部"><a href="#定义头部" class="headerlink" title="定义头部"></a>定义头部</h4><h4 id="明确的定义块"><a href="#明确的定义块" class="headerlink" title="明确的定义块"></a>明确的定义块</h4><h4 id="块根"><a href="#块根" class="headerlink" title="块根"></a>块根</h4><h4 id="轮廓外的块"><a href="#轮廓外的块" class="headerlink" title="轮廓外的块"></a>轮廓外的块</h4><h4 id="头部和尾部"><a href="#头部和尾部" class="headerlink" title="头部和尾部"></a>头部和尾部</h4><h3 id="部分块元素中的地址"><a href="#部分块元素中的地址" class="headerlink" title="部分块元素中的地址"></a>部分块元素中的地址</h3><h3 id="在不支持HTML5的浏览器中使用HTML5元素"><a href="#在不支持HTML5的浏览器中使用HTML5元素" class="headerlink" title="在不支持HTML5的浏览器中使用HTML5元素"></a>在不支持HTML5的浏览器中使用HTML5元素</h3><h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/wilson-blog/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/HTML5/">#HTML5</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTML5语义提升篇</div>
+      <div>https://barnett617.github.io/wilson-blog/2018/02/16/HTML5语义提升篇/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>February 16, 2018</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/02/22/Vue-js%E6%8A%80%E6%9C%AF%E5%9B%9E%E9%A1%BE/" title="Vue.js技术回顾——概述">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Vue.js技术回顾——概述</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/02/16/HTML5%E5%9F%BA%E7%A1%80%E5%9B%9E%E9%A1%BE/" title="HTML5基础回顾">
+                        <span class="hidden-mobile">HTML5基础回顾</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

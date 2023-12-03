@@ -1,0 +1,706 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="背景关于朋友随手抛出的一段SQL，发现MySQL中关于max()和group by联合使用中的一个坑，特此整理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于mysql中max函数和groupby联合使用的坑">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2017/10/31/%E5%85%B3%E4%BA%8Emysql%E4%B8%ADmax%E5%87%BD%E6%95%B0%E5%92%8Cgroupby%E8%81%94%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E5%9D%91/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="背景关于朋友随手抛出的一段SQL，发现MySQL中关于max()和group by联合使用中的一个坑，特此整理。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://trigolds.com/yh1.png">
+<meta property="og:image" content="http://trigolds.com/yh4.png">
+<meta property="og:image" content="http://trigolds.com/yh3.png">
+<meta property="article:published_time" content="2017-10-31T20:50:43.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.943Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://trigolds.com/yh1.png">
+  
+  
+  
+  <title>关于mysql中max函数和groupby联合使用的坑 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="关于mysql中max函数和groupby联合使用的坑"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2017-10-31 20:50" pubdate>
+          Tuesday, October 31, 2017 8:50 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">关于mysql中max函数和groupby联合使用的坑</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>关于朋友随手抛出的一段SQL，发现MySQL中关于max()和group by联合使用中的一个坑，特此整理。</p>
+<span id="more"></span>
+
+<p><img src="http://trigolds.com/yh1.png" srcset="/wilson-blog/img/loading.gif" lazyload><br>YH:老铁们，这段hql对不对啊</p>
+<p>我扫了一眼，总觉得看着别扭，自己试着去掉字符串拼接，还原出SQL来看，依然感觉不对，然后自己试着写了查询，在本地建个表，造了些数据，用简化后的SQL做测试时，<br>当我定睛检查以下这句SQL</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> predictId, <span class="hljs-built_in">max</span>(evaluateDate) evalDate, productId <span class="hljs-keyword">from</span> productcashpredict <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> productId;<br></code></pre></td></tr></table></figure>
+
+
+<p>抛出一个疑问，MySQL是从后往前执行，先分组再求分组结果中evaluateDate最大的记录呢？还是先找出evaluateDate的最大记录，再分组呢？</p>
+<p>网上查了查，发现，都不是！这里有个坑！如果直接这么结合max和group by使用，查出的结果，除了求max的字段和分组条件productId字段，其他字段的值都是错的！</p>
+<p>会是这样：<img src="http://trigolds.com/yh4.png" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p>首先我在本地验证了一下是不是的确如此</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs mysql">desc productcashpredict;<br><br>predictId	int(11)	NO	PRI		auto_increment<br>evaluateDate	datetime	YES			on update CURRENT_TIMESTAMP<br>other	varchar(255)	YES			<br>productId	int(11)	YES<br><br>select * from productcashpredict<br><br>+-----------+---------------------+-------+-----------+<br>| predictId | evaluateDate        | other | productId |<br>+-----------+---------------------+-------+-----------+<br>|         1 | 2017-10-31 18:14:37 | NULL  |     10001 |<br>|         2 | 2017-10-31 18:14:45 | NULL  |     10002 |<br>|         3 | 2017-10-31 18:14:59 | NULL  |     10002 |<br>|         4 | 2017-10-31 18:15:09 | NULL  |     10003 |<br>|         5 | 2017-10-31 18:15:22 | NULL  |     10001 |<br>+-----------+---------------------+-------+-----------+<br><br><br>select predictId, max(evaluateDate) evalDate, productId from productcashpredict group by productId;<br><br>+-----------+---------------------+-----------+<br>| predictId | evalDate            | productId |<br>+-----------+---------------------+-----------+<br>|         1 | 2017-10-31 18:15:22 |     10001 |<br>|         2 | 2017-10-31 18:14:59 |     10002 |<br>|         4 | 2017-10-31 18:15:09 |     10003 |<br>+-----------+---------------------+-----------+<br><br></code></pre></td></tr></table></figure>
+
+<p>直接这样查的确是错的，看predictId可以看出</p>
+<p><img src="http://trigolds.com/yh3.png" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p>我们可以看出来，MySQL其实是把以下两种查询揉在了一起，结果的确是按照productId进行分组的，查询结果也是从取自分组后，排序则是默认按照主键排序，但evalDate也的确取的是每一个productId组内最大的那一项，但这样揉起来，数据就不对了。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">select</span> * from productcashpredict group by productId;<br><br><span class="hljs-attribute">1</span>	<span class="hljs-number">2017</span>-<span class="hljs-number">10</span>-<span class="hljs-number">31</span> <span class="hljs-number">18</span>:<span class="hljs-number">14</span>:<span class="hljs-number">37</span>		<span class="hljs-number">10001</span><br><span class="hljs-attribute">2</span>	<span class="hljs-number">2017</span>-<span class="hljs-number">10</span>-<span class="hljs-number">31</span> <span class="hljs-number">18</span>:<span class="hljs-number">14</span>:<span class="hljs-number">45</span>		<span class="hljs-number">10002</span><br><span class="hljs-attribute">4</span>	<span class="hljs-number">2017</span>-<span class="hljs-number">10</span>-<span class="hljs-number">31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">09</span>		<span class="hljs-number">10003</span><br><br><span class="hljs-attribute">select</span> max(evaluateDate) evalDate, productId from productcashpredict;<br><br><span class="hljs-attribute">2017</span>-<span class="hljs-number">10</span>-<span class="hljs-number">31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">22</span>	<span class="hljs-number">10001</span><br><br></code></pre></td></tr></table></figure>
+
+<p>既然这样，那总得有解决方案，我又问了抛问者YH，他们实际的使用场景是怎么查的，他甩出一张图。<br>我看了半天，很是理解不了，至少觉得逻辑不甚清晰，我开始质疑这样查询的结果是否正确，于是又去寻求max和group by联合使用的正确写法，得到下面两种方案：</p>
+<p>于是我又建了一张表，来模拟真实场景</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">desc product_cash_predict;<br><br>id	int(11)	NO	PRI		auto_increment<br>add_time	datetime	YES			on update CURRENT_TIMESTAMP<br>deleted	varchar(255)	YES			<br>update_time	datetime	YES			on update CURRENT_TIMESTAMP<br>version	varchar(255)	YES			<br>evaluated_date	datetime	YES			on update CURRENT_TIMESTAMP<br>other	varchar(255)	YES			<br>product_id	int(11)	YES<br><br>SELECT <span class="hljs-symbol">*</span> FROM `product_cash_predict`;<br><br>+----+----------+---------+-------------+---------+---------------------+-------+------------+<br>|<span class="hljs-string"> id </span>|<span class="hljs-string"> add_time </span>|<span class="hljs-string"> deleted </span>|<span class="hljs-string"> update_time </span>|<span class="hljs-string"> version </span>|<span class="hljs-string"> evaluated_date      </span>|<span class="hljs-string"> other </span>|<span class="hljs-string"> product_id </span>|<br>+----+----------+---------+-------------+---------+---------------------+-------+------------+<br>|<span class="hljs-string">  1 </span>|<span class="hljs-string"> NULL     </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> NULL        </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> 2017-10-31 18:14:37 </span>|<span class="hljs-string"> NULL  </span>|<span class="hljs-string">      10001 </span>|<br>|<span class="hljs-string">  2 </span>|<span class="hljs-string"> NULL     </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> NULL        </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> 2017-10-31 18:14:45 </span>|<span class="hljs-string"> NULL  </span>|<span class="hljs-string">      10002 </span>|<br>|<span class="hljs-string">  3 </span>|<span class="hljs-string"> NULL     </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> NULL        </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> 2017-10-31 18:14:59 </span>|<span class="hljs-string"> NULL  </span>|<span class="hljs-string">      10002 </span>|<br>|<span class="hljs-string">  4 </span>|<span class="hljs-string"> NULL     </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> NULL        </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> 2017-10-31 18:15:09 </span>|<span class="hljs-string"> NULL  </span>|<span class="hljs-string">      10003 </span>|<br>|<span class="hljs-string">  5 </span>|<span class="hljs-string"> NULL     </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> NULL        </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> 2017-10-31 18:15:22 </span>|<span class="hljs-string"> NULL  </span>|<span class="hljs-string">      10001 </span>|<br>+----+----------+---------+-------------+---------+---------------------+-------+------------+<br></code></pre></td></tr></table></figure>
+
+<p>先按YH的业务场景查询方式查一下：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">SELECT<br>	p2.<span class="hljs-symbol">*</span><br>FROM<br>	(<br>		SELECT<br>			max(evaluated_date) evaluated_date,<br>			product_id<br>		FROM<br>			product_cash_predict<br>		GROUP BY<br>			product_id<br>	) p1<br>LEFT JOIN product_cash_predict p2 ON p1.product_id = p2.product_id<br>AND p1.evaluated_date = p2.evaluated_date<br><br>-- 0.034s<br>--<br>+----+----------+---------+-------------+---------+---------------------+-------+------------+<br>|<span class="hljs-string"> id </span>|<span class="hljs-string"> add_time </span>|<span class="hljs-string"> deleted </span>|<span class="hljs-string"> update_time </span>|<span class="hljs-string"> version </span>|<span class="hljs-string"> evaluated_date      </span>|<span class="hljs-string"> other </span>|<span class="hljs-string"> product_id </span>|<br>+----+----------+---------+-------------+---------+---------------------+-------+------------+<br>|<span class="hljs-string">  3 </span>|<span class="hljs-string"> NULL     </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> NULL        </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> 2017-10-31 18:14:59 </span>|<span class="hljs-string"> NULL  </span>|<span class="hljs-string">      10002 </span>|<br>|<span class="hljs-string">  4 </span>|<span class="hljs-string"> NULL     </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> NULL        </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> 2017-10-31 18:15:09 </span>|<span class="hljs-string"> NULL  </span>|<span class="hljs-string">      10003 </span>|<br>|<span class="hljs-string">  5 </span>|<span class="hljs-string"> NULL     </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> NULL        </span>|<span class="hljs-string"> NULL    </span>|<span class="hljs-string"> 2017-10-31 18:15:22 </span>|<span class="hljs-string"> NULL  </span>|<span class="hljs-string">      10001 </span>|<br>+----+----------+---------+-------------+---------+---------------------+-------+------------+<br></code></pre></td></tr></table></figure>
+
+<p>那么这个结果对不对呢</p>
+<p>先来看一下错误的查询方式：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">select</span> id, add_time, deleted, update_time, version, max(evaluated_date) evalDate, other, product_id from product_cash_predict group by product_id;<br><span class="hljs-attribute">1</span>					<span class="hljs-number">2017</span>-<span class="hljs-number">10</span>-<span class="hljs-number">31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">22</span>		<span class="hljs-number">10001</span><br><span class="hljs-attribute">2</span>					<span class="hljs-number">2017</span>-<span class="hljs-number">10</span>-<span class="hljs-number">31</span> <span class="hljs-number">18</span>:<span class="hljs-number">14</span>:<span class="hljs-number">59</span>		<span class="hljs-number">10002</span><br><span class="hljs-attribute">4</span>					<span class="hljs-number">2017</span>-<span class="hljs-number">10</span>-<span class="hljs-number">31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">09</span>		<span class="hljs-number">10003</span><br><br></code></pre></td></tr></table></figure>
+
+<p>由于数据量少，上面查询的错误肉眼可以用识别</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><br><span class="hljs-comment">-- 解决方案一：先排序再分组</span><br><br><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> product_cash_predict <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> evaluated_date <span class="hljs-keyword">desc</span><br><br><span class="hljs-number">5</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">22</span>		<span class="hljs-number">10001</span><br><span class="hljs-number">4</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">09</span>		<span class="hljs-number">10003</span><br><span class="hljs-number">3</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">14</span>:<span class="hljs-number">59</span>		<span class="hljs-number">10002</span><br><span class="hljs-number">2</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">14</span>:<span class="hljs-number">45</span>		<span class="hljs-number">10002</span><br><span class="hljs-number">1</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">14</span>:<span class="hljs-number">37</span>		<span class="hljs-number">10001</span><br><br><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> product_cash_predict <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> evaluated_date <span class="hljs-keyword">desc</span>) <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> product_id;<br><span class="hljs-comment">--  Every derived table must have its own alias（衍生表需要有其自己的别名）</span><br><br><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> product_cash_predict <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> evaluated_date <span class="hljs-keyword">desc</span>) <span class="hljs-keyword">as</span> result <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> product_id;<br><br><span class="hljs-comment">-- 正确结果</span><br><span class="hljs-number">5</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">22</span>		<span class="hljs-number">10001</span><br><span class="hljs-number">3</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">14</span>:<span class="hljs-number">59</span>		<span class="hljs-number">10002</span><br><span class="hljs-number">4</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">09</span>		<span class="hljs-number">10003</span><br><span class="hljs-comment">-- 0.025s</span><br><span class="hljs-comment">-- 0.025s</span><br><span class="hljs-comment">-- 0.027s</span><br><br></code></pre></td></tr></table></figure>
+
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-comment">-- 解决方案二：看上去很费解</span><br><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> product_cash_predict p <span class="hljs-keyword">where</span> p.evaluated_date<br>=<br>(<span class="hljs-keyword">select</span> max(evaluated_date) <span class="hljs-keyword">from</span> product_cash_predict <span class="hljs-keyword">where</span> p.product_id = product_id)<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> product_id;<br><br><span class="hljs-number">5</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">22</span>		<span class="hljs-number">10001</span><br><span class="hljs-number">3</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">14</span>:<span class="hljs-number">59</span>		<span class="hljs-number">10002</span><br><span class="hljs-number">4</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">09</span>		<span class="hljs-number">10003</span><br><br><span class="hljs-comment">-- 0.028s</span><br><span class="hljs-comment">-- 0.019s</span><br><span class="hljs-comment">-- 0.025s</span><br><br><br></code></pre></td></tr></table></figure>
+
+<p>最后，也就是YH实际业务场景的处理方式再来回顾分析一波</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-comment">-- 解决方案三：自连接，根据max结合group by查出最大日期和分组条件product_id，再自连接查出该product_id对应的其他字段</span><br><br><span class="hljs-comment">-- 只查最大日期和分组条件product_id，若查其他字段则为不准的数据（group by取分组第一条）</span><br><span class="hljs-keyword">select</span> max(evaluated_date) evalDate, product_id <span class="hljs-keyword">from</span> product_cash_predict <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> product_id<br><br><span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">22</span>	<span class="hljs-number">10001</span><br><span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">14</span>:<span class="hljs-number">59</span>	<span class="hljs-number">10002</span><br><span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">09</span>	<span class="hljs-number">10003</span><br><br><span class="hljs-comment">-- 把查出的结果作为p1集</span><br><span class="hljs-keyword">select</span> p1.* <span class="hljs-keyword">from</span> (<br>	<span class="hljs-keyword">select</span> max(evaluated_date) evalDate, product_id <span class="hljs-keyword">from</span> product_cash_predict <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> product_id<br>) p1;<br><br><span class="hljs-comment">-- 然后从根据此结果自连接后查出的结果中取真是的记录值</span><br><span class="hljs-keyword">select</span> p2.* <span class="hljs-keyword">from</span> (<br>	<span class="hljs-keyword">select</span> max(evaluated_date) evalDate, product_id <span class="hljs-keyword">from</span> product_cash_predict <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> product_id<br>) p1 <span class="hljs-keyword">LEFT JOIN</span> product_cash_predict p2 <span class="hljs-keyword">on</span> p1.product_id = p2.product_id <span class="hljs-keyword">and</span> p1.evalDate = p2.evaluated_date;<br><br><span class="hljs-number">3</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">14</span>:<span class="hljs-number">59</span>		<span class="hljs-number">10002</span><br><span class="hljs-number">4</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">09</span>		<span class="hljs-number">10003</span><br><span class="hljs-number">5</span>					<span class="hljs-number">2017</span><span class="hljs-number">-10</span><span class="hljs-number">-31</span> <span class="hljs-number">18</span>:<span class="hljs-number">15</span>:<span class="hljs-number">22</span>		<span class="hljs-number">10001</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="性能比较"><a href="#性能比较" class="headerlink" title="性能比较"></a>性能比较</h3><figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs coq">explain select * from (select * from product_cash_predict ORDER BY evaluated_date desc) <span class="hljs-built_in">as</span> result group <span class="hljs-built_in">by</span> product_id;<br><br>+----+-------------+----------------------+------+---------------+------+---------+------+------+---------------------------------+<br>| <span class="hljs-type">id</span> | <span class="hljs-type">select_type</span> | <span class="hljs-type">table</span>                | <span class="hljs-type">type</span> | <span class="hljs-type">possible_keys</span> | <span class="hljs-type">key</span>  | <span class="hljs-type">key_len</span> | <span class="hljs-type">ref</span>  | <span class="hljs-type">rows</span> | <span class="hljs-type">Extra</span>                           |<br><span class="hljs-type">+----+-------------+----------------------+------+---------------+------+---------+------+------+---------------------------------+</span><br><span class="hljs-type">|  1</span> | <span class="hljs-type">PRIMARY</span>     | <span class="hljs-type">&lt;derived2</span>&gt;           | <span class="hljs-type">ALL</span>  | <span class="hljs-type">NULL</span>          | <span class="hljs-type">NULL</span> | <span class="hljs-type">NULL</span>    | <span class="hljs-type">NULL</span> |    <span class="hljs-type">5</span> | <span class="hljs-type">Using</span> temporary; Using filesort |<br><span class="hljs-type">|  2</span> | <span class="hljs-type">DERIVED</span>     | <span class="hljs-type">product_cash_predict</span> | <span class="hljs-type">ALL</span>  | <span class="hljs-type">NULL</span>          | <span class="hljs-type">NULL</span> | <span class="hljs-type">NULL</span>    | <span class="hljs-type">NULL</span> |    <span class="hljs-type">5</span> | <span class="hljs-type">Using</span> filesort                  |<br><span class="hljs-type">+----+-------------+----------------------+------+---------------+------+---------+------+------+---------------------------------+</span><br><span class="hljs-type"></span><br><span class="hljs-type">explain</span> select * from product_cash_predict p <span class="hljs-keyword">where</span> p.evaluated_date =<br>(select max(evaluated_date) from product_cash_predict <span class="hljs-keyword">where</span> p.product_id = product_id)<br>group <span class="hljs-built_in">by</span> product_id;<br><br>+----+--------------------+----------------------+------+---------------+------+---------+------+------+----------------------------------------------+<br>| <span class="hljs-type">id</span> | <span class="hljs-type">select_type</span>        | <span class="hljs-type">table</span>                | <span class="hljs-type">type</span> | <span class="hljs-type">possible_keys</span> | <span class="hljs-type">key</span>  | <span class="hljs-type">key_len</span> | <span class="hljs-type">ref</span>  | <span class="hljs-type">rows</span> | <span class="hljs-type">Extra</span>                                        |<br><span class="hljs-type">+----+--------------------+----------------------+------+---------------+------+---------+------+------+----------------------------------------------+</span><br><span class="hljs-type">|  1</span> | <span class="hljs-type">PRIMARY</span>            | <span class="hljs-type">p</span>                    | <span class="hljs-type">ALL</span>  | <span class="hljs-type">NULL</span>          | <span class="hljs-type">NULL</span> | <span class="hljs-type">NULL</span>    | <span class="hljs-type">NULL</span> |    <span class="hljs-type">5</span> | <span class="hljs-type">Using</span> <span class="hljs-keyword">where</span>; Using temporary; Using filesort |<br><span class="hljs-type">|  2</span> | <span class="hljs-type">DEPENDENT</span> SUBQUERY | <span class="hljs-type">product_cash_predict</span> | <span class="hljs-type">ALL</span>  | <span class="hljs-type">NULL</span>          | <span class="hljs-type">NULL</span> | <span class="hljs-type">NULL</span>    | <span class="hljs-type">NULL</span> |    <span class="hljs-type">5</span> | <span class="hljs-type">Using</span> <span class="hljs-keyword">where</span>                                  |<br><span class="hljs-type">+----+--------------------+----------------------+------+---------------+------+---------+------+------+----------------------------------------------+</span><br><span class="hljs-type"></span><br><span class="hljs-type">explain</span> select p2.* from (<br>	select max(evaluated_date) evalDate, product_id from product_cash_predict GROUP BY product_id<br>) p1 LEFT JOIN product_cash_predict p2 on p1.product_id = p2.product_id and p1.evalDate = p2.evaluated_date;<br><br>+----+-------------+----------------------+------+---------------+------+---------+------+------+----------------------------------------------------+<br>| <span class="hljs-type">id</span> | <span class="hljs-type">select_type</span> | <span class="hljs-type">table</span>                | <span class="hljs-type">type</span> | <span class="hljs-type">possible_keys</span> | <span class="hljs-type">key</span>  | <span class="hljs-type">key_len</span> | <span class="hljs-type">ref</span>  | <span class="hljs-type">rows</span> | <span class="hljs-type">Extra</span>                                              |<br><span class="hljs-type">+----+-------------+----------------------+------+---------------+------+---------+------+------+----------------------------------------------------+</span><br><span class="hljs-type">|  1</span> | <span class="hljs-type">PRIMARY</span>     | <span class="hljs-type">&lt;derived2</span>&gt;           | <span class="hljs-type">ALL</span>  | <span class="hljs-type">NULL</span>          | <span class="hljs-type">NULL</span> | <span class="hljs-type">NULL</span>    | <span class="hljs-type">NULL</span> |    <span class="hljs-type">5</span> | <span class="hljs-type">NULL</span>                                               |<br><span class="hljs-type">|  1</span> | <span class="hljs-type">PRIMARY</span>     | <span class="hljs-type">p2</span>                   | <span class="hljs-type">ALL</span>  | <span class="hljs-type">NULL</span>          | <span class="hljs-type">NULL</span> | <span class="hljs-type">NULL</span>    | <span class="hljs-type">NULL</span> |    <span class="hljs-type">5</span> | <span class="hljs-type">Using</span> <span class="hljs-keyword">where</span>; Using join buffer (Block Nested Loop) |<br><span class="hljs-type">|  2</span> | <span class="hljs-type">DERIVED</span>     | <span class="hljs-type">product_cash_predict</span> | <span class="hljs-type">ALL</span>  | <span class="hljs-type">NULL</span>          | <span class="hljs-type">NULL</span> | <span class="hljs-type">NULL</span>    | <span class="hljs-type">NULL</span> |    <span class="hljs-type">5</span> | <span class="hljs-type">Using</span> temporary; Using filesort                    |<br><span class="hljs-type">+----+-------------+----------------------+------+---------------+------+---------+------+------+----------------------------------------------------+</span><br><span class="hljs-type"></span><br></code></pre></td></tr></table></figure>
+
+<h3 id="END"><a href="#END" class="headerlink" title="END"></a>END</h3><p>致谢：问题提出者，同时也是本文校对者@YH</p>
+<p>总结：虽然可能这只是SQL查询中的一个小知识点，但不经分析，直接使用，可能会给业务带来不必要的坑，正所谓磨刀不误砍柴工，对常用技术的深入理解应该成为一个技术人的日常习惯。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/wilson-blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-chain-item">数据库</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/mysql/">#mysql</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>关于mysql中max函数和groupby联合使用的坑</div>
+      <div>https://barnett617.github.io/wilson-blog/2017/10/31/关于mysql中max函数和groupby联合使用的坑/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 31, 2017</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2017/10/31/%E5%85%B3%E4%BA%8ESQL%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%88%86%E6%9E%90/" title="关于SQL性能评估的一些分析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">关于SQL性能评估的一些分析</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2017/10/17/%E4%BB%8E%E8%B0%B7%E6%AD%8C%E5%90%8D%E7%8C%BFAddy%20Osmani%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81%E4%B8%AD%E5%AD%A6%E5%88%B0%E7%9A%84%E4%B8%9C%E8%A5%BF/" title="从谷歌&#34;名猿&#34;Addy Osmani一行代码中学到的东西">
+                        <span class="hidden-mobile">从谷歌&#34;名猿&#34;Addy Osmani一行代码中学到的东西</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

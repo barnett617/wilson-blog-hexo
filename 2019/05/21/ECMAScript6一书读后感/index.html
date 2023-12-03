@@ -1,0 +1,667 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="关于阮一峰《ECMAScript6入门》一书的观感">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《ECMAScript6入门》读后感">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2019/05/21/ECMAScript6%E4%B8%80%E4%B9%A6%E8%AF%BB%E5%90%8E%E6%84%9F/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="关于阮一峰《ECMAScript6入门》一书的观感">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-05-21T21:21:28.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.939Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="es6">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>《ECMAScript6入门》读后感 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="《ECMAScript6入门》读后感"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-05-21 21:21" pubdate>
+          Tuesday, May 21, 2019 9:21 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          3 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">《ECMAScript6入门》读后感</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>关于阮一峰《ECMAScript6入门》一书的观感</p>
+<span id="more"></span>
+
+<p><a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/#docs/reference">原书链接</a></p>
+<h2 id="暮色"><a href="#暮色" class="headerlink" title="暮色"></a>暮色</h2><p>首先，抛开技术不谈（这可能有点过分，一本技术书籍的书评竟然和技术没多大关系，但是秉承“一千个读者有一千个哈姆雷特”的原则，建议各位亲自去拜读此书，找寻自己的收获），当然此评也不是广告，因为阮一峰根本不认识我，我只是在学习ES6过程中了解到此书。再说一下为什么此文不谈技术，而更多地谈的是我看此书的感受，因为就我长期对对于阮一峰的了解和关注，他本身也认为技术只是他生活的一部分，而不是全部，令他更开心的可能是他关于人生的感想整理成书——<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2019/01/survivor-preface.html">《未来世界的幸存者》</a>并出版。的确，我的人生规划也不会把技术看做多么重要的东西，它只是我当下阶段职业所需的技能，我会更多地从技术中抽取不同厉害的人或深刻或缜密的思维背后的哲学，用以加深我对这个世界的认知和理解。</p>
+<h2 id="新月"><a href="#新月" class="headerlink" title="新月"></a>新月</h2><p>阮一峰本身不是搞计算机的，他写的书却成为技术圈的参考教科书，至少在ES6这一个知识点上，被大家广为流传借鉴，可见学问存在“大同”效应，即大道至简。如果你是一个对于知识追求理解原理和本质的人，那么在学习了一部分知识后，自然而然会对其他未学的东西有着开导的作用。比如举个不一定恰当的例子，所谓举一反三是什么呢，在前端界我们都知道有三大主流框架React、Vue、Angular，那放给初学者可能就觉得要学的东西太多了，竟然要掌握三种框架，去不同公司，做不同项目可能都要用不同的技术框架，简直像个学不完的无底洞。但如果是有一定经验的人会怎么看呢——举一反三，三大框架本师出同门，都是用基础语言Javascript经过不同的包装形式封装而成，所以高级开发经常会告诉初级工程师要打牢基础，因为基础好了，无论出现什么样的新技术都万变不离其宗，这样的学习方法就是举一反三。吃透理解一个框架，对比地再去学习另外两个，就会发现有很多相似的地方和思想，假如学习一门新技能需要花费10天的话，这样学起来也就不是10x3&#x3D;30天了，而可能是10+9+8&#x3D;27天，甚至是10+7+3&#x3D;20天或者更少。因为伴随着你前面的积淀，再去学习新的东西，如果能利用上之前所学到的思想，大多情况下可能不会再用同样多的时间，而是越来越快，至少相近的知识是这样的。</p>
+<h2 id="月食"><a href="#月食" class="headerlink" title="月食"></a>月食</h2><p>那么回归ECMAScript 6 入门这本书为什么能够一直被奉为学习ES6入门的首推宝书呢，可能读过此书的人才能感受到。首先该书从2014年4月20号发生第一次github上的提交，在开源大家庭的共同维护下已经走过了五个年头。那为什么它会成为一本开源的书呢，作者自己当然有自己的想法，但我们也可以看到，其实阮一峰自己也经常提及自己不是计算机科班出身的事实，但这也不影响他能够写出帮助其他计算机专业的人学习的教材，也不妨碍他和技术圈的人合作产出，所以通过开源的方式，可以云集世界各地的高手一同校验、纠错，历史提交记录中不乏一些很有价值的帮助，比如“fix: <a target="_blank" rel="noopener" href="https://github.com/ruanyf/es6tutorial/commit/eba11dd8c79819d8af9aa4ff39e35a901c0449d9">IIFE 不一定是匿名</a>”、“<a target="_blank" rel="noopener" href="https://github.com/ruanyf/es6tutorial/commit/57fe8c62fc3c282df0dfb61156edeccc511a4815">修改示例代码使其更精确</a>”。另外我们可以从很多细节中感受出他对于这本书的认真态度和投入，比如最后一章所列举的参考链接，就如同专业论文的参考文献，既做到了对于参考内容的版权尊重，也帮助读者对于某些知识点的追本溯源提供了便捷的帮助。同时，这也给人一种学无止境的感觉，当你花一段时间拜读完此书时，认为自己已经做到了“ES6入门”，然而看到最后一章附注的参考链接，才发现你刚刚打开知识海洋的大门，你会发现自己学到的只是冰山一角，因为毕竟你读完这本书可能只要花费不到一个月的时间，而作者写成这本书却要花费五年的心血，甚至更多。所以说——学无止境，任何时候你感觉自己已经会了，或者对于某个领域或某个知识点完全理解了，都是在阻碍你后面更大的进步。</p>
+<h2 id="破晓"><a href="#破晓" class="headerlink" title="破晓"></a>破晓</h2><p>再说一个令人咂舌的细节点，就我写下此评的这一天（2019年05月21日17:27:02）打开该书的github地址，发现<a target="_blank" rel="noopener" href="https://github.com/ruanyf/es6tutorial/issues">issues</a>和<a target="_blank" rel="noopener" href="https://github.com/ruanyf/es6tutorial/pulls">pull requests</a>栏目的待审阅数双双为零，乍一看还以为是此书封版了，已经完善归档，不再需要更新，或是作者设置为禁止其他人继续提交改动了，但好像不是这样。点开近期close掉的issue，发现刚发生在3天前，同时最近一次的pull request处理于4天前，看到这个足以令人震惊。因为逛开源圈的都知道，茫茫众多开源项目，能够做到这样及时关注用户反馈，对开源提交做出处理，达到0待处理issue和0待处理pr的开源项目实在不多，这有时也是从维护积极性维度衡量一个开源项目质量高低的核心指标，有些开源项目一开始很好，比如框架或者工具类的项目，大家会当做现成轮子去使用到生产中，但时过境迁，当项目中所使用的开源工具出现问题，由于是开源项目，所以项目作者就是项目的售后和客服，遇到问题了，如果从网上找不到太大的帮助，八成会回到github的项目原地址来看看issue或者pr中别人有没有睬过同样的坑，当欣喜若狂地搜索到结果后，迎面而来的可能是一盆冷水，就是这种问题的确也很多人遇到过，但作者已经很久没有再维护此项目了，issue和pr中待处理的问题一堆，逐渐地人们可能会换用其他新的技术框架或方案，这样的开源项目便也就此论为昙花一现。与之不同的是，阮一峰能够持续地维护此书，的确值得钦佩。可能有人会说，这只是一本小书，文字内容为主，附以简单的代码片段说明，跟大的开源技术框架不能比，但我们这里看到的是态度，一个人对于小的事情能够报以认真严肃的态度，当面对大问题的时候大多能够从容应对，毕竟还有分治策略不是吗，大的问题大多可以拆解成多个小的问题的合集，继而分而治之。就好比一个人从刚入职场做着简单的岗位起，如果因为觉得基础岗位所做的事情简单无趣而不能认真对待，那么怎么能够得到晋升去做更大事情的机会呢，相反能够在基础岗位做出优异成绩的人大多稳步发展，逐步上升，成为厉害的人，这才是我们应该学习的态度。千里之行始于足下、高楼万丈平地起，这样的道理我们从小学时期就受过教育，只是很多人在成长的过程中都丢掉了。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/wilson-blog/categories/%E8%AF%BB%E4%B9%A6/" class="category-chain-item">读书</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/es6/">#es6</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>《ECMAScript6入门》读后感</div>
+      <div>https://barnett617.github.io/wilson-blog/2019/05/21/ECMAScript6一书读后感/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 21, 2019</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2019/10/17/%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E4%BA%BA%E9%80%82%E5%90%88%E5%81%9A%E6%8A%80%E6%9C%AF/" title="什么样的人适合做技术">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">什么样的人适合做技术</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2019/05/21/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%E5%AD%90%E6%A8%A1%E5%9D%97%E5%8A%9F%E8%83%BD%E5%A4%87%E4%BB%BD%E5%85%B3%E4%BA%8E%E4%B8%BB%E9%A2%98%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%9B%B4%E6%94%B9/" title="Git子模块功能使用实践">
+                        <span class="hidden-mobile">Git子模块功能使用实践</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

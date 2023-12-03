@@ -1,0 +1,931 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="为什么API设计很重要？本文翻译自Effective Java作者Joshua Bloch撰写的一篇关于API设计的分享">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何设计良好的API并且为什么这很重要（译）">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2018/01/16/%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E8%89%AF%E5%A5%BD%E7%9A%84API%E5%B9%B6%E4%B8%94%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E5%BE%88%E9%87%8D%E8%A6%81%EF%BC%88%E8%AF%91%EF%BC%89/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="为什么API设计很重要？本文翻译自Effective Java作者Joshua Bloch撰写的一篇关于API设计的分享">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-01-16T11:38:31.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.943Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="API">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>如何设计良好的API并且为什么这很重要（译） - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="如何设计良好的API并且为什么这很重要（译）"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-01-16 11:38" pubdate>
+          Tuesday, January 16, 2018 11:38 AM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">如何设计良好的API并且为什么这很重要（译）</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="为什么API设计很重要？"><a href="#为什么API设计很重要？" class="headerlink" title="为什么API设计很重要？"></a>为什么API设计很重要？</h3><p>本文翻译自Effective Java作者Joshua Bloch撰写的一篇关于API设计的分享</p>
+<span id="more"></span>
+
+<h4 id="API可以是公司最大的资产之一"><a href="#API可以是公司最大的资产之一" class="headerlink" title="API可以是公司最大的资产之一"></a>API可以是公司最大的资产之一</h4><ul>
+<li>客户投入巨资：购买、撰写、学习（售前一系列培训）</li>
+<li>停止使用API导致的花费令人望而却步（如果不使用API可能要花费更多）</li>
+<li>成功的公共API赢得客户</li>
+</ul>
+<h4 id="也可以成为公司最大的负债之一"><a href="#也可以成为公司最大的负债之一" class="headerlink" title="也可以成为公司最大的负债之一"></a>也可以成为公司最大的负债之一</h4><ul>
+<li>糟糕的APIs将导致无休止的电话技术支持（需要接听很多来自客户的反映）</li>
+</ul>
+<h4 id="公共的APIs是永久的——一次去做正确事情的机会"><a href="#公共的APIs是永久的——一次去做正确事情的机会" class="headerlink" title="公共的APIs是永久的——一次去做正确事情的机会"></a>公共的APIs是永久的——一次去做正确事情的机会</h4><h3 id="为什么API设计对于你来说很重要"><a href="#为什么API设计对于你来说很重要" class="headerlink" title="为什么API设计对于你来说很重要"></a>为什么API设计对于你来说很重要</h3><h4 id="如果你编码，你就是一个API的设计者"><a href="#如果你编码，你就是一个API的设计者" class="headerlink" title="如果你编码，你就是一个API的设计者"></a>如果你编码，你就是一个API的设计者</h4><ul>
+<li>良好的代码应该是模块化的——每一个模块都有一个API</li>
+<li>有用的模块往往被重用</li>
+</ul>
+<h4 id="对于API方面的思考将提高代码的质量"><a href="#对于API方面的思考将提高代码的质量" class="headerlink" title="对于API方面的思考将提高代码的质量"></a>对于API方面的思考将提高代码的质量</h4><h3 id="好的API所具备的特征"><a href="#好的API所具备的特征" class="headerlink" title="好的API所具备的特征"></a>好的API所具备的特征</h3><ul>
+<li>易于学习</li>
+<li>易于使用，甚至无需任何文档</li>
+<li>不易误用</li>
+<li>易于阅读并且对所使用的代码部分易于维护</li>
+<li>足够强大以满足需求</li>
+<li>易于拓展</li>
+<li>适用于大众</li>
+</ul>
+<h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><ul>
+<li>API设计的过程</li>
+<li>一般原则</li>
+<li>类设计</li>
+<li>方法设计</li>
+<li>异常设计</li>
+<li>API重构设计</li>
+</ul>
+<h2 id="I-API设计的过程"><a href="#I-API设计的过程" class="headerlink" title="I API设计的过程"></a>I API设计的过程</h2><h3 id="收集需求——以一种健康的程度怀疑"><a href="#收集需求——以一种健康的程度怀疑" class="headerlink" title="收集需求——以一种健康的程度怀疑"></a>收集需求——以一种健康的程度怀疑</h3><h4 id="通常你会得到建议的解决方法作为替代方案"><a href="#通常你会得到建议的解决方法作为替代方案" class="headerlink" title="通常你会得到建议的解决方法作为替代方案"></a>通常你会得到建议的解决方法作为替代方案</h4><ul>
+<li>可能存在更好的解决方案</li>
+</ul>
+<h4 id="你的工作是去提取出真正的需求"><a href="#你的工作是去提取出真正的需求" class="headerlink" title="你的工作是去提取出真正的需求"></a>你的工作是去提取出真正的需求</h4><ul>
+<li>应采取用例的形式</li>
+<li>可以更容易、更有意义地建立更普遍的东西</li>
+</ul>
+<h4 id="从简短的规范页开始比较理想"><a href="#从简短的规范页开始比较理想" class="headerlink" title="从简短的规范页开始比较理想"></a>从简短的规范页开始比较理想</h4><ul>
+<li>在这个阶段，敏捷胜过完整性</li>
+<li>和尽可能多的人谈（原文：Bounce spec off as many people as possible）<br>  倾听他们的输入并认真对待</li>
+<li>如果你保持规范简短，那么将易于修改</li>
+<li>充分自信<br>  这涉及到编码时也很必要</li>
+</ul>
+<h3 id="尽早写给你的API"><a href="#尽早写给你的API" class="headerlink" title="尽早写给你的API"></a>尽早写给你的API</h3><h4 id="以下应开始于在你实现API之前"><a href="#以下应开始于在你实现API之前" class="headerlink" title="以下应开始于在你实现API之前"></a>以下应开始于在你实现API之前</h4><ul>
+<li>从你将扔掉的实现中拯救你</li>
+</ul>
+<h4 id="以下应开始于你正确指定出API之前"><a href="#以下应开始于你正确指定出API之前" class="headerlink" title="以下应开始于你正确指定出API之前"></a>以下应开始于你正确指定出API之前</h4><ul>
+<li>从撰写你将扔掉的规范中拯救你</li>
+</ul>
+<h4 id="继续写API因为它充实你"><a href="#继续写API因为它充实你" class="headerlink" title="继续写API因为它充实你"></a>继续写API因为它充实你</h4><ul>
+<li>避免令人讨厌的惊喜</li>
+<li>代码作为例子、单元测试而存在</li>
+</ul>
+<h3 id="关于SPI的内容甚至更重要"><a href="#关于SPI的内容甚至更重要" class="headerlink" title="关于SPI的内容甚至更重要"></a>关于SPI的内容甚至更重要</h3><h4 id="服务提供接口（Service-Provider-Interface-SPI）"><a href="#服务提供接口（Service-Provider-Interface-SPI）" class="headerlink" title="服务提供接口（Service Provider Interface, SPI）"></a>服务提供接口（Service Provider Interface, SPI）</h4><ul>
+<li>插件式接口使得实现多样性</li>
+<li>例如：Java加密拓展接口（Java Cryptography Extension, JCE）</li>
+</ul>
+<h4 id="在发布之前编写多个插件"><a href="#在发布之前编写多个插件" class="headerlink" title="在发布之前编写多个插件"></a>在发布之前编写多个插件</h4><ul>
+<li>如果你只写一个，它可能不支持另一种情况</li>
+<li>如果你写两个，它会很难支持更多</li>
+<li>如果你写三个(原文three应表示多个?)，它会良好工作</li>
+</ul>
+<h4 id="Will-Tracz称之为“三项法则”"><a href="#Will-Tracz称之为“三项法则”" class="headerlink" title="Will Tracz称之为“三项法则”"></a>Will Tracz称之为“三项法则”</h4><p>（曾经以为程序销售员Addision-Wesley,1995的自白）</p>
+<h3 id="保持现实的期望"><a href="#保持现实的期望" class="headerlink" title="保持现实的期望"></a>保持现实的期望</h3><h4 id="大多数API设计的过约束"><a href="#大多数API设计的过约束" class="headerlink" title="大多数API设计的过约束"></a>大多数API设计的过约束</h4><ul>
+<li>你不必取悦每一个人</li>
+<li>旨在平等地使每个人都感到高兴</li>
+</ul>
+<h4 id="期望犯错"><a href="#期望犯错" class="headerlink" title="期望犯错"></a>期望犯错</h4><ul>
+<li>几年真实世界的使用将冲洗它们</li>
+<li>期望发展API</li>
+</ul>
+<h2 id="II-一般原则"><a href="#II-一般原则" class="headerlink" title="II 一般原则"></a>II 一般原则</h2><h3 id="API应该只做一件事并把它做好"><a href="#API应该只做一件事并把它做好" class="headerlink" title="API应该只做一件事并把它做好"></a>API应该只做一件事并把它做好</h3><h4 id="功能应该易于解释"><a href="#功能应该易于解释" class="headerlink" title="功能应该易于解释"></a>功能应该易于解释</h4><ul>
+<li>如果很难命名API，那它通常是一个坏讯号</li>
+<li>良好的命名会驱动开发</li>
+<li>要易于分割和合并</li>
+</ul>
+<h4 id="API应尽可能的小但不能再小"><a href="#API应尽可能的小但不能再小" class="headerlink" title="API应尽可能的小但不能再小"></a>API应尽可能的小但不能再小</h4><h4 id="API应该满足它的初始需求"><a href="#API应该满足它的初始需求" class="headerlink" title="API应该满足它的初始需求"></a>API应该满足它的初始需求</h4><h4 id="当存疑时就抛弃掉"><a href="#当存疑时就抛弃掉" class="headerlink" title="当存疑时就抛弃掉"></a>当存疑时就抛弃掉</h4><ul>
+<li>函数、类、方法、参数等等</li>
+<li>你总可以加些什么，但你永远不能去掉什么</li>
+</ul>
+<h4 id="概念的重量比实体块的重量更重要"><a href="#概念的重量比实体块的重量更重要" class="headerlink" title="概念的重量比实体块的重量更重要"></a>概念的重量比实体块的重量更重要</h4><h4 id="寻找一个好的力量-重量比率（此处应指API的作用和轻重之比）"><a href="#寻找一个好的力量-重量比率（此处应指API的作用和轻重之比）" class="headerlink" title="寻找一个好的力量&#x2F;重量比率（此处应指API的作用和轻重之比）"></a>寻找一个好的力量&#x2F;重量比率（此处应指API的作用和轻重之比）</h4><h3 id="实现不应该影响API"><a href="#实现不应该影响API" class="headerlink" title="实现不应该影响API"></a>实现不应该影响API</h3><h3 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h3><ul>
+<li>迷惑用户</li>
+<li>禁止掉改变API实现的自由</li>
+</ul>
+<h4 id="意识到实现细节是什么"><a href="#意识到实现细节是什么" class="headerlink" title="意识到实现细节是什么"></a>意识到实现细节是什么</h4><ul>
+<li>不要过度指定方法的行为</li>
+<li>例如：不要指定散列函数</li>
+<li>所有的可调整参数都是可疑的</li>
+</ul>
+<h4 id="别让实现细节“泄露”进API"><a href="#别让实现细节“泄露”进API" class="headerlink" title="别让实现细节“泄露”进API"></a>别让实现细节“泄露”进API</h4><ul>
+<li>磁盘上的格式和线上的格式例外</li>
+</ul>
+<h3 id="最小化对于所有的可达性"><a href="#最小化对于所有的可达性" class="headerlink" title="最小化对于所有的可达性"></a>最小化对于所有的可达性</h3><h4 id="将类和方法指定得尽可能私有"><a href="#将类和方法指定得尽可能私有" class="headerlink" title="将类和方法指定得尽可能私有"></a>将类和方法指定得尽可能私有</h4><h4 id="公共类不应该有公共域（除了常量）"><a href="#公共类不应该有公共域（除了常量）" class="headerlink" title="公共类不应该有公共域（除了常量）"></a>公共类不应该有公共域（除了常量）</h4><h4 id="这最大化了信息隐藏"><a href="#这最大化了信息隐藏" class="headerlink" title="这最大化了信息隐藏"></a>这最大化了信息隐藏</h4><h4 id="允许模块被独立使用、理解、构建、测试、调试"><a href="#允许模块被独立使用、理解、构建、测试、调试" class="headerlink" title="允许模块被独立使用、理解、构建、测试、调试"></a>允许模块被独立使用、理解、构建、测试、调试</h4><h3 id="给API命名的事务相当于一种小语言"><a href="#给API命名的事务相当于一种小语言" class="headerlink" title="给API命名的事务相当于一种小语言"></a>给API命名的事务相当于一种小语言</h3><h4 id="名字应大部分不言自明（自解释的）"><a href="#名字应大部分不言自明（自解释的）" class="headerlink" title="名字应大部分不言自明（自解释的）"></a>名字应大部分不言自明（自解释的）</h4><ul>
+<li>避免模糊的缩写</li>
+</ul>
+<h4 id="保持一致——同样的词应表达同样的意思"><a href="#保持一致——同样的词应表达同样的意思" class="headerlink" title="保持一致——同样的词应表达同样的意思"></a>保持一致——同样的词应表达同样的意思</h4><ul>
+<li>贯穿API的整个内容（包括不同平台上的该API）</li>
+</ul>
+<h4 id="定期争取对称"><a href="#定期争取对称" class="headerlink" title="定期争取对称"></a>定期争取对称</h4><h4 id="代码应该读起来像散文"><a href="#代码应该读起来像散文" class="headerlink" title="代码应该读起来像散文"></a>代码应该读起来像散文</h4><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scss">if (car.speed() &gt; <span class="hljs-number">2</span> * SPEED_LIMIT)<br>		<span class="hljs-built_in">generateAlert</span>(&quot;Watch out for cops!&quot;);<br></code></pre></td></tr></table></figure>
+
+<h3 id="文档相关事宜"><a href="#文档相关事宜" class="headerlink" title="文档相关事宜"></a>文档相关事宜</h3><blockquote>
+<p>重用是一件说起来容易做起来难的事。具体做起来既需要好的设计又需要良好的文档。即使我们看到好的设计，我们仍很少能看到没有好的文档组件被重用。</p>
+</blockquote>
+<blockquote>
+<p>D.L.Parnas, _Software Aging. Proceedings of 16th International Conference Software Engineering, 1994</p>
+</blockquote>
+<h3 id="Document-Religiously"><a href="#Document-Religiously" class="headerlink" title="Document Religiously"></a>Document Religiously</h3><h4 id="为每一个类、接口、方法、构造器、参数和异常制作文档（注释）"><a href="#为每一个类、接口、方法、构造器、参数和异常制作文档（注释）" class="headerlink" title="为每一个类、接口、方法、构造器、参数和异常制作文档（注释）"></a>为每一个类、接口、方法、构造器、参数和异常制作文档（注释）</h4><ul>
+<li>类：实例所表示的东西</li>
+<li>方法：方法和客户之间的契约<ul>
+<li>先决条件、后置条件、副作用</li>
+</ul>
+</li>
+<li>参数：提示性的单位、格式、所有权</li>
+</ul>
+<h4 id="文档要非常认真地陈述"><a href="#文档要非常认真地陈述" class="headerlink" title="文档要非常认真地陈述"></a>文档要非常认真地陈述</h4><h3 id="考虑API设计决定的性能后果"><a href="#考虑API设计决定的性能后果" class="headerlink" title="考虑API设计决定的性能后果"></a>考虑API设计决定的性能后果</h3><h4 id="糟糕的决定会限制性能"><a href="#糟糕的决定会限制性能" class="headerlink" title="糟糕的决定会限制性能"></a>糟糕的决定会限制性能</h4><ul>
+<li>让类型易变</li>
+<li>提供构造器以取代静态工厂</li>
+<li>使用实现类型取代接口</li>
+</ul>
+<h4 id="不要扭曲API来获得性能"><a href="#不要扭曲API来获得性能" class="headerlink" title="不要扭曲API来获得性能"></a>不要扭曲API来获得性能</h4><ul>
+<li>底层性能问题会被修复，但头疼的事会一直伴随着你</li>
+<li>良好的设计通常与良好的性能相吻合</li>
+</ul>
+<h4 id="API设计决策在性能方面的影响是真实并且永久的"><a href="#API设计决策在性能方面的影响是真实并且永久的" class="headerlink" title="API设计决策在性能方面的影响是真实并且永久的"></a>API设计决策在性能方面的影响是真实并且永久的</h4><ul>
+<li>Component.getSize() returns Dimension</li>
+<li>尺寸是易变的</li>
+<li>每一个getSize调用都必然分配Dimension</li>
+<li>将导致非常多不必要的对象分配</li>
+<li>在1.2版本增加替代品，老的客户端代码仍然慢（在新的版本找到解决方案，但不能解决旧代码的性能问题）</li>
+</ul>
+<h3 id="API必须和平台和平共存"><a href="#API必须和平台和平共存" class="headerlink" title="API必须和平台和平共存"></a>API必须和平台和平共存</h3><h4 id="做习惯性的事"><a href="#做习惯性的事" class="headerlink" title="做习惯性的事"></a>做习惯性的事</h4><ul>
+<li>遵守标准的命名约定</li>
+<li>避免过时的参数和返回类型</li>
+<li>模仿核心APIs和语言中的模式</li>
+</ul>
+<h4 id="利用API友好功能"><a href="#利用API友好功能" class="headerlink" title="利用API友好功能"></a>利用API友好功能</h4><ul>
+<li>泛型、可变参数、枚举、默认参数</li>
+</ul>
+<h4 id="了解并避免API陷阱"><a href="#了解并避免API陷阱" class="headerlink" title="了解并避免API陷阱"></a>了解并避免API陷阱</h4><ul>
+<li>常量（Finalizers）、公共静态常量数组</li>
+</ul>
+<h2 id="III-类设计"><a href="#III-类设计" class="headerlink" title="III 类设计"></a>III 类设计</h2><h3 id="最小化可变性"><a href="#最小化可变性" class="headerlink" title="最小化可变性"></a>最小化可变性</h3><h4 id="类应该是不可变的除非有一个好的理由不去这么做"><a href="#类应该是不可变的除非有一个好的理由不去这么做" class="headerlink" title="类应该是不可变的除非有一个好的理由不去这么做"></a>类应该是不可变的除非有一个好的理由不去这么做</h4><ul>
+<li>优点： 简洁、线程安全、可复用</li>
+<li>缺点： 对于每个值都分离了对象</li>
+</ul>
+<h4 id="如果可变，保证状态空间尽可能小并被良好定义"><a href="#如果可变，保证状态空间尽可能小并被良好定义" class="headerlink" title="如果可变，保证状态空间尽可能小并被良好定义"></a>如果可变，保证状态空间尽可能小并被良好定义</h4><ul>
+<li>搞清何时去调用哪一个方法是合法的</li>
+</ul>
+<h4 id="仅在合理的地方建子类"><a href="#仅在合理的地方建子类" class="headerlink" title="仅在合理的地方建子类"></a>仅在合理的地方建子类</h4><h5 id="建子类按时可替代性（Liskov）"><a href="#建子类按时可替代性（Liskov）" class="headerlink" title="建子类按时可替代性（Liskov）"></a>建子类按时可替代性（Liskov）</h5><ul>
+<li>子类仅当is-a关系时存在</li>
+<li>否则，使用组合</li>
+</ul>
+<h5 id="公共类不应该再包含其他公共子类，以保证实现简单"><a href="#公共类不应该再包含其他公共子类，以保证实现简单" class="headerlink" title="公共类不应该再包含其他公共子类，以保证实现简单"></a>公共类不应该再包含其他公共子类，以保证实现简单</h5><p>反例： Properties extends Hashtable<br>             Stack extends Vector</p>
+<p>正例： Set extends Collection</p>
+<h3 id="为继承做设计和文档否则禁止"><a href="#为继承做设计和文档否则禁止" class="headerlink" title="为继承做设计和文档否则禁止"></a>为继承做设计和文档否则禁止</h3><h4 id="继承违反封装（Snyder-86）"><a href="#继承违反封装（Snyder-86）" class="headerlink" title="继承违反封装（Snyder, 86）"></a>继承违反封装（Snyder, 86）</h4><ul>
+<li>子类对于父类的实现细节敏感</li>
+</ul>
+<h4 id="如果你允许建子类，那么就文档自用"><a href="#如果你允许建子类，那么就文档自用" class="headerlink" title="如果你允许建子类，那么就文档自用"></a>如果你允许建子类，那么就文档自用</h4><ul>
+<li>方法如何相互使用</li>
+</ul>
+<h4 id="保守策略：所有具体的类都不可变（final）"><a href="#保守策略：所有具体的类都不可变（final）" class="headerlink" title="保守策略：所有具体的类都不可变（final）"></a>保守策略：所有具体的类都不可变（final）</h4><p>反例：J2SE包中许多的具体类<br>正例：AbstractSet, AbstractMap</p>
+<h2 id="IV-方法设计"><a href="#IV-方法设计" class="headerlink" title="IV 方法设计"></a>IV 方法设计</h2><h3 id="别让客户端把模板能做的事都做了"><a href="#别让客户端把模板能做的事都做了" class="headerlink" title="别让客户端把模板能做的事都做了"></a>别让客户端把模板能做的事都做了</h3><h4 id="减少对样板代码的需要"><a href="#减少对样板代码的需要" class="headerlink" title="减少对样板代码的需要"></a>减少对样板代码的需要</h4><ul>
+<li>通常经cut-and-paste完成</li>
+<li>丑陋、恼人并且易错</li>
+</ul>
+<h3 id="不要违反最小原则"><a href="#不要违反最小原则" class="headerlink" title="不要违反最小原则"></a>不要违反最小原则</h3><h4 id="API的使用者不应该对于某些行为感到惊讶"><a href="#API的使用者不应该对于某些行为感到惊讶" class="headerlink" title="API的使用者不应该对于某些行为感到惊讶"></a>API的使用者不应该对于某些行为感到惊讶</h4><ul>
+<li>值得额外的实现努力</li>
+<li>这甚至值得降低性能</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-symbol">Thread</span> <span class="hljs-symbol">implements</span> <span class="hljs-symbol">Runnable</span> &#123;<br>		<span class="hljs-comment">// Tests whether current thread has been interrupted</span><br>		<span class="hljs-comment">// Clears the interrupted status of current thread.</span><br>		<span class="hljs-keyword">public</span> static <span class="hljs-built_in">bool</span>ean <span class="hljs-built_in">int</span>errupted();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面的第二行注释所述的功能就做了额外的没必要的努力，违背了最小原则</p>
+<h3 id="当错误发生尽可能快地产生错误报告"><a href="#当错误发生尽可能快地产生错误报告" class="headerlink" title="当错误发生尽可能快地产生错误报告"></a>当错误发生尽可能快地产生错误报告</h3><h4 id="编译时报错最佳——静态拼写、generics"><a href="#编译时报错最佳——静态拼写、generics" class="headerlink" title="编译时报错最佳——静态拼写、generics"></a>编译时报错最佳——静态拼写、generics</h4><h4 id="在运行时，第一个方法调用失败为最佳"><a href="#在运行时，第一个方法调用失败为最佳" class="headerlink" title="在运行时，第一个方法调用失败为最佳"></a>在运行时，第一个方法调用失败为最佳</h4><ul>
+<li>方法应该是原子性失败（failure-atomic）</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-comment">// A Properties instance maps strings to strings</span><br>public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Properties</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Hashtable</span> </span>&#123;<br>		public <span class="hljs-type">Object</span> put(<span class="hljs-type">Object</span> key, <span class="hljs-type">Object</span> value);<br><br>		<span class="hljs-comment">// Throws ClassCastException if this Properties</span><br>		<span class="hljs-comment">// contains any keys or values that are not strings</span><br>		public void save(<span class="hljs-type">OutputStream</span> out, <span class="hljs-type">String</span> comments);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="为所有的数据访问提供字符串的形式的编程接口"><a href="#为所有的数据访问提供字符串的形式的编程接口" class="headerlink" title="为所有的数据访问提供字符串的形式的编程接口"></a>为所有的数据访问提供字符串的形式的编程接口</h3><h4 id="否则客户端需要做字符串转换"><a href="#否则客户端需要做字符串转换" class="headerlink" title="否则客户端需要做字符串转换"></a>否则客户端需要做字符串转换</h4><ul>
+<li>对于客户端来说很痛苦</li>
+<li>更糟糕的是，turns strings format into de facto API（无力翻译orz）</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Throwable</span> &#123;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printStackTrace</span>(<span class="hljs-params">PrintStream s</span>)</span>;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> StackTraceElement[] <span class="hljs-title">getStackTrace</span>()</span>;		<span class="hljs-comment">// Since 1.4</span><br>&#125;<br><br><span class="hljs-keyword">public</span> final <span class="hljs-keyword">class</span> <span class="hljs-title">StackTraceElement</span> &#123;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getFilaName</span>()</span>;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> <span class="hljs-title">getLineNumber</span>()</span>;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getClassName</span>()</span>;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getMethodName</span>()</span>;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> boolean <span class="hljs-title">isNativeMethod</span>()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="小心重载"><a href="#小心重载" class="headerlink" title="小心重载"></a>小心重载</h3><h4 id="避免模糊的重载"><a href="#避免模糊的重载" class="headerlink" title="避免模糊的重载"></a>避免模糊的重载</h4><ul>
+<li>多个重载适用于相同的情况</li>
+<li>保守策略：没有两个重载拥有同样多的参数个数</li>
+</ul>
+<h4 id="仅仅是因为你可以但不意味着你应当"><a href="#仅仅是因为你可以但不意味着你应当" class="headerlink" title="仅仅是因为你可以但不意味着你应当"></a>仅仅是因为你可以但不意味着你应当</h4><ul>
+<li>通常最好使用不同的名字</li>
+</ul>
+<h4 id="如果你必须提供模糊的重载，请确保相同的参数拥有相同的行为"><a href="#如果你必须提供模糊的重载，请确保相同的参数拥有相同的行为" class="headerlink" title="如果你必须提供模糊的重载，请确保相同的参数拥有相同的行为"></a>如果你必须提供模糊的重载，请确保相同的参数拥有相同的行为</h4><p>反例:</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TreeSet</span><span class="hljs-params">(Collection c)</span></span>;		<span class="hljs-comment">// Ignores order</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TreeSet</span><span class="hljs-params">(SortedSet s)</span></span>;		<span class="hljs-comment">// Respects order</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="使用恰当的参数和返回类型"><a href="#使用恰当的参数和返回类型" class="headerlink" title="使用恰当的参数和返回类型"></a>使用恰当的参数和返回类型</h3><h4 id="赞成接口类型作为类的输入"><a href="#赞成接口类型作为类的输入" class="headerlink" title="赞成接口类型作为类的输入"></a>赞成接口类型作为类的输入</h4><ul>
+<li>提供灵活性、性能</li>
+</ul>
+<h4 id="使用最具体的可能的输入参数类型"><a href="#使用最具体的可能的输入参数类型" class="headerlink" title="使用最具体的可能的输入参数类型"></a>使用最具体的可能的输入参数类型</h4><ul>
+<li>把运行时错误提前到编译时</li>
+</ul>
+<h4 id="如果存在更好的类型请别用String类型"><a href="#如果存在更好的类型请别用String类型" class="headerlink" title="如果存在更好的类型请别用String类型"></a>如果存在更好的类型请别用String类型</h4><ul>
+<li>Strings是繁琐的、易错的并且慢的</li>
+</ul>
+<h4 id="不要将浮点数用于货币值"><a href="#不要将浮点数用于货币值" class="headerlink" title="不要将浮点数用于货币值"></a>不要将浮点数用于货币值</h4><ul>
+<li>二进制浮点会导致不精确的结果</li>
+</ul>
+<h4 id="使用double-64位-优于float-32位"><a href="#使用double-64位-优于float-32位" class="headerlink" title="使用double(64位)优于float(32位)"></a>使用double(64位)优于float(32位)</h4><ul>
+<li>精确度损失是真实的，性能损失是可忽略的</li>
+</ul>
+<h3 id="在方法之间使用一致的参数顺序"><a href="#在方法之间使用一致的参数顺序" class="headerlink" title="在方法之间使用一致的参数顺序"></a>在方法之间使用一致的参数顺序</h3><h4 id="如果参数类型相同，尤其重要"><a href="#如果参数类型相同，尤其重要" class="headerlink" title="如果参数类型相同，尤其重要"></a>如果参数类型相同，尤其重要</h4><p>反例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">char</span> *<span class="hljs-title">strcpy</span> <span class="hljs-params">(<span class="hljs-type">char</span> *dest, <span class="hljs-type">char</span> *src)</span></span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">bcopy</span> 	 <span class="hljs-params">(<span class="hljs-type">void</span> *src, <span class="hljs-type">void</span> *dst, <span class="hljs-type">int</span> n)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>正例：<br>java.util.Collections——第一个参数总被收集来用于修改或查询</p>
+<p>java.util.concurrent——time总被指定为long delay, TimeUnit unit</p>
+<h3 id="避免长参数列表"><a href="#避免长参数列表" class="headerlink" title="避免长参数列表"></a>避免长参数列表</h3><h4 id="三个或更少参数是比较理想的"><a href="#三个或更少参数是比较理想的" class="headerlink" title="三个或更少参数是比较理想的"></a>三个或更少参数是比较理想的</h4><ul>
+<li>如果存在更多，用户则需参阅文档</li>
+</ul>
+<h4 id="相同类型的长参数列表是有害的"><a href="#相同类型的长参数列表是有害的" class="headerlink" title="相同类型的长参数列表是有害的"></a>相同类型的长参数列表是有害的</h4><ul>
+<li>程序员会错误地转置参数</li>
+<li>程序仍会编译、运行，但行为不端</li>
+</ul>
+<h4 id="两种缩短参数列表的技巧"><a href="#两种缩短参数列表的技巧" class="headerlink" title="两种缩短参数列表的技巧"></a>两种缩短参数列表的技巧</h4><ul>
+<li>拆分方法</li>
+<li>创建辅助类来保存参数</li>
+</ul>
+<p>反例：</p>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs hsp"><span class="hljs-comment">// Eleven parameters including four consecutive ints</span><br><span class="hljs-keyword">HWND</span> CreateWindow(LPCTSTR lpClassName, LPCTSTR lpWindowName,<br>			DWORD dwStyle, <span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> nWidth, <span class="hljs-keyword">int</span> nHeight,<br>			<span class="hljs-keyword">HWND</span> hWndParent, HMENU hMenu, <span class="hljs-keyword">HINSTANCE</span> <span class="hljs-keyword">hInstance</span>,<br>			LPVOID lpParam)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="避免返回值需要异常处理"><a href="#避免返回值需要异常处理" class="headerlink" title="避免返回值需要异常处理"></a>避免返回值需要异常处理</h3><h4 id="返回零长度数组或空集合而非null"><a href="#返回零长度数组或空集合而非null" class="headerlink" title="返回零长度数组或空集合而非null"></a>返回零长度数组或空集合而非null</h4><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs aspectj"><span class="hljs-keyword">package</span> java.awt.image;<br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">BufferedImageOp</span> </span>&#123;<br>		<span class="hljs-comment">// Returns the rendering hints for this operation,</span><br>		<span class="hljs-comment">// or null if no hints have been set.</span><br>		<span class="hljs-keyword">public</span> <span class="hljs-function">RenderingHints <span class="hljs-title">getRenderingHints</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="V-异常设计"><a href="#V-异常设计" class="headerlink" title="V.异常设计"></a>V.异常设计</h2><h3 id="抛出异常以表明异常的条件"><a href="#抛出异常以表明异常的条件" class="headerlink" title="抛出异常以表明异常的条件"></a>抛出异常以表明异常的条件</h3><h4 id="不要强迫客户端去使用异常来控制流"><a href="#不要强迫客户端去使用异常来控制流" class="headerlink" title="不要强迫客户端去使用异常来控制流"></a>不要强迫客户端去使用异常来控制流</h4><p>反例:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">private</span> <span class="hljs-built_in">byte</span>[] a = <span class="hljs-keyword">new</span> <span class="hljs-built_in">byte</span>[BUF_SIZE];<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">processBuffer</span> (<span class="hljs-params">ByteBuffer buf</span>)</span> &#123;<br>	<span class="hljs-keyword">try</span> &#123;<br>		<span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>			buf.<span class="hljs-keyword">get</span>(a);<br>			processBytes(tmp, BUF_SIZE);<br>		&#125;<br>	&#125; <span class="hljs-keyword">catch</span> (BufferUnderflowException e) &#123;<br>		<span class="hljs-built_in">int</span> remaining = buf.remaining();<br>		buf.<span class="hljs-keyword">get</span>(a, <span class="hljs-number">0</span>, remaning);<br>		processBytes(bufArray, remaining);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="反过来，不要安静的失败"><a href="#反过来，不要安静的失败" class="headerlink" title="反过来，不要安静的失败"></a>反过来，不要安静的失败</h4><p>例如：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">ThreadGroup<span class="hljs-selector-class">.enumerate</span>(Thread<span class="hljs-selector-attr">[]</span> list)<br></code></pre></td></tr></table></figure>
+
+<h3 id="赞成未经检查的异常"><a href="#赞成未经检查的异常" class="headerlink" title="赞成未经检查的异常"></a>赞成未经检查的异常</h3><h4 id="已检查——客户端必须采取修复措施"><a href="#已检查——客户端必须采取修复措施" class="headerlink" title="已检查——客户端必须采取修复措施"></a>已检查——客户端必须采取修复措施</h4><h4 id="未检查——程序报错"><a href="#未检查——程序报错" class="headerlink" title="未检查——程序报错"></a>未检查——程序报错</h4><h4 id="过度使用已检查的异常会导致样板化"><a href="#过度使用已检查的异常会导致样板化" class="headerlink" title="过度使用已检查的异常会导致样板化"></a>过度使用已检查的异常会导致样板化</h4><p>反例：</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-keyword">try</span> &#123;<br>		Foo f = (Foo) <span class="hljs-keyword">super</span>.clone();<br>		...<br>&#125; <span class="hljs-keyword">catch</span> (CloneNotSupportedException e) &#123;<br>		<span class="hljs-comment">// This can&#x27;t happen, since we&#x27;re Cloneable</span><br>		<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">AssertionError</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="在异常中包含错误捕获信息"><a href="#在异常中包含错误捕获信息" class="headerlink" title="在异常中包含错误捕获信息"></a>在异常中包含错误捕获信息</h3><h4 id="允许诊断、修复或恢复"><a href="#允许诊断、修复或恢复" class="headerlink" title="允许诊断、修复或恢复"></a>允许诊断、修复或恢复</h4><h4 id="对于未检查的异常，信息就足够了"><a href="#对于未检查的异常，信息就足够了" class="headerlink" title="对于未检查的异常，信息就足够了"></a>对于未检查的异常，信息就足够了</h4><h4 id="对于已检查的异常，提供访问者"><a href="#对于已检查的异常，提供访问者" class="headerlink" title="对于已检查的异常，提供访问者"></a>对于已检查的异常，提供访问者</h4><h2 id="VI-重构API设计"><a href="#VI-重构API设计" class="headerlink" title="VI 重构API设计"></a>VI 重构API设计</h2><h3 id="向量的子列表操作"><a href="#向量的子列表操作" class="headerlink" title="向量的子列表操作"></a>向量的子列表操作</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-built_in">public</span> <span class="hljs-keyword">class</span> Vector &#123;<br>		<span class="hljs-built_in">public</span> <span class="hljs-type">int</span> indexOf(<span class="hljs-keyword">Object</span> elem, <span class="hljs-type">int</span> <span class="hljs-keyword">index</span>);<br>		<span class="hljs-built_in">public</span> <span class="hljs-type">int</span> lastIndexOf(<span class="hljs-keyword">Object</span> elem, <span class="hljs-type">int</span> <span class="hljs-keyword">index</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="不够强大——只支持搜索"><a href="#不够强大——只支持搜索" class="headerlink" title="不够强大——只支持搜索"></a>不够强大——只支持搜索</h4><h4 id="没有文档很难使用"><a href="#没有文档很难使用" class="headerlink" title="没有文档很难使用"></a>没有文档很难使用</h4><h3 id="字列表操作重构"><a href="#字列表操作重构" class="headerlink" title="字列表操作重构"></a>字列表操作重构</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-symbol">List</span> &#123;<br>		List subList(<span class="hljs-built_in">int</span> fromIndex, <span class="hljs-built_in">int</span> toIndex);<br>		...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="非常强大——支持所有的操作"><a href="#非常强大——支持所有的操作" class="headerlink" title="非常强大——支持所有的操作"></a>非常强大——支持所有的操作</h4><h4 id="接口的使用减少了概念的重量"><a href="#接口的使用减少了概念的重量" class="headerlink" title="接口的使用减少了概念的重量"></a>接口的使用减少了概念的重量</h4><ul>
+<li>高功率重量比</li>
+</ul>
+<h4 id="没有文档也易于使用"><a href="#没有文档也易于使用" class="headerlink" title="没有文档也易于使用"></a>没有文档也易于使用</h4><h3 id="Thread-local变量"><a href="#Thread-local变量" class="headerlink" title="Thread-local变量"></a>Thread-local变量</h3><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs processing"><span class="hljs-comment">// Broken - inappropriate use of String as capability.</span><br><span class="hljs-comment">// Keys constitue a shared global namespace.</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ThreadLocal</span> &#123;<br>		<span class="hljs-keyword">private</span> <span class="hljs-title function_">ThreadLocal</span>() &#123; &#125;		<span class="hljs-comment">// Non-instantiable</span><br><br>		<span class="hljs-comment">// Sets current thread&#x27;s value for named variable.</span><br>		<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-built_in">set</span>(<span class="hljs-built_in">String</span> <span class="hljs-built_in">key</span>, <span class="hljs-built_in">Object</span> value);<br><br>		<span class="hljs-comment">// Returns current thread&#x27;s value for named variable.</span><br>		<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">Object</span> <span class="hljs-built_in">get</span>(<span class="hljs-built_in">String</span> <span class="hljs-built_in">key</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="Thread-Local变量重构（1）"><a href="#Thread-Local变量重构（1）" class="headerlink" title="Thread-Local变量重构（1）"></a>Thread-Local变量重构（1）</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs processing"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ThreadLocal</span> &#123;<br>		<span class="hljs-keyword">private</span> <span class="hljs-title function_">ThreadLocal</span>() &#123; &#125;  <span class="hljs-comment">// Noninstantiable</span><br><br>		<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Key</span> &#123;	<span class="hljs-title function_">Key</span>() &#123; &#125; &#125;<br>		<span class="hljs-comment">// Generates a unique, unforgeable key</span><br>		<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-built_in">set</span>(Key <span class="hljs-built_in">key</span>, <span class="hljs-built_in">Object</span> value);<br>		<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">Object</span> <span class="hljs-built_in">get</span>(Key <span class="hljs-built_in">key</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="有效，但是需要使用样板代码"><a href="#有效，但是需要使用样板代码" class="headerlink" title="有效，但是需要使用样板代码"></a>有效，但是需要使用样板代码</h3><p>例如:</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">static ThreadLocal.Key serialNumberKey = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ThreadLocal</span>.</span></span>get<span class="hljs-constructor">Key()</span>;<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ThreadLocal</span>.</span></span>set(serialNumberKey, next<span class="hljs-constructor">SerialNumber()</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ThreadLocal</span>.</span></span>get(serialNumberKey));<br></code></pre></td></tr></table></figure>
+
+<h4 id="Thread-Local变量重构（2）"><a href="#Thread-Local变量重构（2）" class="headerlink" title="Thread-Local变量重构（2）"></a>Thread-Local变量重构（2）</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ThreadLocal</span> &#123;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ThreadLocal</span>()</span> &#123; &#125;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">set</span>(<span class="hljs-params">Object <span class="hljs-keyword">value</span></span>)</span>;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">get</span>()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="消除API和客户端代码之间的混乱"><a href="#消除API和客户端代码之间的混乱" class="headerlink" title="消除API和客户端代码之间的混乱"></a>消除API和客户端代码之间的混乱</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">static</span> ThreadLocal serialNumber = <span class="hljs-keyword">new</span> ThreadLocal();<br>serialNumber.<span class="hljs-keyword">set</span>(nextSerialNumber());<br>System.<span class="hljs-keyword">out</span>.println(serialNumber.<span class="hljs-keyword">get</span>());<br></code></pre></td></tr></table></figure>
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="API设计是一种高贵且有益的工艺"><a href="#API设计是一种高贵且有益的工艺" class="headerlink" title="API设计是一种高贵且有益的工艺"></a>API设计是一种高贵且有益的工艺</h3><ul>
+<li>改进了很多程序员、最终用户和公司</li>
+</ul>
+<h3 id="这次谈话涵盖了一些启发式的手艺"><a href="#这次谈话涵盖了一些启发式的手艺" class="headerlink" title="这次谈话涵盖了一些启发式的手艺"></a>这次谈话涵盖了一些启发式的手艺</h3><ul>
+<li>不要狂妄地坚持，但…</li>
+<li>不要没有理由的违反</li>
+</ul>
+<h3 id="API设计很难"><a href="#API设计很难" class="headerlink" title="API设计很难"></a>API设计很难</h3><ul>
+<li>不是一个孤独的活动</li>
+<li>完美是无法实现的，但无论如何都要尝试</li>
+</ul>
+<h2 id="个人评价-总结"><a href="#个人评价-总结" class="headerlink" title="个人评价&amp;总结"></a>个人评价&amp;总结</h2><p>本文评价了很多Java语言包以及面向对象的优点和缺点，也包含C语言的部分例子。本文作者Joshua Bloch同时也是Effective Java的作者。本文中有些用词比较晦涩难懂，但通篇整体很好也很全面地剖析了API设计的重要性及一部分技巧和注意事项，值得参考借鉴。</p>
+<p>翻译过程也是磕磕绊绊，很多地方自我感觉翻译的不甚准确，甚至有问题，实在找不到合适的翻译的地方注明了原文或保留原文词句，希望有心读者能指正并反馈。不过翻译的过程的确为了理解作者原意，也会竭尽脑力去思考和体会字里行间所表达的思想，收益良多。<br>其中不乏有些建议的确出现于日常的编程实践，并作为编程规范存在于最佳实践中，一眼就能理解。也有一些目前可能尚未在实际应用中良好实践。</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://web.archive.org/web/20110903030015/http://lcsd05.cs.tamu.edu/slides/keynote.pdf">https://web.archive.org/web/20110903030015/http://lcsd05.cs.tamu.edu/slides/keynote.pdf</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/wilson-blog/categories/%E7%BF%BB%E8%AF%91/" class="category-chain-item">翻译</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/API/">#API</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>如何设计良好的API并且为什么这很重要（译）</div>
+      <div>https://barnett617.github.io/wilson-blog/2018/01/16/如何设计良好的API并且为什么这很重要（译）/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 16, 2018</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/01/17/webpack%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="webpack学习笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">webpack学习笔记</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2017/11/28/vultr%E8%B4%A6%E5%8D%95%E8%A7%A3%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8ssr%E5%9C%A8vultr%E6%90%AD%E5%BB%BA%E4%BB%A3%E7%90%86/" title="vultr账单解析及使用ssr在vultr搭建代理">
+                        <span class="hidden-mobile">vultr账单解析及使用ssr在vultr搭建代理</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

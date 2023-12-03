@@ -1,0 +1,717 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="使用vscode远程开发一个全栈Web项目技术栈&amp;工具前端 Vue.js  后端 Express PM2  工具 Nodejs VScode 地图jssdk  开发准备 一台Linux系统的服务器(centos) 搭建基于nodejs的服务端环境 使用nvm管理nodejs环境(curl -o- https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;nvm-sh&#x2F;nvm&#x2F;v0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于B&#x2F;S架构的webapp开发">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2021/07/24/%E5%9F%BA%E4%BA%8EB-S%E6%9E%B6%E6%9E%84%E7%9A%84webapp%E5%BC%80%E5%8F%91/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="使用vscode远程开发一个全栈Web项目技术栈&amp;工具前端 Vue.js  后端 Express PM2  工具 Nodejs VScode 地图jssdk  开发准备 一台Linux系统的服务器(centos) 搭建基于nodejs的服务端环境 使用nvm管理nodejs环境(curl -o- https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;nvm-sh&#x2F;nvm&#x2F;v0">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/architecture.png">
+<meta property="article:published_time" content="2021-07-24T21:40:00.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.943Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://barnett617.github.io/wilson-blog/img/post/architecture.png">
+  
+  
+  
+  <title>基于B/S架构的webapp开发 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="基于B/S架构的webapp开发"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-07-24 21:40" pubdate>
+          Saturday, July 24, 2021 9:40 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.8k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          4 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">基于B/S架构的webapp开发</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="使用vscode远程开发一个全栈Web项目"><a href="#使用vscode远程开发一个全栈Web项目" class="headerlink" title="使用vscode远程开发一个全栈Web项目"></a>使用vscode远程开发一个全栈Web项目</h1><h2 id="技术栈-工具"><a href="#技术栈-工具" class="headerlink" title="技术栈&amp;工具"></a>技术栈&amp;工具</h2><h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://vuejs.org/index.html">Vue.js</a></li>
+</ul>
+<h3 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://expressjs.com/">Express</a></li>
+<li><a target="_blank" rel="noopener" href="https://pm2.keymetrics.io/">PM2</a></li>
+</ul>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://nodejs.org/en/about/">Nodejs</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/remote/remote-overview">VScode</a></li>
+<li><a target="_blank" rel="noopener" href="https://lbsyun.baidu.com/index.php?title=jspopular3.0">地图jssdk</a></li>
+</ul>
+<h2 id="开发准备"><a href="#开发准备" class="headerlink" title="开发准备"></a>开发准备</h2><ul>
+<li>一台Linux系统的服务器(centos)</li>
+<li>搭建基于<code>nodejs</code>的服务端环境<ol>
+<li>使用<code>nvm</code>管理<code>nodejs</code>环境(curl -o- <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh">https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh</a> | bash)</li>
+<li>安装<code>pm2</code>用于<code>nodejs</code>程序的进程管理(npm i -g pm2)</li>
+</ol>
+</li>
+<li>搭建基于<code>Vue</code>的前端环境<ol>
+<li>使用<code>@vue/cli</code>进行前端项目初始化(npm install -g @vue&#x2F;cli)</li>
+<li>[可选]使用<a target="_blank" rel="noopener" href="https://travis-ci.com/">travis</a>+<a target="_blank" rel="noopener" href="https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/disabling-or-limiting-github-actions-for-a-repository#allowing-specific-actions-to-run">github action</a>进行项目CI管理</li>
+</ol>
+</li>
+</ul>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul>
+<li>获取精确到城市级别的位置信息</li>
+<li>位置信息地图可视化展示</li>
+</ul>
+<h2 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h2><h3 id="后端核心逻辑"><a href="#后端核心逻辑" class="headerlink" title="后端核心逻辑"></a>后端核心逻辑</h3><p>根据<code>express</code>获取到的请求获取来源IP，通过调用<a target="_blank" rel="noopener" href="https://ipapi.com/">第三方</a>API获取位置信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/api/loc&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">let</span> ip = req.<span class="hljs-property">ip</span> || req.<span class="hljs-property">ips</span>[<span class="hljs-number">0</span>]<br>  <span class="hljs-keyword">if</span> (ip.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&quot;:&quot;</span>) &gt; -<span class="hljs-number">1</span>) &#123;<br>    ip = ip.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;:&#x27;</span>)[<span class="hljs-number">3</span>]<br>  &#125;<br>  <span class="hljs-keyword">if</span> (ip) &#123;<br>    <span class="hljs-keyword">const</span> url = <span class="hljs-string">`http://api.ipapi.com/<span class="hljs-subst">$&#123;ip&#125;</span>?access_key=xxx`</span><br>    http.<span class="hljs-title function_">get</span>(url, <span class="hljs-function"><span class="hljs-params">httpRes</span> =&gt;</span> &#123;<br>      <span class="hljs-keyword">let</span> chunkData = <span class="hljs-string">&#x27;&#x27;</span>;<br>      httpRes.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;data&#x27;</span>, <span class="hljs-function"><span class="hljs-params">chunk</span> =&gt;</span> &#123;<br>        chunkData += chunk;<br>      &#125;)<br>      httpRes.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;end&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-keyword">const</span> jsonObj = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(chunkData)<br>        res.<span class="hljs-title function_">status</span>(<span class="hljs-number">200</span>)<br>        res.<span class="hljs-title function_">json</span>(&#123;<br>          <span class="hljs-attr">errno</span>: <span class="hljs-number">0</span>,<br>          <span class="hljs-attr">data</span>: jsonObj<br>        &#125;)<br>      &#125;)<br>    &#125;)<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    res.<span class="hljs-title function_">status</span>(<span class="hljs-number">400</span>)<br>    res.<span class="hljs-title function_">json</span>(&#123;<br>      <span class="hljs-attr">errno</span>: <span class="hljs-number">400</span>,<br>      <span class="hljs-attr">errmsg</span>: <span class="hljs-string">&#x27;没有获取到IP&#x27;</span><br>    &#125;)<br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="前端核心逻辑"><a href="#前端核心逻辑" class="headerlink" title="前端核心逻辑"></a>前端核心逻辑</h3><h4 id="接口请求及数据处理"><a href="#接口请求及数据处理" class="headerlink" title="接口请求及数据处理"></a>接口请求及数据处理</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">getLoc</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">let</span> url = <span class="hljs-string">`//<span class="hljs-subst">$&#123;account.api&#125;</span>/api/loc`</span>;<br>  axios<br>    .<span class="hljs-title function_">get</span>(url)<br>    .<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> res.<span class="hljs-property">data</span>)<br>    .<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> &#123;<br>      <span class="hljs-keyword">if</span> (+res.<span class="hljs-property">errno</span> === <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">const</span> obj = res.<span class="hljs-property">data</span>;<br>        <span class="hljs-keyword">if</span> (obj.<span class="hljs-property">latitude</span>) &#123;<br>          <span class="hljs-variable language_">this</span>.<span class="hljs-property">lat</span> = obj.<span class="hljs-property">latitude</span> * <span class="hljs-number">1</span><br>          <span class="hljs-variable language_">this</span>.<span class="hljs-property">lng</span> = obj.<span class="hljs-property">longitude</span> * <span class="hljs-number">1</span><br>        &#125;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">rows</span> = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(obj)<br>          .<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">key</span> =&gt;</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">dataMap</span>).<span class="hljs-title function_">includes</span>(key))<br>          .<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">key</span> =&gt;</span> &#123;<br>            <span class="hljs-keyword">return</span> key === <span class="hljs-string">&#x27;location&#x27;</span> ? &#123;<br>              <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;国旗&#x27;</span>,<br>              <span class="hljs-attr">value</span>: obj[key][<span class="hljs-string">&#x27;country_flag_emoji&#x27;</span>]<br>            &#125; : &#123;<br>              <span class="hljs-attr">label</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">dataMap</span>[key],<br>              <span class="hljs-attr">value</span>: obj[key]<br>            &#125;;<br>          &#125;);<br>      &#125;<br>    &#125;);<br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<h4 id="地图SDK加载"><a href="#地图SDK加载" class="headerlink" title="地图SDK加载"></a>地图SDK加载</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">baiduMap</span>(<span class="hljs-params">ak</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> &#123;<br>    <span class="hljs-variable language_">window</span>.<span class="hljs-property">baiduMap</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-title function_">resolve</span>()<br>    &#125;<br>    <span class="hljs-keyword">let</span> script = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;script&#x27;</span>)<br>    script.<span class="hljs-property">type</span> = <span class="hljs-string">&#x27;text/javascript&#x27;</span><br>    script.<span class="hljs-property">src</span> = <span class="hljs-string">`http://api.map.baidu.com/api?type=webgl&amp;v=3.0&amp;ak=<span class="hljs-subst">$&#123;ak&#125;</span>&amp;callback=baiduMap`</span><br>    script.<span class="hljs-property">onerror</span> = reject<br>    <span class="hljs-variable language_">document</span>.<span class="hljs-property">head</span>.<span class="hljs-title function_">appendChild</span>(script)<br>  &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="地图组件"><a href="#地图组件" class="headerlink" title="地图组件"></a>地图组件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;template&gt;<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;map-wrap&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;container&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>&lt;/template&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml"><span class="hljs-keyword">import</span> &#123; baiduMap &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../../common/js/utils&quot;</span>;</span></span><br><span class="language-javascript"><span class="language-xml"><span class="hljs-keyword">import</span> &#123; account &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../../../account&quot;</span>;</span></span><br><span class="language-javascript"><span class="language-xml"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-attr">props</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">lat</span>: <span class="hljs-title class_">Number</span>,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">lng</span>: <span class="hljs-title class_">Number</span></span></span><br><span class="language-javascript"><span class="language-xml">  &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-keyword">return</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">ak</span>: account.<span class="hljs-property">ak</span>,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">zoomSize</span>: <span class="hljs-number">16</span>,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">map</span>: <span class="hljs-literal">null</span>,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">clickedAddr</span>: <span class="hljs-string">&quot;&quot;</span></span></span><br><span class="language-javascript"><span class="language-xml">    &#125;;</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-attr">watch</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">lat</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">renderMap</span>();</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-title function_">mounted</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">lat</span> &amp;&amp; <span class="hljs-variable language_">window</span>.<span class="hljs-property">BMapGL</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">initMap</span>();</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-attr">methods</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">renderMap</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-keyword">const</span> that = <span class="hljs-variable language_">this</span>;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.$nextTick(<span class="hljs-function">() =&gt;</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">baiduMap</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">ak</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">          that.<span class="hljs-title function_">initMap</span>();</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;);</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;);</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">initMap</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-title class_">BMapGL</span>.<span class="hljs-title class_">Map</span>(<span class="hljs-string">&quot;container&quot;</span>);</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">locationByLatLng</span>(map);</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">commonSet</span>(map);</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">showLoactionControl</span>(map);</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">observeMapClick</span>(map);</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getAddress</span>();</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">locationByBrowser</span>(map);</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">locateByOriginBrowser</span>();</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml">&#125;;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;scss&quot;</span> <span class="hljs-attr">scoped</span>&gt;</span><span class="language-css"></span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-selector-class">.map-wrap</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">20px</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">position</span>: relative;</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-selector-id">#container</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">height</span>: <span class="hljs-number">300px</span>;</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<h3 id="工程化基建"><a href="#工程化基建" class="headerlink" title="工程化基建"></a>工程化基建</h3><h4 id="vConsole"><a href="#vConsole" class="headerlink" title="vConsole"></a>vConsole</h4><p>隐式加载vConsole，通过热键唤起vConsole面板</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">clickTitle</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">clickCount</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">clickCount</span> + <span class="hljs-number">1</span><br>  <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">clickCount</span> === <span class="hljs-number">5</span>) &#123;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">consoleShow</span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">consoleShow</span> = <span class="hljs-literal">true</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">showVConsole</span>()<br>    &#125;<br>  &#125;<br>  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">clickCount</span> = <span class="hljs-number">0</span><br>  &#125;, <span class="hljs-number">2000</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="PM2"><a href="#PM2" class="headerlink" title="PM2"></a>PM2</h4><p>启动后端服务时添加<code>--time</code>参数，为日志添加时间</p>
+<p>使用<code>pm2 logs</code>查看后端服务日志</p>
+<h3 id="项目部署"><a href="#项目部署" class="headerlink" title="项目部署"></a>项目部署</h3><h4 id="后端服务"><a href="#后端服务" class="headerlink" title="后端服务"></a>后端服务</h4><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">pm2 <span class="hljs-built_in">start</span> api.js <span class="hljs-comment">--name me</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="前端服务"><a href="#前端服务" class="headerlink" title="前端服务"></a>前端服务</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">npm <span class="hljs-built_in">run</span> build<br></code></pre></td></tr></table></figure>
+
+<p>将<code>dist</code>拖拽到<code>vscode remote</code>访问到的服务机</p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p>服务机固定单端口同时部署前端服务和后端服务于不同的路由</p>
+<p><img src="/wilson-blog/img/post/architecture.png" srcset="/wilson-blog/img/loading.gif" lazyload alt="architecture"></p>
+<h4 id="前端服务-1"><a href="#前端服务-1" class="headerlink" title="前端服务"></a>前端服务</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">use</span>(express.<span class="hljs-title function_">static</span>(path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;../dist&#x27;</span>)))<br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>  res.<span class="hljs-title function_">sendFile</span>(path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;../dist/&#x27;</span>, <span class="hljs-string">&#x27;index.html&#x27;</span>))<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h4 id="后端服务-1"><a href="#后端服务-1" class="headerlink" title="后端服务"></a>后端服务</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/api/loc&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>  res.<span class="hljs-title function_">status</span>(<span class="hljs-number">400</span>)<br>  res.<span class="hljs-title function_">json</span>(&#123;<br>    <span class="hljs-attr">errno</span>: <span class="hljs-number">200</span>,<br>    <span class="hljs-attr">data</span>: &#123;&#125;<br>  &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="关于CI"><a href="#关于CI" class="headerlink" title="关于CI"></a>关于CI</h2><p>Vue CLI官方文档中提供了两种基于Github Pages的CI方式，其中第一个坑就是<code>不要看中文文档</code>，因为中文文档“年久失修”，很多错误的地方也没人勘误，建议以<a target="_blank" rel="noopener" href="https://cli.vuejs.org/guide/deployment.html#github-pages">英文文档</a>为准。</p>
+<p>接着就是关于两种CI方式，其中第一种手动方式没什么问题，本地写一个Shell脚本，需要发布项目的时候手动执行，核心逻辑如下</p>
+<ol>
+<li>build生成dist</li>
+<li>进到dist目录，将dist目录初始化为一个git项目并提交，强制推送到当前项目远程的gh-pages分支</li>
+<li>退出dist目录</li>
+</ol>
+<p>另外就是通过集成travis的自动化方式，核心步骤如下</p>
+<ol>
+<li>在本地安装travis客户端(gem install travis)</li>
+<li>使用github登录travis(travis login –com –github-token xxx)</li>
+<li>设置travis变量（用于travis调用github API来拉取你的github项目）(travis env set GITHUB_TOKEN xxx)</li>
+<li>项目中增加travis配置文件</li>
+<li>在travis网站观察CI结果</li>
+</ol>
+<p>这里面坑很多，首先第一个就是<code>Vue CLI官方文档中提供的travis登录方式已经过时</code>，即直接进行<code>travis --login</code>输入github用户名和密码后会报<code>NOT FOUND</code>错误，这里是由于<a target="_blank" rel="noopener" href="https://github.com/travis-ci/travis.rb/issues/794#issuecomment-787485778">这个</a>原因，所以需要使用github_token的方式进行登录。</p>
+<p>第二个坑就是按照CI逻辑，推送了本地分支，却没有发生gh-pages分支的更新，即自动化根本没有执行。这里可以通过travis网站的控制台查看requests中所有的CI请求都是失败的，提示的报错大多是<code>Could not authorize build request for xxx</code>。而这里的错误根本不是字面意思这样，而是需要手动在travis的plan中选择一个套餐，即使是免费套餐也得选择。原因发现自<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/41034694/travis-could-not-authorize-build-request/41078031">这里</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/web/">#web</a>
+      
+        <a href="/wilson-blog/tags/%E5%89%8D%E7%AB%AF/">#前端</a>
+      
+        <a href="/wilson-blog/tags/nodejs/">#nodejs</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>基于B/S架构的webapp开发</div>
+      <div>https://barnett617.github.io/wilson-blog/2021/07/24/基于B-S架构的webapp开发/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 24, 2021</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2022/09/21/2022-projects/" title="2022年项目总结">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2022年项目总结</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2021/03/01/2020-en-projects/" title="2020年项目总结(英文版)">
+                        <span class="hidden-mobile">2020年项目总结(英文版)</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

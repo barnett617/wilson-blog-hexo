@@ -1,0 +1,866 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="心血来潮，想做一个苹果发布会的倒计时 访问地址https:&#x2F;&#x2F;barnett617.github.io&#x2F;clock&#x2F; 过程步骤如下：  首先，网页标题来个标志性的苹果图标   一个好的图标网站  svg转换ico在线工具   如何为网站添加图标： 在&lt;head&gt;标签中添加&lt;link rel&#x3D;&quot;shortcut icon&quot; href&#x3D;&quot;favicon.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用原生技术写一个倒计时时钟">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2018/09/05/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%8E%9F%E7%94%9F%E6%8A%80%E6%9C%AF%E5%86%99%E4%B8%80%E4%B8%AA%E5%80%92%E8%AE%A1%E6%97%B6%E6%97%B6%E9%92%9F/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="心血来潮，想做一个苹果发布会的倒计时 访问地址https:&#x2F;&#x2F;barnett617.github.io&#x2F;clock&#x2F; 过程步骤如下：  首先，网页标题来个标志性的苹果图标   一个好的图标网站  svg转换ico在线工具   如何为网站添加图标： 在&lt;head&gt;标签中添加&lt;link rel&#x3D;&quot;shortcut icon&quot; href&#x3D;&quot;favicon.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-09-05T15:55:05.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.943Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="HTML5">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>如何使用原生技术写一个倒计时时钟 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="如何使用原生技术写一个倒计时时钟"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-09-05 15:55" pubdate>
+          Wednesday, September 5, 2018 3:55 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">如何使用原生技术写一个倒计时时钟</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>心血来潮，想做一个苹果发布会的倒计时</p>
+<h2 id="访问地址"><a href="#访问地址" class="headerlink" title="访问地址"></a>访问地址</h2><p><a href="https://barnett617.github.io/clock/">https://barnett617.github.io/clock/</a></p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>步骤如下：</p>
+<ol>
+<li>首先，网页标题来个标志性的苹果图标</li>
+</ol>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.flaticon.com/free-icon/apple_152752#term=apple&page=1&position=2">一个好的图标网站</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://cloudconvert.com/svg-to-ico">svg转换ico在线工具</a></p>
+</li>
+</ul>
+<p>如何为网站添加图标：</p>
+<p>在&lt;head&gt;标签中添加<code>&lt;link rel=&quot;shortcut icon&quot; href=&quot;favicon.ico&quot;&gt;</code>，其会从项目根目录找favicon.ico文件</p>
+<blockquote>
+<p><code>rel</code>表示将要引用的资源类型，<code>href</code>表示指向资源的URL，<br>&lt;link rel&#x3D;”shortcut icon” href&#x3D;”favicon.ico”&gt;中    <code>rel=&quot;shortcut icon&quot;</code>是一种固定写法，不写或错写会导致图标无法正常显示。</p>
+</blockquote>
+<ol start="2">
+<li>主体布局</li>
+</ol>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>如果要背景铺满屏幕，来一个渐变色要怎么做呢</p>
+<p>首先，为什么要用渐变，因为好看啊</p>
+<p>其次，为什么渐变不用PS做的图片，因为CSS3提供了gradients属性，通过CSS实现其实渐变是由浏览器生成的，可以减少下载的事件和宽带的使用</p>
+<p>既然渐变是浏览器生成的，就会涉及到不同浏览器的支持问题（Safari、Opera、Firefox等）</p>
+<p>另外，渐变的方式分为两种：<code>线性渐变（Linear Gradients）</code>和<code>径向渐变（Radial Gradients）</code>，顾名思义，线性渐变是从一个<em>起点</em>沿着一个<em>方向</em>从一种颜色渐变成另一种颜色，而径向渐变是从一个<em>起点</em>沿着一个<em>角度</em>渐变</p>
+<p>线性：linear-gradient</p>
+<p>径向：radial-gradient</p>
+<p>其参数对于不同的浏览器有着不同的写法，但基本都是在配置渐变方向和渐变首末的颜色</p>
+<p>从上到下（默认）</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-webkit-linear-gradient</span>(red, blue); <span class="hljs-comment">/* Safari 5.1 - 6.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-o-linear-gradient</span>(red, blue); <span class="hljs-comment">/* Opera 11.1 - 12.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-moz-linear-gradient</span>(red, blue); <span class="hljs-comment">/* Firefox 3.6 - 15 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">linear-gradient</span>(red, blue); <span class="hljs-comment">/* 标准的语法 */</span><br></code></pre></td></tr></table></figure>
+
+<p>从左到右</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-webkit-linear-gradient</span>(left, red , blue); <span class="hljs-comment">/* Safari 5.1 - 6.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-o-linear-gradient</span>(right, red, blue); <span class="hljs-comment">/* Opera 11.1 - 12.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-moz-linear-gradient</span>(right, red, blue); <span class="hljs-comment">/* Firefox 3.6 - 15 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">linear-gradient</span>(to right, red , blue); <span class="hljs-comment">/* 标准的语法 */</span><br></code></pre></td></tr></table></figure>
+
+<p>左上角到右下角</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-webkit-linear-gradient</span>(left top, red , blue); <span class="hljs-comment">/* Safari 5.1 - 6.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-o-linear-gradient</span>(bottom right, red, blue); <span class="hljs-comment">/* Opera 11.1 - 12.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-moz-linear-gradient</span>(bottom right, red, blue); <span class="hljs-comment">/* Firefox 3.6 - 15 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">linear-gradient</span>(to bottom right, red , blue); <span class="hljs-comment">/* 标准的语法 */</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：Internet Explorer 9 及之前的版本不支持渐变</p>
+</blockquote>
+<p>上面的是指定方向，也可以指定角度，如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(to top, <span class="hljs-number">#7A88FF</span>, <span class="hljs-number">#7AFFAF</span>);<br><span class="hljs-comment">/* 等价 */</span><br><span class="hljs-attribute">background-image</span>:<span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">0deg</span>, <span class="hljs-number">#7A88FF</span>, <span class="hljs-number">#7AFFAF</span>);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>角度指的是过渡在哪个方向截止，浏览器会绘制一条经过元素中心点的假想线。指定的角度就是<em>这条线的角度</em>，同时还指明<em>过度在哪里结束</em></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>度数</th>
+<th>解释</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0deg</td>
+<td>表示元素的顶边</td>
+<td>to top</td>
+</tr>
+<tr>
+<td>90deg</td>
+<td>表示元素的右边</td>
+<td>to right</td>
+</tr>
+<tr>
+<td>180deg</td>
+<td>表示元素的底边</td>
+<td>to bottom</td>
+</tr>
+<tr>
+<td>270deg</td>
+<td>表示元素的左边</td>
+<td>to left</td>
+</tr>
+</tbody></table>
+<p>如果仍然无法理解角度如何用，这里有一个<a target="_blank" rel="noopener" href="https://codepen.io/thebabydino/full/qgoBL">在线演示</a></p>
+<p>除此，透明度（transparent）使用</p>
+<blockquote>
+<p>CSS3 渐变也支持透明度（transparent），可用于创建减弱变淡的效果。</p>
+</blockquote>
+<blockquote>
+<p>可使用 rgba() 函数来定义颜色结点。rgba() 函数中的最后一个参数可以是从 0 到 1 的值，它定义了颜色的透明度：0 表示完全透明，1 表示完全不透明。</p>
+</blockquote>
+<p>如下为从左侧完全透明的红色到右侧完全不透明的红色</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-webkit-linear-gradient</span>(left,<span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>),<span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)); <span class="hljs-comment">/* Safari 5.1 - 6 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-o-linear-gradient</span>(right,<span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>),<span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)); <span class="hljs-comment">/* Opera 11.1 - 12*/</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-moz-linear-gradient</span>(right,<span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>),<span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)); <span class="hljs-comment">/* Firefox 3.6 - 15*/</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">linear-gradient</span>(to right, <span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>), <span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)); <span class="hljs-comment">/* 标准的语法 */</span><br></code></pre></td></tr></table></figure>
+
+<p>以上都是<code>线性渐变</code></p>
+<p>接下来是<code>径向渐变</code></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">radial-gradient(center, shape size, start-<span class="hljs-attribute">color</span>, ..., last-<span class="hljs-attribute">color</span>);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>若不指定前面的参数，只指明颜色，则按照默认情况对颜色进行<em>均匀</em>分布</p>
+</blockquote>
+<blockquote>
+<p>可以根据需求添加任意多个颜色。额外添加的颜色叫色标（color stop）</p>
+</blockquote>
+<blockquote>
+<p>添加色标后，背景会从第一个颜色过渡到第二个颜色，再从第二个颜色过渡到第三个颜色，直到渐变的最后一个颜色为止。浏览器会平均分布各个颜色</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-webkit-radial-gradient</span>(red, green, blue); <span class="hljs-comment">/* Safari 5.1 - 6.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-o-radial-gradient</span>(red, green, blue); <span class="hljs-comment">/* Opera 11.6 - 12.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-moz-radial-gradient</span>(red, green, blue); <span class="hljs-comment">/* Firefox 3.6 - 15 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">radial-gradient</span>(red, green, blue); <span class="hljs-comment">/* 标准的语法 */</span><br></code></pre></td></tr></table></figure>
+
+<p>如下为背景色从左到右开始渐变，最左边是玫红，在元素宽度20%的位置变成青色，80%的位置变成黄色，最后是蓝色。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">linear-gradient(<span class="hljs-selector-tag">to</span> <span class="hljs-attribute">right</span>, <span class="hljs-selector-id">#E94E65</span>, <span class="hljs-selector-id">#15A892</span> <span class="hljs-number">20%</span>, <span class="hljs-selector-id">#A89215</span> <span class="hljs-number">80%</span>, <span class="hljs-selector-id">#1574A8</span>);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用多色渐变时，第一个颜色和最后一个颜色无需指定位置，因为浏览器会嘉定第一个颜色从0%的位置开始，最后一个颜色在100%的位置结束。除非想把第一个颜色或最后一个颜色的位置放在指定的位置开始，才需要专门定位。</p>
+</blockquote>
+<blockquote>
+<p>若想颜色不均匀分布，可手动对颜色增加权重</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-webkit-radial-gradient</span>(red <span class="hljs-number">5%</span>, green <span class="hljs-number">15%</span>, blue <span class="hljs-number">60%</span>); <span class="hljs-comment">/* Safari 5.1 - 6.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-o-radial-gradient</span>(red <span class="hljs-number">5%</span>, green <span class="hljs-number">15%</span>, blue <span class="hljs-number">60%</span>); <span class="hljs-comment">/* Opera 11.6 - 12.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-moz-radial-gradient</span>(red <span class="hljs-number">5%</span>, green <span class="hljs-number">15%</span>, blue <span class="hljs-number">60%</span>); <span class="hljs-comment">/* Firefox 3.6 - 15 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">radial-gradient</span>(red <span class="hljs-number">5%</span>, green <span class="hljs-number">15%</span>, blue <span class="hljs-number">60%</span>); <span class="hljs-comment">/* 标准的语法 */</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>shape 参数定义了形状。它可以是值 circle 或 ellipse。其中，circle 表示圆形，ellipse 表示椭圆形。默认值是 ellipse。</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-webkit-radial-gradient</span>(circle, red, yellow, green); <span class="hljs-comment">/* Safari 5.1 - 6.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-o-radial-gradient</span>(circle, red, yellow, green); <span class="hljs-comment">/* Opera 11.6 - 12.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-moz-radial-gradient</span>(circle, red, yellow, green); <span class="hljs-comment">/* Firefox 3.6 - 15 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">radial-gradient</span>(circle, red, yellow, green); <span class="hljs-comment">/* 标准的语法 */</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>repeating-radial-gradient() 函数用于重复径向渐变</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-comment">/* Safari 5.1 - 6.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-webkit-repeating-radial-gradient</span>(red, yellow <span class="hljs-number">10%</span>, green <span class="hljs-number">15%</span>);<br><span class="hljs-comment">/* Opera 11.6 - 12.0 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-o-repeating-radial-gradient</span>(red, yellow <span class="hljs-number">10%</span>, green <span class="hljs-number">15%</span>);<br><span class="hljs-comment">/* Firefox 3.6 - 15 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">-moz-repeating-radial-gradient</span>(red, yellow <span class="hljs-number">10%</span>, green <span class="hljs-number">15%</span>);<br><span class="hljs-comment">/* 标准的语法 */</span><br><span class="hljs-attribute">background</span>: <span class="hljs-built_in">repeating-radial-gradient</span>(red, yellow <span class="hljs-number">10%</span>, green <span class="hljs-number">15%</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h3><p>需要文字内容水平垂直居中，这就涉及到一个老生常谈的问题</p>
+<p>一开始随手一加，使用flex布局</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>倒计时<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.container</span> &#123;<br>  <span class="hljs-attribute">display</span>: flex;<br>  <span class="hljs-attribute">justify-content</span>: center;<br>  <span class="hljs-attribute">align-items</span>: center;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>发现效果并不理想，只水平居中了，垂直方向并没有居中</p>
+<p>这里犯了一个flex布局的理解错误，对某个元素进行flex的设置，将影响其<em>子元素</em>，而不是其本身的布局，所以这里其实想container这一级水平垂直居中，那么<code>display: flex;</code>应该加在它的父级，即body的属性上</p>
+<p>而在body上加过多的样式不是理想的做法，我们是想以 container 为页面根级，所以在其上加flex布局，然后将其子元素达到居中的效果，那么要让 container 作为页面根级，则需要其铺满屏幕，这里需要做一些样式设计。</p>
+<p>首先，发现 container 并未铺满屏幕，即元素没有贴边浏览器，这是因为body有一个默认外边距，会随着不同的浏览器有着不同的行为，所以即使 container 高度和宽度100%贴着body，也无法占满屏幕，这就是为什么要对css作全局初始样式，重置其默认样式</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">body</span> &#123;<br>    <span class="hljs-attribute">display</span>: block;<br>    <span class="hljs-attribute">margin</span>: <span class="hljs-number">8px</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>需要在body上进行重置 </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">button</span>, <span class="hljs-selector-tag">p</span>, pre &#123;<br>    <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>另外，要让渐变色的背景铺满屏幕，这里采用了对html和body元素设置高度100%，从而达到自适应，背景总占满屏幕的效果</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">html</span>, <span class="hljs-selector-tag">body</span> &#123;<br>  <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>  <span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;<br>&#125;<br><span class="hljs-selector-tag">body</span> &#123;<br>  <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">45deg</span>, <span class="hljs-number">#7A88FF</span>, <span class="hljs-number">#7AFFAF</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="倒计时"><a href="#倒计时" class="headerlink" title="倒计时"></a>倒计时</h3><p>接下来，需要一个定时器来展示倒计时</p>
+<p>这里结束时间从简处理，即使用(后续可优化为目标时间从目标网站中获取)</p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p><code>倒计时</code>即是要计算<em>剩余</em>时间，即目标时间的时间戳减去当下时间的时间戳来做一个格式化显示，因为当下时间是实时变化的，所以并不需要做特殊处理，只要用<code>目标时间戳(常量)</code> - <code>当前时间(变量)</code>便可得到倒计时应该显示的<em>剩余时间</em></p>
+<p>这里<code>国际化</code>是重点</p>
+<p>首先来看一下 js 提供的当地时间（根据浏览器所设地区显示相应时间）方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">toLocaleString</span>()<br><span class="hljs-comment">// &quot;2018/9/4 下午5:04:02&quot;</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">toLocaleDateString</span>()<br><span class="hljs-comment">// &quot;2018/9/4&quot;</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">toLocaleTimeString</span>()<br><span class="hljs-comment">// &quot;下午5:04:21&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>这是 js <code>i18n</code>程序提供的时间格式化方法</p>
+<p>Date对象是js原生时间库，以<code>1970年1月1日00:00:00</code>作为起点</p>
+<p>Date对象作为普通函数直接调用会返回代表当前时间的字符串（无论是否传递参数）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Date</span>()<br><span class="hljs-comment">// &quot;Tue Sep 04 2018 17:23:42 GMT+0800 (中国标准时间)&quot;</span><br><span class="hljs-title class_">Date</span>(<span class="hljs-string">&#x27;2018-08-08&#x27;</span>)<br><span class="hljs-comment">// &quot;Tue Sep 04 2018 17:23:55 GMT+0800 (中国标准时间)&quot;</span><br><span class="hljs-title class_">Date</span>(<span class="hljs-number">2018</span>, <span class="hljs-number">08</span>, <span class="hljs-number">08</span>)<br><span class="hljs-comment">// &quot;Tue Sep 04 2018 17:24:05 GMT+0800 (中国标准时间)&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>Date作为构造函数时，使用new返回一个Date对象实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>()<br><span class="hljs-comment">// Tue Sep 04 2018 17:25:49 GMT+0800 (中国标准时间)</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-string">&#x27;2018-08-08&#x27;</span>)<br><span class="hljs-comment">// Wed Aug 08 2018 08:00:00 GMT+0800 (中国标准时间)</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-number">2018</span>, <span class="hljs-number">08</span>, <span class="hljs-number">08</span>)<br><span class="hljs-comment">// Sat Sep 08 2018 00:00:00 GMT+0800 (中国标准时间)</span><br></code></pre></td></tr></table></figure>
+
+<p>*** 特殊地</p>
+<p>普通对象求值，都默认调用其valueOf()方法，而Date实例求值，默认调用toString()方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> a = <span class="hljs-string">&#x27;hello&#x27;</span><br>a<br><span class="hljs-comment">// &quot;hello&quot;</span><br>a.<span class="hljs-title function_">valueOf</span>()<br><span class="hljs-comment">// &quot;hello&quot;</span><br>a.<span class="hljs-title function_">toString</span>()<br><span class="hljs-comment">// &quot;hello&quot;</span><br><br><span class="hljs-keyword">var</span> b = <span class="hljs-number">3</span><br>b<br><span class="hljs-comment">// 3</span><br>b.<span class="hljs-title function_">valueOf</span>()<br><span class="hljs-comment">// 3</span><br>b.<span class="hljs-title function_">toString</span>()<br><span class="hljs-comment">// &quot;3&quot;</span><br><br><span class="hljs-keyword">var</span> c = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>()<br>c<br><span class="hljs-comment">// Tue Sep 04 2018 17:31:30 GMT+0800 (中国标准时间)</span><br>c.<span class="hljs-title function_">valueOf</span>()<br><span class="hljs-comment">// 1536053490129</span><br>c.<span class="hljs-title function_">toString</span>()<br><span class="hljs-comment">// &quot;Tue Sep 04 2018 17:31:30 GMT+0800 (中国标准时间)&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>使用Date构造函数生产日期实例可传递各种类型的参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">valueOf</span>()<br><span class="hljs-comment">// 1536053659322</span><br><br><span class="hljs-comment">// 参数为时间零点开始计算的毫秒数</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-number">1536053659322</span>)<br><span class="hljs-comment">// Tue Sep 04 2018 17:34:19 GMT+0800 (中国标准时间)</span><br><br><span class="hljs-comment">// 参数为日期字符串</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-string">&#x27;Sep 4, 2018&#x27;</span>)<br><span class="hljs-comment">// Tue Sep 04 2018 00:00:00 GMT+0800 (中国标准时间)</span><br><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-string">&#x27;Oct 4, 2018&#x27;</span>)<br><span class="hljs-comment">// Thu Oct 04 2018 00:00:00 GMT+0800 (中国标准时间)</span><br><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-string">&#x27;Oct 4, 2018, 08:59:59&#x27;</span>)<br><span class="hljs-comment">// Thu Oct 04 2018 08:59:59 GMT+0800 (中国标准时间)</span><br><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-string">&#x27;Oct 4, 2018, 08:61:59&#x27;</span>)<br><span class="hljs-comment">// Invalid Date</span><br><br><span class="hljs-comment">// 参数为多个整数</span><br><span class="hljs-comment">// 代表年、月、日、小时、分钟、秒、毫秒</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-number">2018</span>, <span class="hljs-number">10</span>, <span class="hljs-number">23</span>, <span class="hljs-number">6</span>, <span class="hljs-number">34</span>, <span class="hljs-number">59</span>, <span class="hljs-number">500</span>)<br><span class="hljs-comment">// Fri Nov 23 2018 06:34:59 GMT+0800 (中国标准时间)</span><br><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-string">&#x27;Fri Nov 23 2018 06:34:59&#x27;</span>)<br><span class="hljs-comment">// Fri Nov 23 2018 06:34:59 GMT+0800 (中国标准时间)</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-string">&#x27;Fri Nov 23 2018 06:34:59&#x27;</span>).<span class="hljs-title function_">valueOf</span>()<br><span class="hljs-comment">// 1542926099000</span><br></code></pre></td></tr></table></figure>
+
+<p>既然这样，那么Date()构造方法的参数都可以是什么格式的呢？</p>
+<p>答：任何可以被Date.parse()方法解析的字符串</p>
+<p>注意点</p>
+<ol>
+<li><p>参数可以是负整数，代表1970年元旦之前的时间</p>
+</li>
+<li><p>参数为多个整数时，至少需要两个参数，即年和月，若只传递一个参数，将按照<em>毫秒数</em>处理</p>
+</li>
+<li><p>参数取值范围</p>
+</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs">年：使用四位数年份，比如2000。如果写成两位数或个位数，则加上1900，即10代表1910年。如果是负数，表示公元前<br><br>月：0表示一月，依次类推，11表示12月<br><br>日：1到31<br><br>小时：0到23<br><br>分钟：0到59<br><br>秒：0到59<br><br>毫秒：0到999<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>参数如果超出了正常范围，会被自动折算</p>
+</li>
+<li><p>参数只有一个时，使用负整数表示<code>1970年元旦之前的时间</code>，参数为多个整数时，使用负整数表示<code>从基准日扣去相应的时间</code></p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(-<span class="hljs-number">1542926099000</span>)<br><span class="hljs-comment">// Wed Feb 09 1921 09:25:01 GMT+0800 (中国标准时间)</span><br><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-number">2018</span>, <span class="hljs-number">09</span>, -<span class="hljs-number">1</span>)<br><span class="hljs-comment">// Sat Sep 29 2018 00:00:00 GMT+0800 (中国标准时间)</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-number">2018</span>, <span class="hljs-number">0</span>)<br><span class="hljs-title class_">Mon</span> <span class="hljs-title class_">Jan</span> <span class="hljs-number">01</span> <span class="hljs-number">2018</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span> <span class="hljs-variable constant_">GMT</span>+<span class="hljs-number">0800</span> (中国标准时间)<br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-number">2018</span>, <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>)<br><span class="hljs-title class_">Sat</span> <span class="hljs-title class_">Dec</span> <span class="hljs-number">30</span> <span class="hljs-number">2017</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span> <span class="hljs-variable constant_">GMT</span>+<span class="hljs-number">0800</span> (中国标准时间)<br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-number">2018</span>, <span class="hljs-number">1</span>, -<span class="hljs-number">1</span>)<br><span class="hljs-title class_">Tue</span> <span class="hljs-title class_">Jan</span> <span class="hljs-number">30</span> <span class="hljs-number">2018</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span> <span class="hljs-variable constant_">GMT</span>+<span class="hljs-number">0800</span> (中国标准时间)<br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-number">2018</span>, <span class="hljs-number">1</span>)<br><span class="hljs-title class_">Thu</span> <span class="hljs-title class_">Feb</span> <span class="hljs-number">01</span> <span class="hljs-number">2018</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span> <span class="hljs-variable constant_">GMT</span>+<span class="hljs-number">0800</span> (中国标准时间)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>留个疑问，如何求<code>明年的昨天</code>，比如，现在是<code>Tue Sep 04 2018 18:04:58 GMT+0800 (中国标准时间)</code>，明年的昨天即是<code>Wed Sep 03 2019 18:04:58 GMT+0800 (中国标准时间)</code>，有好的方法可以提PR，</p>
+</blockquote>
+<p>此处的目标时间如下：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">2018 </span>年 <span class="hljs-number">9</span> 月 <span class="hljs-number">12</span> 日上午 <span class="hljs-number">10</span> 点（北京时间 <span class="hljs-number">9</span> 月 <span class="hljs-number">13</span> 日凌晨 <span class="hljs-number">1</span> 点）<br></code></pre></td></tr></table></figure>
+
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>没想到最终呈现出来这么简单的一个页面竟涉及到这么多东西，而且每一个环节都可以细究到很多深层次的东西，这就是web的世界</p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>使用vscode+搜狗输入法编辑本md文件上传至github后发现隐藏字符</p>
+<p>查得<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/61638859">原因</a>为</p>
+<blockquote>
+<p>在mac版vscode的中文输入法下，按下任意字母，出现中文候选后按删除键，删除完刚才输入的字母再按删除会出现这个控制字符</p>
+</blockquote>
+<p>mac版的vscode中这个隐藏字符默认隐藏，可通过修改如下配置打开，将文档中显示<code>BS</code>的退格符全局搜索并替换为空即可</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-comment">//控制编辑器是否应呈现控制字符</span><br><span class="hljs-attr">&quot;editor.renderControlCharacters&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br></code></pre></td></tr></table></figure>
+
+<p>原理解析：<code>BS</code>为ASCII码中的退格符的Unicode表示法，而所有ASCII<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Control_character">控制字符</a>都有一个图形外观</p>
+<p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/58b340a037ea">jianshu-【CSS】渐变背景</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.runoob.com/css3/css3-gradients.html">runoob-CSS3 渐变</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.oschina.net/translate/introducing-the-javascript-internationalization-api">oschina-介绍 JavaScript 国际化 API</a></p>
+<p><a target="_blank" rel="noopener" href="http://javascript.ruanyifeng.com/stdlib/date.html#toc4">JavaScript 标准参考教程（alpha）之Date</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000007581722">segmentfault-JavaScript 时间与日期处理实战:你肯定被坑过</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.runoob.com/jquery/jquery-tutorial.html">runoob-jquery</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000006110417">jianshu-如何优雅的选择字体</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/wilson-blog/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/HTML5/">#HTML5</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>如何使用原生技术写一个倒计时时钟</div>
+      <div>https://barnett617.github.io/wilson-blog/2018/09/05/如何使用原生技术写一个倒计时时钟/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 5, 2018</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/10/02/2017%E5%B9%B410-2018%E5%B9%B4%E4%B8%AA%E4%BA%BA%E7%9B%98%E7%82%B9/" title="2017-2018年个人盘点(多图)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2017-2018年个人盘点(多图)</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/09/03/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E7%9A%84/" title="我是如何备份博客的">
+                        <span class="hidden-mobile">我是如何备份博客的</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,930 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="从理解pom.xml探析Maven">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache项目Maven官方文档学习及翻译（译）">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2018/01/29/%E5%85%B3%E4%BA%8EMaven/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="从理解pom.xml探析Maven">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://trigolds.com/maven_lifecircle.png">
+<meta property="article:published_time" content="2018-01-29T14:34:24.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.943Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://trigolds.com/maven_lifecircle.png">
+  
+  
+  
+  <title>Apache项目Maven官方文档学习及翻译（译） - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Apache项目Maven官方文档学习及翻译（译）"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-01-29 14:34" pubdate>
+          Monday, January 29, 2018 2:34 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          22k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Apache项目Maven官方文档学习及翻译（译）</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>从理解pom.xml探析Maven</p>
+<span id="more"></span>
+
+<h3 id="pom是什么"><a href="#pom是什么" class="headerlink" title="pom是什么"></a>pom是什么</h3><p>POM表示“Project Object Model(工程对象模型)”，同其他对象模型一样，pom用于表示一个工程的结构。</p>
+<p>在Maven工程中以xml文件形式呈现，核心文件pom.xml</p>
+<p>官网的形容是：pom是关乎工程的“一站式商店（one-stop-store）”，所以对工程的配置仅需一个pom.xml文件</p>
+<h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs Maven">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;<br>  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;<br>  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0<br>                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;<br>  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;<br><br>  &lt;!-- The Basics --&gt;<br>  &lt;groupId&gt;...&lt;/groupId&gt;<br>  &lt;artifactId&gt;...&lt;/artifactId&gt;<br>  &lt;version&gt;...&lt;/version&gt;<br>  &lt;packaging&gt;...&lt;/packaging&gt;<br>  &lt;dependencies&gt;...&lt;/dependencies&gt;<br>  &lt;parent&gt;...&lt;/parent&gt;<br>  &lt;dependencyManagement&gt;...&lt;/dependencyManagement&gt;<br>  &lt;modules&gt;...&lt;/modules&gt;<br>  &lt;properties&gt;...&lt;/properties&gt;<br><br>  &lt;!-- Build Settings --&gt;<br>  &lt;build&gt;...&lt;/build&gt;<br>  &lt;reporting&gt;...&lt;/reporting&gt;<br><br>  &lt;!-- More Project Information --&gt;<br>  &lt;name&gt;...&lt;/name&gt;<br>  &lt;description&gt;...&lt;/description&gt;<br>  &lt;url&gt;...&lt;/url&gt;<br>  &lt;inceptionYear&gt;...&lt;/inceptionYear&gt;<br>  &lt;licenses&gt;...&lt;/licenses&gt;<br>  &lt;organization&gt;...&lt;/organization&gt;<br>  &lt;developers&gt;...&lt;/developers&gt;<br>  &lt;contributors&gt;...&lt;/contributors&gt;<br><br>  &lt;!-- Environment Settings --&gt;<br>  &lt;issueManagement&gt;...&lt;/issueManagement&gt;<br>  &lt;ciManagement&gt;...&lt;/ciManagement&gt;<br>  &lt;mailingLists&gt;...&lt;/mailingLists&gt;<br>  &lt;scm&gt;...&lt;/scm&gt;<br>  &lt;prerequisites&gt;...&lt;/prerequisites&gt;<br>  &lt;repositories&gt;...&lt;/repositories&gt;<br>  &lt;pluginRepositories&gt;...&lt;/pluginRepositories&gt;<br>  &lt;distributionManagement&gt;...&lt;/distributionManagement&gt;<br>  &lt;profiles&gt;...&lt;/profiles&gt;<br>&lt;/project&gt;<br></code></pre></td></tr></table></figure>
+
+<p><img src="http://trigolds.com/maven_lifecircle.png" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p>modelVersion是必填参数，4.0.0当前仅支持Maven2及Maven3版本</p>
+<p>通览整个pom文件，分为一下几部分配置：</p>
+<ol>
+<li><p>基本配置（The Basics）</p>
+</li>
+<li><p>构建配置（Build Settings）</p>
+</li>
+<li><p>关于工程的更多信息（More Project Information）</p>
+</li>
+<li><p>环境配置（Environment Settings）</p>
+</li>
+</ol>
+<h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><p>pom包含了关于工程的所有必要信息，包括构建过程中所用的插件配置。</p>
+<p>它有效地声明了“who”、“what”和“where”（谁在哪里做了什么）</p>
+<p>与此同时，构建生命周期是“when”和“how”（何时做以及怎么做）</p>
+<h4 id="特别之处"><a href="#特别之处" class="headerlink" title="特别之处"></a>特别之处</h4><p>上述的构建生命周期去决定“何时以及如何去做”并不意味着pom不能<strong>干涉（影响）</strong>生命周期流</p>
+<p>取而代之的是，它可以</p>
+<p>例如：通过配置maven-antrun-plugin，可以在pom中有效地嵌入ant任务</p>
+<p>这最终是一个声明，然而正如build.xml在运行时告诉ant（流程上）准确去做什么，pom陈述了它（声明上）的配置</p>
+<p>但如果某种外部力量迫使生命周期跳过ant插件的执行，Maven的魔法使得它并不会停止被执行的插件</p>
+<p>这不像build.xml的任务几乎总是依赖于执行流上前一个任务的执行</p>
+<h3 id="Maven坐标"><a href="#Maven坐标" class="headerlink" title="Maven坐标"></a>Maven坐标</h3><p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0</span></span><br><span class="hljs-string"><span class="hljs-tag">                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.codehaus.mojo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>my-project<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>以上是Maven2和Maven3允许的最小配置</p>
+<p>groupId:artifactId:version是都被要求配置的参数（如果继承自父pom时，groupId和version则不需要准确定义）</p>
+<p>这三个域对于一个工程扮演了地址和时间戳的角色，这在仓库中标记出一个特定的位置，像是扮演了Maven工程中的坐标系统这一角色</p>
+<h4 id="groupId"><a href="#groupId" class="headerlink" title="groupId"></a>groupId</h4><p>这通常对于一个组织或者一个工程是唯一的。例如Maven所有的核心组件都存在于org.apache.maven这一groupId下</p>
+<p>groupId不是必须添加“.”符号，比如junit工程</p>
+<p>包含“.”符的groupId不必和工程所包含的包结构保持一致，但这二者保持一致是一种推荐遵守的最佳实践</p>
+<p>但存储在仓库时，组扮演了操作系统中java包结构的角色，“.”符将被操作系统替换为特定的目录分隔符（例如Unix中的斜杠符“&#x2F;”），从而变成一个相对于仓库根目录的相对目录结构。</p>
+<p>在所给例子中，org.codehaus.mojo组存在于$M2_REPO&#x2F;org&#x2F;codehaus&#x2F;mojo中</p>
+<h4 id="artifactId"><a href="#artifactId" class="headerlink" title="artifactId"></a>artifactId</h4><p>artifactId通常是工程所被知晓的名称</p>
+<p>虽然groupId很重要，但是人们在组（group）内的讨论很少提及groupId（通常都是在相同ID的组内，例如Codehaus Mojo工程的groupId:org.codehaus.mojo）</p>
+<p>artifactId在groupId之下对于将这个工程区别于所有其他工程创建了一个键，完整定义了组件在仓库中的住所</p>
+<p>在上例中，即是my-project居住在$M2_REPO&#x2F;org&#x2F;codehaus&#x2F;mojo&#x2F;my-project</p>
+<h4 id="version"><a href="#version" class="headerlink" title="version"></a>version</h4><p>这是命名谜题中的最后一块</p>
+<p>groupId:artifactId声明了一个单一的工程，但它没有描述清我们讨论的那个工程是哪一个化身</p>
+<p>我们讨论的是今天的junit:junit，还是四年前的junit:junit（第二版）</p>
+<p>简而言之，代码改变了，那些改动应该被版本化</p>
+<p>version这个元素在组件线上定义了那些版本改动</p>
+<hr>
+<p>上述这三个元素指出了一个特定的工程版本，使得Maven知晓我们在处理哪一个工程，还有何时我们需要它们</p>
+<h4 id="packaging"><a href="#packaging" class="headerlink" title="packaging"></a>packaging</h4><p>知道了地址结构groupId:artifactId:version之后，还有一个标准标签提供真正完整的地址，那就是工程的组件类型</p>
+<p>上述示例pom中定义的org.codehaus.mojo:my-project:1.0将被以jar格式打包</p>
+<p>当没有packaging被声明时，Maven的默认处理方式是以jar包形式打包</p>
+<p>有效类型有：</p>
+<ol>
+<li><p>pom</p>
+</li>
+<li><p>jar</p>
+</li>
+<li><p>maven-plugin</p>
+</li>
+<li><p>ejb</p>
+</li>
+<li><p>war</p>
+</li>
+<li><p>ear</p>
+</li>
+<li><p>rar</p>
+</li>
+<li><p>par</p>
+</li>
+</ol>
+<p>对于一个指定的包结构，这些定义了和构建声明周期阶段所一致的某个默认目标列表<br>（这句话稍显晦涩，原文：These define the default list of goals which execute to each corresponding build lifecycle stage for a particular package structure）</p>
+<p>你有时会看到Maven打印出如下的工程坐标：</p>
+<p>groupId:artifactId:packaging:version</p>
+<h4 id="classfier"><a href="#classfier" class="headerlink" title="classfier"></a>classfier</h4><p>你可能会在坐标中碰巧发现第五个元素，那就是classifier</p>
+<h3 id="POM关系"><a href="#POM关系" class="headerlink" title="POM关系"></a>POM关系</h3><p>Maven强大的一个方面在于它对工程关系的处理，包括<strong>依赖</strong>和<strong>可传递依赖</strong>、继承、聚合（多模块工程）</p>
+<p>Maven在处理依赖管理这一老生常谈的问题上通过一个本地公共仓库正确处理工程联系及版本问题</p>
+<h4 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h4><p>POM的基石是其依赖列表，几乎每一个工程都依赖于其他包或工程去正确地实现构建和运行</p>
+<p>当你需要时，Maven会为你复杂的目标任务下载并关联依赖</p>
+<h5 id="groupId-artifactId-version"><a href="#groupId-artifactId-version" class="headerlink" title="groupId,artifactId,version"></a>groupId,artifactId,version</h5><p>你会经常看到这些元素，这个三元组合用来及时计算针对某个特定工程的Maven坐标</p>
+<p>计算的目的是为了选择一个匹配所有依赖声明的版本（由于可传递依赖的存在，对于相同的artifactId可以有多依赖声明）</p>
+<ul>
+<li><p>groupId,artifactId：直接对应的坐标的依赖</p>
+</li>
+<li><p>version：一个被特指的依赖版本，将被用来计算依赖的有效版本</p>
+</li>
+</ul>
+<p>因为依赖由Maven坐标所描述，你可能会想“这意味着我的工程只能依靠artifacts”，答案是“当然，但那是好事”，这迫使你去依靠于Maven可管理的依赖</p>
+<p>有时可能很不幸，当一个工程不能从中央仓库下载到。比如一个工程依赖于一个遵守闭源协议的jar文件，使得你无法从中央仓库下载所得。下面三种方法可以处理：</p>
+<ol>
+<li>使用安装插件进行本地安装这个依赖，这个方法是最简单的推荐方法</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">mvn install:install-file <span class="hljs-attribute">-Dfile</span>=non-maven-proj.jar <span class="hljs-attribute">-DgroupId</span>=some.group <span class="hljs-attribute">-DartifactId</span>=non-maven-proj <span class="hljs-attribute">-Dversion</span>=1 <span class="hljs-attribute">-Dpackaging</span>=jar<br></code></pre></td></tr></table></figure>
+
+<p>注意这仍需要一个地址，只有这个时候你使用命令行和安装插件会通过你给出的地址创建一个POM</p>
+<ol start="2">
+<li><p>创建你自己的仓库并把包部署上去。这对于公司在内部网络是一个令人喜欢的方法，并且需要保持每一个人同步。有一个Maven目标叫做deploy:deploy-file，和install:install-file类似</p>
+</li>
+<li><p>设置依赖域为system并定义一个systemPath。这不被推荐，然而引出了接下来要解释的元素。</p>
+</li>
+</ol>
+<h5 id="classfier-1"><a href="#classfier-1" class="headerlink" title="classfier"></a>classfier</h5><p>classfier用来区分由相同POM构建，但内容不同的artifacts。这是可选项，并且是任意的字符串，当它呈现时，它附加于artfact名称的版本后面</p>
+<p>这个元素的动机是考虑到例如一个工程提供了一个针对JRE1.5的artifact，但与此同时另一个artifact仍支持JRE1.4。这样第一个artifact可以用classfier“jdk15”装配，第二个artifact用“jdk14”装配，这样客户端便可以使用哪一个</p>
+<p>另一个classfiers的通用用例是对于工程主artifact所附加的第二artifacts。如果你浏览Maven中央仓库，会注意到在打包的文件中sources分类器和javadoc分类器被用于部署工程源码和API文档</p>
+<h5 id="type"><a href="#type" class="headerlink" title="type"></a>type</h5><p>和所依赖的artifact的packaging类型保持一致。默认是jar。</p>
+<p>它常常展示于依赖文件的名称后缀，但并不总是这样</p>
+<p>类型可以被映射到一个不同的拓展名和分类器</p>
+<p>类型经常和打包所用方式一致，虽然这也不总是这样</p>
+<p>可以通过插件定义新的类型，设置extensions为true，所以这不是一个完整的列表</p>
+<h5 id="scope"><a href="#scope" class="headerlink" title="scope"></a>scope</h5><p>这个元素涉及到即将到来的（编译时、运行时、测试时）任务的类路径（classpath），同时也涉及如何限制可传递依赖，共有一下五个域变量：</p>
+<ol>
+<li><p>compile：默认域，如果没特别指定，则使用compile。compile依赖将在所有的类路径可用，更甚，那些依赖会被传播到从属工程（compile、runtime、test）</p>
+</li>
+<li><p>provided：和compile很像，但指明了你想用的JDK或者在运行时所提供的容器。仅在编译和测试的类路径可用，并且不可传递（compile、test）</p>
+</li>
+<li><p>runtime：这个域指明了这个依赖在编译时不被需要，但被需要于执行时。它存在于运行时和测试的类路径中，不存在与编译类路径（runtime、test）</p>
+</li>
+<li><p>test：这个域指明了依赖在应用的常规使用时不被需要，而仅在测试编译和执行时可用。不可传递（test-compile、test-runtime）</p>
+</li>
+<li><p>system：这个域和provided类似，除非你不得不明确提供所包含的JAR</p>
+</li>
+</ol>
+<h5 id="systemPath"><a href="#systemPath" class="headerlink" title="systemPath"></a>systemPath</h5><p>仅被用来当scope是system时，否则如果这个设置被配置，构建将会失败</p>
+<p>路径必须是绝对路径，所以推荐使用一个property去设置指定机器的路径，例如${java.home}&#x2F;lib</p>
+<p>假定系统域依赖安装一个priori，Maven不会为这个工程从仓库检查，取而代之的是去检查那个文件是否存在。如果不存在，，Maven将会构建失败并建议你手动下载并安装它</p>
+<h5 id="optional"><a href="#optional" class="headerlink" title="optional"></a>optional</h5><p>当工程本身是一个依赖时标记可选配置为一个依赖。这困惑吗？举个例子，想象一个工程A依赖于工程B去编译一部分在运行时不会被使用的代码，然后我们可能没必要对于所有工程都需要工程B。所以如果工程X添加了工程A作为它自己的依赖，然后Maven将根本不必安装工程B。用象征性的符号表示，如果&#x3D;&gt;表示一个需要的依赖，–&gt;表示可选，虽然情况是A&#x3D;&gt;B可能当构建A时，但情况是X&#x3D;&gt;A–&gt;B当构建X时</p>
+<p>简言之，optional让其他工程知道这样一点，就是当你使用这个工程，你不必需要这个依赖以正确工作</p>
+<h4 id="依赖版本需求指定"><a href="#依赖版本需求指定" class="headerlink" title="依赖版本需求指定"></a>依赖版本需求指定</h4><p>依赖的版本元素定义了版本的需求，用来计算有效的依赖版本</p>
+<p>版本需求有如下的语法：</p>
+<ul>
+<li><p>1.0：软需求，需要1.0版本（仅是推荐，如果它匹配了所有其他的范围也可以，例如1.1或0.9）</p>
+</li>
+<li><p>[1.0]：硬需求，指定1.0版本</p>
+</li>
+<li><p>(,1.0)：x &lt;&#x3D; 1.0</p>
+</li>
+<li><p>[1.2,1.3]：1.2 &lt;&#x3D; x &lt;&#x3D; 1.3</p>
+</li>
+<li><p>[1.0,2.0)：1.0 &lt;&#x3D; x &lt; 2.0</p>
+</li>
+<li><p>[1.5,)：x &gt;&#x3D; 1.5</p>
+</li>
+<li><p>(,1.0],[1.2,)：x &lt;&#x3D; 1.0 or x &gt;&#x3D; 1.2（多个范围以逗号隔开）</p>
+</li>
+<li><p>(,1.1),(1.1,)：这排除了1.1（例如知道1.1这个版本不能正常工作）</p>
+</li>
+</ul>
+<h4 id="版本顺序指定"><a href="#版本顺序指定" class="headerlink" title="版本顺序指定"></a>版本顺序指定</h4><p>Maven坐标在符号之间以点符(.)和连线符(-)分割，在数字和字符之间以</p>
+<p>分隔符会被记录下来并对顺序产生影响</p>
+<p>数字和字符之间的等同于连字符</p>
+<p>空字符会被替换为0</p>
+<p>这通过.和-前缀给版本号（数值符）和版本限定符（非数值符号）一个顺序</p>
+<p>实例：</p>
+<p>1-1.foo-bar1baz-.1 -&gt; 1-1.foo-bar-1-baz-0.1</p>
+<h4 id="排除项"><a href="#排除项" class="headerlink" title="排除项"></a>排除项</h4><p>exclusions明确告诉Maven你在某个特定工程中某个依赖中不想包含的依赖（换言之，它的传递依赖）</p>
+<p>举个例子，maven-embedder需要maven-core，并且我们不想使用它或者它的依赖，随后我们添加一个exclusion配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0</span></span><br><span class="hljs-string"><span class="hljs-tag">                      https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>  ...<br>  <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.maven<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-embedder<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">exclusions</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">exclusion</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.maven<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">exclusion</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">exclusions</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    ...<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br>  ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这有时对于修剪依赖的传递依赖有帮助</p>
+<p>一个依赖可能在某些特定域范围中不正确，或者依赖会与你工程中的其他依赖冲突</p>
+<p>使用通配符排除法可以使得排除一个依赖的所有传递依赖变得简单</p>
+<p>在下面的示例中你可能需要maven-embedder，并且你想自己管理依赖，所以你修剪了所有的传递依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0</span></span><br><span class="hljs-string"><span class="hljs-tag">                      https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>  ...<br>  <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.maven<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-embedder<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">exclusions</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">exclusion</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>*<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>*<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">exclusion</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">exclusions</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    ...<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br>  ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>exclusions包含了一个或多个exclusion元素，每一个都包含groupId和artifactId来指明一个排除的依赖</p>
+<p>不像optional会可能或者可能不需要安装和使用，exclusions将其完全移除出依赖树</p>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>Maven为构建管理带来的另一个强大力量是工程继承概念</p>
+<p>虽然在构建系统例如Ant，继承当然可以模拟，Maven在使得工程继承对于工程对象模型明确上移除了额外的步骤</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0</span></span><br><span class="hljs-string"><span class="hljs-tag">                      https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.codehaus.mojo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>my-parent<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">packaging</span>&gt;</span>pom<span class="hljs-tag">&lt;/<span class="hljs-name">packaging</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>对父工程和聚合工程（多模块）来说，packaging类型需要设为pom</p>
+<p>这些类型定义了绑定到一系列生命周期阶段的目标</p>
+<p>例如，如果packaging是jar，那么package将会执行jar:jar目标</p>
+<p>如果packaging是pom，被执行的目标将会是site:attach-descriptor</p>
+<p>现在我们可以向父pom中添加值，这些会被其子对象继承，大多数元素会从父pom继承到子，包括：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs gradle">groupId<br>version<br><span class="hljs-keyword">description</span><br>url<br>inceptionYear<br>organization<br>licenses<br>developers<br>contributors<br>mailingLists<br>scm<br>issueManagement<br>ciManagement<br>properties<br>dependencyManagement<br><span class="hljs-keyword">dependencies</span><br><span class="hljs-keyword">repositories</span><br>pluginRepositories<br>build<br>  plugin executions with matching ids<br>  plugin configuration<br>  etc.<br>reporting<br>profiles<br></code></pre></td></tr></table></figure>
+
+<p>特别注意一下元素不被继承：</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs delphi">artifactId<br><span class="hljs-keyword">name</span><br>prerequisites<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0</span></span><br><span class="hljs-string"><span class="hljs-tag">                      https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">parent</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.codehaus.mojo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>my-parent<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">relativePath</span>&gt;</span>../my-parent<span class="hljs-tag">&lt;/<span class="hljs-name">relativePath</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">parent</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>my-project<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>注意relativePath元素，是不必须的，但可能会用来作为提供给Maven搜索父工程路径的信号，在搜索本地仓库然后远程仓库之前（relativePath -&gt; local repository -&gt; remote repository）</p>
+<h4 id="超类POM"><a href="#超类POM" class="headerlink" title="超类POM"></a>超类POM</h4><p>和面向编程中对象都继承自跟对象类似，POMs都继承自一个根POM，此外正如java对象最终都继承自java.lang.Object，所有工程对象模型都继承自一个基类POM，下面的片段这Maven3.0.4的超类POM</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">repositories</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">repository</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>central<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>Central Repository<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span>http://repo.maven.apache.org/maven2<span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span>default<span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">snapshots</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">enabled</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">enabled</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">snapshots</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">repository</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">repositories</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">pluginRepositories</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">pluginRepository</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>central<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>Central Repository<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span>http://repo.maven.apache.org/maven2<span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span>default<span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">snapshots</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">enabled</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">enabled</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">snapshots</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">releases</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">updatePolicy</span>&gt;</span>never<span class="hljs-tag">&lt;/<span class="hljs-name">updatePolicy</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">releases</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">pluginRepository</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">pluginRepositories</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">directory</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;project.basedir&#125;</span><span class="language-xml">/target<span class="hljs-tag">&lt;/<span class="hljs-name">directory</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">outputDirectory</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;project.build.directory&#125;</span><span class="language-xml">/classes<span class="hljs-tag">&lt;/<span class="hljs-name">outputDirectory</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">finalName</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;project.artifactId&#125;</span><span class="language-xml">-$</span><span class="hljs-template-variable">&#123;project.version&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">finalName</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">testOutputDirectory</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;project.build.directory&#125;</span><span class="language-xml">/test-classes<span class="hljs-tag">&lt;/<span class="hljs-name">testOutputDirectory</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">sourceDirectory</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;project.basedir&#125;</span><span class="language-xml">/src/main/java<span class="hljs-tag">&lt;/<span class="hljs-name">sourceDirectory</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">scriptSourceDirectory</span>&gt;</span>src/main/scripts<span class="hljs-tag">&lt;/<span class="hljs-name">scriptSourceDirectory</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">testSourceDirectory</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;project.basedir&#125;</span><span class="language-xml">/src/test/java<span class="hljs-tag">&lt;/<span class="hljs-name">testSourceDirectory</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">resources</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">resource</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">directory</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;project.basedir&#125;</span><span class="language-xml">/src/main/resources<span class="hljs-tag">&lt;/<span class="hljs-name">directory</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">resource</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">resources</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">testResources</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">testResource</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">directory</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;project.basedir&#125;</span><span class="language-xml">/src/test/resources<span class="hljs-tag">&lt;/<span class="hljs-name">directory</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">testResource</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">testResources</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">pluginManagement</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-comment">&lt;!-- <span class="hljs-doctag">NOTE:</span> These plugins will be removed from future versions of the super POM --&gt;</span></span><br><span class="language-xml">      <span class="hljs-comment">&lt;!-- They are kept for the moment as they are very unlikely to conflict with lifecycle mappings (MNG-4453) --&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-antrun-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.3<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-assembly-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.2-beta-5<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-dependency-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-release-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">pluginManagement</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">reporting</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">outputDirectory</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;project.build.directory&#125;</span><span class="language-xml">/site<span class="hljs-tag">&lt;/<span class="hljs-name">outputDirectory</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">reporting</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">profiles</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!-- <span class="hljs-doctag">NOTE:</span> The release profile will be removed from future versions of the super POM --&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">profile</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>release-profile<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">activation</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>performRelease<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">activation</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">inherited</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">inherited</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-source-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span></span><br><span class="language-xml">              <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>attach-sources<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span></span><br><span class="language-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>jar<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span></span><br><span class="language-xml">              <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">inherited</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">inherited</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-javadoc-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span></span><br><span class="language-xml">              <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>attach-javadocs<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span></span><br><span class="language-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>jar<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span></span><br><span class="language-xml">              <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">inherited</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">inherited</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-deploy-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span></span><br><span class="language-xml">              <span class="hljs-tag">&lt;<span class="hljs-name">updateReleaseInfo</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">updateReleaseInfo</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">profile</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">profiles</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>你可以创建一个最小pom.xml来看一下超类POM是如何影响你的工程对象模型，并且通过在命令行执行mvn help:effective-pom</p>
+<h4 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h4><p>除了对于顶级元素的继承，父pom还有一些元素配置用于子POMs和可传递依赖，其中之一是dependenceManagement</p>
+<h5 id="dependencyManagement"><a href="#dependencyManagement" class="headerlink" title="dependencyManagement"></a>dependencyManagement</h5><p>dependencyManagement被POMs用来管理贯穿其所有子pom的依赖信息</p>
+<p>如果my-parent工程使用dependenceManagement来定义一个依赖junit:junit:4.0，然后POMs继承自这个pom，可以设置它们的依赖，仅设置groupId&#x3D;junit，artifactId&#x3D;junit，随后Maven会通过父工程为其填充version配置。这个方法的收益是显然的。依赖细节可以被设置在一个中央位置，会传播到继承其的POMs</p>
+<p>注意artifact的version和scope是从传递依赖而组成的，这也被依赖管理部分控制着版本，这会带来意想不到的结果。考虑一个情况，在你的工程中使用两个依赖，dep1和dep2。dep2反过来又使用到dep1，并需要一个特定的最小版本去运作。如果你使用dependenceManagement去指定一个旧版本，dep2将会被迫使使用旧版本，并失败。</p>
+<p>所以你必须小心检查整个依赖树去避免这种问题</p>
+<p>mvn:dependence:tree会派上用场</p>
+<h3 id="聚合（或说多模块）"><a href="#聚合（或说多模块）" class="headerlink" title="聚合（或说多模块）"></a>聚合（或说多模块）</h3><p>一个包含模块的工程被认为是一个多模块，或说聚合工程。</p>
+<p>模块是这个POM列出的工程，同时会被以组的形式执行。一个以pom方式进行打包的工程可能聚合构建一组工程清单作为模块，这是相对路径或者那些工程的POM文件（原文： An pom packaged project may aggregate the build of a set of projects by listing them as modules, which are relative paths to the directories or the POM files of those projects.）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0</span></span><br><span class="hljs-string"><span class="hljs-tag">                      https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.codehaus.mojo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>my-parent<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">packaging</span>&gt;</span>pom<span class="hljs-tag">&lt;/<span class="hljs-name">packaging</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">modules</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">module</span>&gt;</span>my-project<span class="hljs-tag">&lt;/<span class="hljs-name">module</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">module</span>&gt;</span>another-project<span class="hljs-tag">&lt;/<span class="hljs-name">module</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">module</span>&gt;</span>third-project/pom-example.xml<span class="hljs-tag">&lt;/<span class="hljs-name">module</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">modules</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>当列出模式时，你不必亲自考虑内部模块的依赖，例如POM给出的模块次序是不重要的。Maven会拓扑地排序模块以使依赖模块总会在依赖其的模块之前被构建（被依赖者总会先构建）</p>
+<h4 id="最后需要注意关于继承和聚合的一点"><a href="#最后需要注意关于继承和聚合的一点" class="headerlink" title="最后需要注意关于继承和聚合的一点"></a>最后需要注意关于继承和聚合的一点</h4><p>继承和聚合创造了一个良好的动态操作去控制构建一个单一的、高级的POM。你将经常看到工程既是父工程，又是聚合工程。例如，整个Maven核心运行于一个简单的基POM——org.apache.maven:maven，所以构建Maven工程可以通过一个简单的命令mvn compile去执行。</p>
+<p>然而虽然POM工程、聚合工程还有父工程都不同并且不应该令人困惑。一个POM工程可能会被继承——但不必需要——任何它聚合的模块。相反，一个POM工程可能聚合工程而并没有继承自它的工程</p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>属性是理解POM基本元素的最后一块。Maven属性是占位值，像Ant中的属性。它们的值可以被POM中任何位置通过${X}所获取到，X是属性值。或者它们可被用于作为插件默认值，例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span>&gt;</span><br>  ...<br>  <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">maven.compiler.source</span>&gt;</span>1.7<span class="hljs-tag">&lt;/<span class="hljs-name">maven.compiler.source</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">maven.compiler.target</span>&gt;</span>1.7<span class="hljs-tag">&lt;/<span class="hljs-name">maven.compiler.target</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="hljs-tag">&lt;/<span class="hljs-name">project.build.sourceEncoding</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="hljs-tag">&lt;/<span class="hljs-name">project.reporting.outputEncoding</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span><br>  ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>它们以五种方式表示：</p>
+<ol>
+<li>env.X：伴随env前缀变量会返回shell的环境变量。例如${env.PATH}包含了PATH环境变量</li>
+</ol>
+<blockquote>
+<p>注意：Windows本身环境变量大小写不敏感，但属性是大小写敏感的。换句话说，当在Windows的shell对于%PATH%和%Path%返回相同的值时，Maven会区分${env.PATH}和${env.Path}。谈及Maven2.1.0，环境变量名称被规范化为全大写以保证可靠性</p>
+</blockquote>
+<ol start="2">
+<li><p>project.x：POM中点符表示的路径会包含和元素值一致的值。例如：<project><version>1.0</version></project>可通过${project.version}达到</p>
+</li>
+<li><p>setting.x：setting.xml中的点符表示的路径包含和元素值相一致的值。例如：<settings><offline>false</offline></settings>可通过${settings.offline}达到</p>
+</li>
+<li><p>java系统属性：所有的属性可通过java.lang.System.getProperties()达到作为POM属性的变量，例如${java.home}</p>
+</li>
+<li><p>x：通过<properties />在POM中设置的元素。<properties><someVar>value</someVar></properties>的值可通过${someVar}获得</p>
+</li>
+</ol>
+<h3 id="构建设置"><a href="#构建设置" class="headerlink" title="构建设置"></a>构建设置</h3><p>在上述给出的Maven基本设置之上，有两个元素必须在声明完整的POM之前被理解。它们就是build元素，就是像声明你工程目录结构和管理插件一样的处理器。还有reporting元素，能最大化反映构建元素的报告</p>
+<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>根据POM 4.0.0 XSD，build元素被概念上拆分成两部分：一个BaseBuild类型包含了build元素（project层级下的顶级构建元素和profiles下的构建元素）的通用元素集；还有一个Build类型，包含了BaseBuild集同时还有更多用于顶级定义的元素。让我们开始分析这二者的通用元素</p>
+<p>注意：这些不同的build元素会被以project build和profile build指明</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0</span></span><br><span class="hljs-string"><span class="hljs-tag">                      https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>  ...<br>  <span class="hljs-comment">&lt;!-- &quot;Project Build&quot; contains more elements than just the BaseBuild set --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">profiles</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">profile</span>&gt;</span><br>      <span class="hljs-comment">&lt;!-- &quot;Profile Build&quot; contains a subset of &quot;Project Build&quot;s elements --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">profile</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">profiles</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="BaseBuild元素集"><a href="#BaseBuild元素集" class="headerlink" title="BaseBuild元素集"></a>BaseBuild元素集</h5><p>BaseBuild恰如其名：在POM文件中两个build元素之间的基本元素集</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">defaultGoal</span>&gt;</span>install<span class="hljs-tag">&lt;/<span class="hljs-name">defaultGoal</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">directory</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;basedir&#125;</span><span class="language-xml">/target<span class="hljs-tag">&lt;/<span class="hljs-name">directory</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">finalName</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;artifactId&#125;</span><span class="language-xml">-$</span><span class="hljs-template-variable">&#123;version&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">finalName</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">filters</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span>filters/filter1.properties<span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">filters</span>&gt;</span></span><br><span class="language-xml">  ...</span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p>defaultGoal：如果未给定，则执行的默认目标或时期。如果goal被给定，那应该被定义如命令行中的样子（例如jar:jar）。如果时期被定义也如此（例如install）</p>
+</li>
+<li><p>directory：这是构建将会输出其文件的目录，或者Maven的说法——构建目标物，这适当地默认设置为${basedir}&#x2F;target</p>
+</li>
+<li><p>finalName：这是捆绑项目的名称当其最终构建（无文件拓展名，例如my-project-1.0.jar，此时finalName就是my-project-1.0）。默认是${artifactId}-${version}</p>
+</li>
+</ol>
+<p>finalName这个术语有点用词不当，然而，正如插件构建捆绑项目拥有每一个权利去忽略或修改这个名称（但它们通常不会这么做）。例如：如果maven-jar-plugins被配置用于生成一个jar并添加一个test的classifier，然后上述定义的实际jar将会被构建为my-project-1.0-test.jar</p>
+<ol start="4">
+<li>filter：定义*.properties文件，该文件包含一个属性列表，这个属性列表是用于作为其他接受设置的资源。换句话说，在filter文件中被定义的“键值对”在构建时会用实际资源替换掉${name}字符串。上述例子定义了filter&#x2F;目录下的filter1.properties文件。Maven的默认过滤器目录是${basedir}&#x2F;src&#x2F;main&#x2F;filters&#x2F;</li>
+</ol>
+<h5 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h5><p>build元素的另一个特征是指定资源存在于你工程的哪里。资源不是代码。它们不被编译，但也是要被绑定进你项目的项或被用作其他理由，比如代码生成</p>
+<p>举个例子：一个Plexus工程需要伴随一个存在于META-INF&#x2F;plexus下的configuration.xml文件（用来指定对于容器的组件配置信息）去存在。虽然我们仅需要简单地放置这个文件在src&#x2F;main&#x2F;resources&#x2F;META-INF&#x2F;plexus，但我们想取而代之的是给予Plexus一个它自己的目录src&#x2F;main&#x2F;plexus。为了JAR插件能够正确地绑定资源，你需要指定资源类似如下：</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">  <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">  <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="hljs-string"><span class="hljs-tag"><span class="language-xml">                      https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span></span><br><span class="language-xml">    ...</span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">resources</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">resource</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">targetPath</span>&gt;</span>META-INF/plexus<span class="hljs-tag">&lt;/<span class="hljs-name">targetPath</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">filtering</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">filtering</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">directory</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;basedir&#125;</span><span class="language-xml">/src/main/plexus<span class="hljs-tag">&lt;/<span class="hljs-name">directory</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">includes</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">include</span>&gt;</span>configuration.xml<span class="hljs-tag">&lt;/<span class="hljs-name">include</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">includes</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">excludes</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">exclude</span>&gt;</span>**/*.properties<span class="hljs-tag">&lt;/<span class="hljs-name">exclude</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">excludes</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">resource</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">resources</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">testResources</span>&gt;</span></span><br><span class="language-xml">      ...</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">testResources</span>&gt;</span></span><br><span class="language-xml">    ...</span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p>resources：是一个资源元素列表，其中每一个元素描述了去包含什么文件和去哪获得这个文件关联进这个工程</p>
+</li>
+<li><p>targetPath：指定放置构建出的资源所处目录结构。目标路径默认是根目录。对于将被打包进一个JAR的资源，一个通常指定的目标路径是META-INF</p>
+</li>
+<li><p>filtering：值是true或者false，指示出对于这个资源是否使用过滤器。注意，*.properties过滤器文件不必被定义去过滤——资源也可以使用在POM中被默认定义的属性（例如${project.version}），被传递到命令行，通过使用-D标识（例如-Dname&#x3D;value）或者通过属性元素准确定义。</p>
+</li>
+<li><p>directory：这个元素的值定义了资源从哪里找。默认用于构建的目录是${basedir}&#x2F;src&#x2F;main&#x2F;resources</p>
+</li>
+<li><p>includes：一组用于指定在特定目录下被包含进作为资源的文件模式，使用*作为通配符</p>
+</li>
+<li><p>excludes：和includes一样的结构，但指定哪些文件被忽略。当include和exclude产生矛盾时，exclude生效</p>
+</li>
+<li><p>testResources：这个元素块包含了testResource元素。它们的定义类似resource元素，但只在test时期使用。有一点不同的是一个工程的默认（超POM所定义的）测试资源目录是${basedir}&#x2F;src&#x2F;test&#x2F;resources。测试资源不会被部署</p>
+</li>
+</ol>
+<h5 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0</span></span><br><span class="hljs-string"><span class="hljs-tag">                      https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span><br>    ...<br>    <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-jar-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.6<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">extensions</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">extensions</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">inherited</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">inherited</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">classifier</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">classifier</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文源自apache官网Maven项目的官方文档，本人初读此文档时感觉晦涩难度，难以完整通读。但苦于找不到其他关于Maven学习的高质有效资料，遂决定再次“品味”官方文档并作翻译，并借此对官方文档逐行理解，并做此译文，以便后人。部分字句由于鄙人才疏学浅，无法做到准确翻译，伴有原文。翻译不当之处还请指正。</p>
+<p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://maven.apache.org/pom.html">https://maven.apache.org/pom.html</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/wilson-blog/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/java/">#java</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Apache项目Maven官方文档学习及翻译（译）</div>
+      <div>https://barnett617.github.io/wilson-blog/2018/01/29/关于Maven/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 29, 2018</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/02/01/mysql%E8%AF%AF%E5%88%A0%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/" title="mysql误删数据恢复">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">mysql误删数据恢复</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/01/25/%E5%85%B3%E4%BA%8E%E5%9F%9F%E5%90%8D/" title="关于域名">
+                        <span class="hidden-mobile">关于域名</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

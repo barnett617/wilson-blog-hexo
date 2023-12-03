@@ -1,0 +1,696 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="js中的“拷贝”（第一篇）——js数据类型赋值 基本类型变量赋值 引用类型变量赋值  前言在es6出现以前，js有六大数据类型，由五大基本类型+一个引用类型所组成，五大基本类型分别为undefined、null、boolean、number、string，一大引用类型为object 但随着es6的普及（从新知识变成基本知识），新添一位成员名叫symbol，js的数据类型格局变为六大基本类型+一大引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js中的“拷贝”（第一篇）——js数据类型">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2019/01/21/copy/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="js中的“拷贝”（第一篇）——js数据类型赋值 基本类型变量赋值 引用类型变量赋值  前言在es6出现以前，js有六大数据类型，由五大基本类型+一个引用类型所组成，五大基本类型分别为undefined、null、boolean、number、string，一大引用类型为object 但随着es6的普及（从新知识变成基本知识），新添一位成员名叫symbol，js的数据类型格局变为六大基本类型+一大引">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-21T15:44:00.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.939Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="Wilson">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>js中的“拷贝”（第一篇）——js数据类型 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="js中的“拷贝”（第一篇）——js数据类型"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-01-21 15:44" pubdate>
+          Monday, January 21, 2019 3:44 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          3 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">js中的“拷贝”（第一篇）——js数据类型</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="js中的“拷贝”（第一篇）——js数据类型"><a href="#js中的“拷贝”（第一篇）——js数据类型" class="headerlink" title="js中的“拷贝”（第一篇）——js数据类型"></a>js中的“拷贝”（第一篇）——js数据类型</h1><h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><ul>
+<li>基本类型变量赋值</li>
+<li>引用类型变量赋值</li>
+</ul>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在es6出现以前，js有六大<code>数据类型</code>，由五大<code>基本类型</code>+一个<code>引用类型</code>所组成，五大基本类型分别为<code>undefined</code>、<code>null</code>、<code>boolean</code>、<code>number</code>、<code>string</code>，一大引用类型为<code>object</code></p>
+<p>但随着es6的普及（从新知识变成基本知识），新添一位成员名叫symbol，js的数据类型格局变为六大<code>基本类型</code>+一大<code>引用类型</code>，symbol的出现被列入<code>基本类型</code>队列，而引用类型并无变化</p>
+<h3 id="基本类型变量（primitive-value）"><a href="#基本类型变量（primitive-value）" class="headerlink" title="基本类型变量（primitive value）"></a>基本类型变量（primitive value）</h3><ol>
+<li>undefined</li>
+<li>null</li>
+<li>boolean</li>
+<li>number</li>
+<li>string</li>
+<li>symbol <del>object</del></li>
+</ol>
+<p>另附以上六种基本类型在<code>chrome71</code>控制台中实际输出</p>
+<h4 id="undefined"><a href="#undefined" class="headerlink" title="undefined"></a>undefined</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">typeof</span> <span class="hljs-literal">undefined</span><br><span class="hljs-string">&quot;undefined&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>undefined</code>首字母不大写</p>
+<h4 id="null"><a href="#null" class="headerlink" title="null"></a>null</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">typeof</span> <span class="hljs-literal">null</span><br><span class="hljs-string">&quot;object&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>空对象的类型当然是对象</p>
+<h4 id="boolean"><a href="#boolean" class="headerlink" title="boolean"></a>boolean</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Boolean</span>(<span class="hljs-literal">true</span>)<br><span class="hljs-string">&quot;boolean&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>boolean</code>首字母不大写</p>
+<p><code>Boolean</code>是<code>window</code>对象提供的js全局方法，用于将一个值转换为布尔类型，以下是我能想到比较有代表的转换case:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Boolean</span>()<br><span class="hljs-literal">false</span><br><span class="hljs-title class_">Boolean</span>(<span class="hljs-literal">false</span>)<br><span class="hljs-literal">false</span><br><span class="hljs-title class_">Boolean</span>(<span class="hljs-number">0</span>)<br><span class="hljs-literal">false</span><br><span class="hljs-title class_">Boolean</span>(<span class="hljs-number">111</span>)<br><span class="hljs-literal">true</span><br><span class="hljs-title class_">Boolean</span>(<span class="hljs-string">&#x27;&#x27;</span>)<br><span class="hljs-literal">false</span><br><span class="hljs-title class_">Boolean</span>(<span class="hljs-literal">undefined</span>)<br><span class="hljs-literal">false</span><br><span class="hljs-title class_">Boolean</span>(<span class="hljs-literal">null</span>)<br><span class="hljs-literal">false</span><br><span class="hljs-title class_">Boolean</span>(<span class="hljs-string">&#x27;false&#x27;</span>)<br><span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="number"><a href="#number" class="headerlink" title="number"></a>number</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Number</span>()<br><span class="hljs-string">&quot;number&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>同<code>Boolean()</code>，<code>Number()</code>是将变量转换为number类型的内置方法，以下为示例:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Number</span>()<br><span class="hljs-number">0</span><br><span class="hljs-title class_">Number</span>(<span class="hljs-number">1</span>)<br><span class="hljs-number">1</span><br><span class="hljs-title class_">Number</span>(<span class="hljs-literal">false</span>)<br><span class="hljs-number">0</span><br><span class="hljs-title class_">Number</span>(<span class="hljs-literal">true</span>)<br><span class="hljs-number">1</span><br><span class="hljs-title class_">Number</span>(<span class="hljs-string">&#x27;&#x27;</span>)<br><span class="hljs-number">0</span><br><span class="hljs-title class_">Number</span>(<span class="hljs-string">&#x27;false&#x27;</span>)<br><span class="hljs-title class_">NaN</span><br><span class="hljs-title class_">Number</span>(<span class="hljs-string">&#x27;true&#x27;</span>)<br><span class="hljs-title class_">NaN</span><br><span class="hljs-title class_">Number</span>(<span class="hljs-string">&#x27;1&#x27;</span>)<br><span class="hljs-number">1</span><br><span class="hljs-title class_">Number</span>(<span class="hljs-literal">undefined</span>)<br><span class="hljs-title class_">NaN</span><br><span class="hljs-title class_">Number</span>(<span class="hljs-literal">null</span>)<br><span class="hljs-number">0</span><br><span class="hljs-title class_">Number</span>(<span class="hljs-string">&#x27;1str&#x27;</span>)<br><span class="hljs-title class_">NaN</span><br><span class="hljs-title class_">Number</span>(<span class="hljs-string">&#x27;str1&#x27;</span>)<br><span class="hljs-title class_">NaN</span><br></code></pre></td></tr></table></figure>
+
+<p>以上看出，Number()方法在转换字符串时，会尽量把数字字符串顺利转换为number类型，但包含字符串或干脆就是是纯字符串的字符串类型变量显得无能为力，经过Number()方法处理的返回值是得到一个特殊的变量<code>NaN</code>，它是js内置的一个用以表示非数字的number类型常量，为什么说它是变量，而不是类型呢，因为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">NaN</span><br><span class="hljs-string">&quot;number&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="string"><a href="#string" class="headerlink" title="string"></a>string</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">String</span>()<br><span class="hljs-string">&quot;string&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>同样，<code>string</code>类型首字母不大写，首字母大写的是js内置的用以将某个值转换为该类型的方法，同<code>Boolean()</code>、<code>Number()</code>，也有<code>String()</code>，case如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">String</span>()<br><span class="hljs-string">&quot;&quot;</span><br><span class="hljs-title class_">String</span>(<span class="hljs-string">&#x27;boolean&#x27;</span>)<br><span class="hljs-string">&quot;boolean&quot;</span><br><span class="hljs-title class_">String</span>(<span class="hljs-string">&#x27;number&#x27;</span>)<br><span class="hljs-string">&quot;number&quot;</span><br><span class="hljs-title class_">String</span>(<span class="hljs-title class_">Number</span>(<span class="hljs-string">&#x27;false&#x27;</span>))<br><span class="hljs-string">&quot;NaN&quot;</span><br><span class="hljs-title class_">String</span>(<span class="hljs-number">1</span>)<br><span class="hljs-string">&quot;1&quot;</span><br><span class="hljs-title class_">String</span>(<span class="hljs-literal">undefined</span>)<br><span class="hljs-string">&quot;undefined&quot;</span><br><span class="hljs-title class_">String</span>(<span class="hljs-literal">null</span>)<br><span class="hljs-string">&quot;null&quot;</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">String</span>(<span class="hljs-literal">undefined</span>)<br><span class="hljs-string">&quot;string&quot;</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">String</span>(<span class="hljs-literal">null</span>)<br><span class="hljs-string">&quot;string&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>以上看出，“万物皆可字符串化”，<code>NaN</code>、<code>undefined</code>、<code>null</code>也难逃于此，它们被String()大法转变后，都乖乖套上了双引号，用<code>typeof</code>一照都是字符串类型</p>
+<h4 id="symbol"><a href="#symbol" class="headerlink" title="symbol"></a>symbol</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Symbol</span>(<span class="hljs-number">1</span>)<br><span class="hljs-string">&quot;symbol&quot;</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Symbol</span>()<br><span class="hljs-string">&quot;symbol&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>以上就是传统主流js(es5标准实现下的js)的六大基本类型</p>
+<h3 id="引用类型变量（reference-value）"><a href="#引用类型变量（reference-value）" class="headerlink" title="引用类型变量（reference value）"></a>引用类型变量（reference value）</h3><p>首先所有的<code>引用类型</code>都隶属于object类型，细分有<code>array</code>、<code>function</code>、<code>object</code>、<code>date</code>、<code>regexp</code>等</p>
+<blockquote>
+<p>注意：引用类型无法再通过typeof进行判断，因为引用类型都衍生与object，typeof引用于判断基本类型的区分</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Array</span>()<br><span class="hljs-string">&quot;object&quot;</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>()<br><span class="hljs-string">&quot;object&quot;</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;&#125;<br><span class="hljs-string">&quot;function&quot;</span><br><span class="hljs-keyword">typeof</span> []<br><span class="hljs-string">&quot;object&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="object"><a href="#object" class="headerlink" title="object"></a>object</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Object</span>()<br><span class="hljs-string">&quot;object&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>同样<code>object</code>首字母也不大写，同样js内置了<code>Object()</code>方法将一切转换为js对象，但这和<code>String()</code>、<code>Boolean()</code>、<code>Number()</code>不可同日而语，因为<code>Object</code>可以说是js的根、源头，一切生自<code>Object</code>，没有它就没有js的其他一切</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Object</span>()<br><span class="hljs-string">&quot;object&quot;</span><br><span class="hljs-title class_">Object</span>()<br>&#123;&#125;<br><span class="hljs-keyword">typeof</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>()<br><span class="hljs-string">&quot;object&quot;</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Object</span>()<br><span class="hljs-string">&quot;object&quot;</span><br><span class="hljs-title class_">Object</span>(<span class="hljs-number">1</span>)<br><span class="hljs-title class_">Number</span> &#123;<span class="hljs-number">1</span>&#125;<br><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Number</span>(<span class="hljs-number">1</span>)<br><span class="hljs-string">&quot;number&quot;</span><br><span class="hljs-title class_">Object</span>(<span class="hljs-literal">null</span>)<br>&#123;&#125;<br><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Object</span>(<span class="hljs-literal">null</span>)<br><span class="hljs-string">&quot;object&quot;</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Object</span>(<span class="hljs-literal">false</span>)<br><span class="hljs-string">&quot;object&quot;</span><br><span class="hljs-title class_">Object</span>(<span class="hljs-literal">false</span>)<br><span class="hljs-title class_">Boolean</span> &#123;<span class="hljs-literal">false</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><p>引用类型的值是<code>可变的</code>，区分于基本类型<code>不可变</code>，所以对于基本类型的数据进行拷贝，就真的是拷贝出了一份类型相同的一个新值。但引用类型的变量只是指向一片内存空间的指针，所以对引用类型的直接拷贝得到的只是一个指向同一片内存空间的另一个指针而已，但拷贝前后所表示的值是相同的，所以此时如果改变原引用变量的值，会同时改变拷贝出的变量的值，举个例子:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> x = &#123;<span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;hello&#x27;</span>&#125;<br><span class="hljs-literal">undefined</span><br><span class="hljs-keyword">var</span> y = x;<br><span class="hljs-literal">undefined</span><br>x<br>&#123;<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;hello&quot;</span>&#125;<br>y<br>&#123;<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;hello&quot;</span>&#125;<br>x.<span class="hljs-property">name</span> = <span class="hljs-string">&#x27;world&#x27;</span><br><span class="hljs-string">&quot;world&quot;</span><br>x<br>&#123;<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;world&quot;</span>&#125;<br>y<br>&#123;<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;world&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h4><p><code>instanceof</code>见名知意，判断某个对象实例是否是某种对象的实例，（晦涩版：用来判断某个构造函数的 prototype 属性所指向的对象是否存在于另外一个要检测对象的原型链上，这里牵扯到<code>构造函数</code>、<code>ptototype属性</code>、<code>原型链</code>重要概念，需要后面一一详解）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js">(&#123;&#125;) <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Object</span><br><span class="hljs-literal">true</span><br>([]) <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Array</span><br><span class="hljs-literal">true</span><br>(<span class="hljs-regexp">/a/</span>) <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">RegExp</span><br><span class="hljs-literal">true</span><br>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;&#125;) <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Function</span><br><br><br><span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p>本篇系整合各篇优质内容并加以个人理解整理而成，参考文章如下：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000006752076">JavaScript 深入了解基本类型和引用类型的值</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>js中的“拷贝”（第一篇）——js数据类型</div>
+      <div>https://barnett617.github.io/wilson-blog/2019/01/21/copy/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 21, 2019</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2019/01/22/clone/" title="浅拷贝和深拷贝">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">浅拷贝和深拷贝</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2019/01/17/reread-js/" title="重读javascript第一篇">
+                        <span class="hidden-mobile">重读javascript第一篇</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

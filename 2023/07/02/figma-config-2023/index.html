@@ -1,0 +1,704 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="关于Figma Config 2023 的一些总结和所思所想">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Figma Config 2023 观后感上篇——变量、原型">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2023/07/02/figma-config-2023/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="关于Figma Config 2023 的一些总结和所思所想">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/figma-config-2023-01/desk.png">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/figma-config-2023-01/figma1.jpg">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/figma-config-2023-01/color-modes.jpg">
+<meta property="og:image" content="https://barnett617.github.io/wilson-blog/img/post/figma-config-2023-01/xcode.jpg">
+<meta property="article:published_time" content="2023-07-02T21:45:54.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.939Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="Wilson">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://barnett617.github.io/wilson-blog/img/post/figma-config-2023-01/desk.png">
+  
+  
+  
+  <title>Figma Config 2023 观后感上篇——变量、原型 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Figma Config 2023 观后感上篇——变量、原型"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-02 21:45" pubdate>
+          Sunday, July 2, 2023 9:45 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          3 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Figma Config 2023 观后感上篇——变量、原型</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>关于Figma Config 2023 的一些总结和所思所想</p>
+<span id="more"></span>
+
+<blockquote>
+<p>视频源：<a target="_blank" rel="noopener" href="https://config.figma.com/">https://config.figma.com/</a></p>
+</blockquote>
+<p><img src="/wilson-blog/img/post/figma-config-2023-01/desk.png" srcset="/wilson-blog/img/loading.gif" lazyload alt="desktop"></p>
+<h1 id="开场动画信息点"><a href="#开场动画信息点" class="headerlink" title="开场动画信息点"></a>开场动画信息点</h1><ul>
+<li>颜色token</li>
+<li>有序列表</li>
+<li>AI文本校对</li>
+<li>黏性吸顶布局（CSS sticky position）</li>
+<li>多样式文本（粗体、斜体同行显示）</li>
+<li>区域选择（区别于容器和图层，新增了section概念）</li>
+</ul>
+<h1 id="用户回馈"><a href="#用户回馈" class="headerlink" title="用户回馈"></a>用户回馈</h1><ul>
+<li>社区感谢</li>
+<li>教育推广</li>
+<li>chrome book合作</li>
+<li>adobe收购事件</li>
+<li>拥抱AI</li>
+</ul>
+<h1 id="服务场景"><a href="#服务场景" class="headerlink" title="服务场景"></a>服务场景</h1><p>Stages</p>
+<ul>
+<li>Brainstorm（创意头脑风暴）</li>
+<li>Design（设计环节）</li>
+<li>Build（生产构建环节）</li>
+</ul>
+<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>Variables rather than Design Tokens</p>
+<p>变量支持四种类型</p>
+<ul>
+<li>数字</li>
+<li>字符串</li>
+<li>颜色</li>
+<li>布尔</li>
+</ul>
+<h2 id="作用范围"><a href="#作用范围" class="headerlink" title="作用范围"></a>作用范围</h2><p>变量设置中可以定义变量的作用范围（针对哪些属性，比如圆角、宽高、间距、文本）</p>
+<p>变量设置框里有一个“即将上线”的功能——代码高亮</p>
+<p><img src="/wilson-blog/img/post/figma-config-2023-01/figma1.jpg" srcset="/wilson-blog/img/loading.gif" lazyload alt="code highlight"></p>
+<p>以上提供的能力已经可被用于建立设计系统，那么接下来我们看看变量可以有哪些应用</p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><h3 id="场景1：颜色模式"><a href="#场景1：颜色模式" class="headerlink" title="场景1：颜色模式"></a>场景1：颜色模式</h3><p>和变量同级别的设置项还有”颜色模式“，有点像颜色选集，但更像 web 应用中换肤功能所对应底层定义，也就是每套皮肤（主题）所使用的颜色定义组合</p>
+<p>但这不止像演示中所呈现的亮暗色模式下的颜色定义，很明显它支持定义更多套的主题色配置，每套配置都在使用相同的颜色变量，但每个变量在每套主题下使用的颜色是不同的，这有点像design tokens，但确实更接近于主题色的定义，因此这个配置项区别于变量，单独成为一个配置框完全合理</p>
+<p>一旦定义好不同颜色主题的配置，在容器级别的图层选择 Color modes，即可轻松实现快捷的”一键换肤“效果。</p>
+<p><img src="/wilson-blog/img/post/figma-config-2023-01/color-modes.jpg" srcset="/wilson-blog/img/loading.gif" lazyload alt="Color modes"></p>
+<p>相比传统设计场景需要针对不同颜色主题需要提供多套设计，这一改变将使得<em>设计师</em>和<em>前端工程师</em>的使用效率都大大提高，想必当前端还原设计稿时也希望直接在同一个容器看到它在不同颜色模式下所对应的标注信息。</p>
+<p>而这一切都是因为变量作为基础，所以产生了更简洁的呈现方式。正如编程语言中，借助变量在不同的场景下具有不同的值，从而使得程序在运行时拥有更多的变化</p>
+<h3 id="场景2：布局密度"><a href="#场景2：布局密度" class="headerlink" title="场景2：布局密度"></a>场景2：布局密度</h3><p>对于列表类的布局，通过对变量定义不同模式下的值，可以直接应用在图层的排布密度属性上。当你定义了多套模式后，在设计稿中可以通过切换不同的模式查看同一个布局在不同密度下的视觉效果，这是不是解决了设计师常常反复调整元素间距以对比哪个效果更好的痛点呢</p>
+<h3 id="场景3：国际化（多语种）"><a href="#场景3：国际化（多语种）" class="headerlink" title="场景3：国际化（多语种）"></a>场景3：国际化（多语种）</h3><p>如果你要做一款国际化的产品，需要考虑设计稿在不同语种下的视觉体验是否一致。同样是借助变量，你可以直接定义多套语言模式，同一个词汇在不同语言模式下使用其对应语言的字符，然后同样在图层的”本地化“属性下进行”一键切换“。</p>
+<p>这里从开发视角补充一点，其实国际化功能在实现环节也是通过类似变量的方式定义同一个词汇在不同语言下的字符定义，因此将变量能力带到设计环节，其实是对设计到实现的整个协作流程效率的提升，因为在设计环节的很多”动态定义“从此可以与开发人员共享了。</p>
+<p>简单来说，就是从前对于多语种的展示，可能只有开发人员在维护，设计人员可能需要到开发的实现环节才能体验不同语种下的展示效果，或者设计师需要创建多套设计稿来展示同样的内容使用不同语言的呈现效果。但因为有了变量，设计师和开发人员完全可以共享同一套”多语言配置“，这难道不是协作效率的飞跃吗</p>
+<h2 id="变量组合应用"><a href="#变量组合应用" class="headerlink" title="变量组合应用"></a>变量组合应用</h2><p>如你所见，变量的魅力不止于此，一旦拥有变量，你可以更近一步，对他们进行组合使用。因为有了上面的颜色模式、密度模式和语言模式，从此你可以看到的不止是各个属性下不同模式的效果，而是各个模式的随意组合</p>
+<h2 id="样式能力增强"><a href="#样式能力增强" class="headerlink" title="样式能力增强"></a>样式能力增强</h2><h3 id="最小宽度-最大宽度-最小高度-最大高度"><a href="#最小宽度-最大宽度-最小高度-最大高度" class="headerlink" title="最小宽度&#x2F;最大宽度&#x2F;最小高度&#x2F;最大高度"></a>最小宽度&#x2F;最大宽度&#x2F;最小高度&#x2F;最大高度</h3><p>这是前端CSS中一个很基本的属性，但到今天才被添加到设计工具内，算是补充了设计到开发环节的一个鸿沟。因为这里原本的痛点在于，设计稿往往对响应式设计依赖于做多套设计，而前端对于响应式的实现往往是通过最小&#x2F;大宽度和最小&#x2F;大高度属性在不同宽度&#x2F;高度范围内定义不同的布局属性和元素宽高值，可见这个环节从前在设计环节和开发环节的实现方式是不一致的。</p>
+<p>自动布局功能对于设计与实现环节保持一致曾迈出了重要的一步，而最小&#x2F;最大宽度和最小&#x2F;最大高度功能则是补齐了响应式实现在设计到前端的另一块拼图</p>
+<h3 id="换行属性"><a href="#换行属性" class="headerlink" title="换行属性"></a>换行属性</h3><p>这是网页技术中实现多列布局响应式的关键属性，因为它决定了元素在限定的布局内当超出一行后应如何展示，也许你说使用网格布局可以做到同样的事情，但如果你想使用自动布局（对应前端的弹性布局），那换行属性必不可少</p>
+<h1 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h1><p>使用原型作为产品初始功能演示是很重要的，因为在它还没有被完整实现以前，可以快速地进行意见收集和改进。但对于一个功能复杂的应用，使用原型模拟出所有操作路径会很复杂，使用设计工具以往所提供的能力，原型中的步骤线可能会非常，因为你需要创建同一个页面在不同操作后的不同结果，因此最终原型内的关系会变得非常难以维护。</p>
+<h2 id="原型-变量"><a href="#原型-变量" class="headerlink" title="原型+变量"></a>原型+变量</h2><p>如果依托变量能力，原型可以变得怎样呢？</p>
+<p>你可以为原型中使用到的状态定义变量，比如对于电商应用，你可以定义不同商品的名称、数量、价格等等。当定义完这些以后，你就像拥有了一个小型的数据库（数据库这个概念熟悉吗？Notion的表格正是利用数据库方式存储表格数据，从而做到将同一个数据源以不同视图模式进行展示的效果）</p>
+<h2 id="动作使用变量"><a href="#动作使用变量" class="headerlink" title="动作使用变量"></a>动作使用变量</h2><p>交互属性内的动作使用变量</p>
+<p>比如当你点击某个元素时，你可以对变量的值进行更新，更新的值可以是在变量当前值的基础上增加计算逻辑，从而得到新的状态值。比如当你在购物车对某个商品点击加号时，理想的变化应该仅仅是商品展示的数量从1变成2即可，而使用以往的原型演示，这一效果可能需要拷贝一份容器，然后在新的版本内将数量改为2。</p>
+<p>怎么样？感受到变量的力量了吗，因为有了变量，这个场景下的原型交互可以直接省去一个重复的容器去展示不同的状态，而仅仅是通过变量的变化来表达状态的变化</p>
+<h2 id="原型预览"><a href="#原型预览" class="headerlink" title="原型预览"></a>原型预览</h2><p>这是另一个工作流上的效率提升点，以往的原型预览是在一个新的标签页展示的，如今你可以直接在原型设计页面弹出一个和容器一样大的弹窗，直接看到一个像样机一样的页面呈现在你眼前，然后在此基础上进行调整。</p>
+<p>这一交互其实源自苹果应用的开发，熟悉苹果App开发的人应该知道，苹果官方提供了专用的工具用于开发苹果系列的产品，叫做Xcode。当你在Xcode内运行代码后，就会在弹出一个独立窗体用于展示你的App，然后你可以在不需要切换标签页的情况下直接预览到你应用此刻的效果，从而在此基础上进行调整。</p>
+<p><img src="/wilson-blog/img/post/figma-config-2023-01/xcode.jpg" srcset="/wilson-blog/img/loading.gif" lazyload alt="xcode"></p>
+<p>将这种交互应用在原型功能上，可以说是将原型使用者的体验与开发者更加接近了</p>
+<h2 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h2><p>这也是源自编程语言的理念，因为有了条件语句，你可以对逻辑增加条件判断，从而使逻辑走向不同条件下的分支。但看似简单的能力，却可以产生丰富的结果。</p>
+<p>用在原型场景，就是你原本对于不同元素的点击，下一步要展示的页面可能需要拷贝多份并做对应的修改才能达成。而使用条件语句，你可以对交互增加条件逻辑声明，当你点击商品列表中的苹果时，在跳转商品详情页时应该展示的是苹果的详情，包括苹果的价格和数量。</p>
+<p>当你在购物车将所有商品的数量减少为0时，页面应该展示空态，而这些判断都是通过条件判断所定义的</p>
+<p>未完待续，详见 <a href="/wilson-blog/2023/07/03/figma-config-2023-02/">下篇——开发模式</a> </p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Figma Config 2023 观后感上篇——变量、原型</div>
+      <div>https://barnett617.github.io/wilson-blog/2023/07/02/figma-config-2023/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 2, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2023/07/03/figma-config-2023-02/" title="Figma Config 2023 观后感下篇——开发模式">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Figma Config 2023 观后感下篇——开发模式</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2023/06/29/vite-trying/" title="vite体验">
+                        <span class="hidden-mobile">vite体验</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

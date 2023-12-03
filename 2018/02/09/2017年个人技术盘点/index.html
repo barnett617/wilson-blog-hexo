@@ -1,0 +1,741 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="关于2017年个人博客点滴的年终总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2017年个人技术盘点">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2018/02/09/2017%E5%B9%B4%E4%B8%AA%E4%BA%BA%E6%8A%80%E6%9C%AF%E7%9B%98%E7%82%B9/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="关于2017年个人博客点滴的年终总结">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-02-09T23:37:50.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.939Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="盘点">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2017年个人技术盘点 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2017年个人技术盘点"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-02-09 23:37" pubdate>
+          Friday, February 9, 2018 11:37 PM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          3 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">2017年个人技术盘点</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>关于2017年个人博客点滴的年终总结</p>
+<span id="more"></span>
+
+<h3 id="提纲"><a href="#提纲" class="headerlink" title="提纲"></a>提纲</h3><p>以下按掌握顺序倒叙整理（即博客浏览顺序），也是博客内容的一个大致归类</p>
+<ul>
+<li><p>React</p>
+</li>
+<li><p>node&amp;npm</p>
+</li>
+<li><p>javascript</p>
+</li>
+<li><p>浏览器缓存</p>
+</li>
+<li><p>mysql</p>
+</li>
+<li><p>网络基础</p>
+</li>
+<li><p>maven</p>
+</li>
+<li><p>linux</p>
+</li>
+<li><p>虚拟机</p>
+</li>
+<li><p>tensorflow</p>
+</li>
+<li><p>设计模式</p>
+</li>
+<li><p>区块链</p>
+</li>
+<li><p>webpack</p>
+</li>
+<li><p>API</p>
+</li>
+<li><p>markdown</p>
+</li>
+<li><p>git</p>
+</li>
+<li><p>负载均衡&amp;反向代理</p>
+</li>
+<li><p>java</p>
+</li>
+<li><p>python</p>
+</li>
+<li><p>es6</p>
+</li>
+</ul>
+<p>以上条目一眼望去有些多，也显得很杂。整体上学习轨迹从后端向前端转移，知识虽杂，但定位于“宽度优先”的学习计划，其实“面儿宽”其实是为了能够对于整个计算机行业技术栈融会贯通，相互影响，以窥全貌。</p>
+<p>接下来将逐一按照上述提纲盘点2017年的58篇博客总结</p>
+<h3 id="详述"><a href="#详述" class="headerlink" title="详述"></a>详述</h3><h4 id="React"><a href="#React" class="headerlink" title="React"></a>React</h4><p>对于React的学习介于前端方面的需求，React目前是前端主流框架之一，因其“小模块组成大应用”的思想，广为大多数公司使用，成为前端开发的必备技能之一。</p>
+<p>关于React的学习共整理两篇——安装篇和快速上手篇，源于学习React官网时的学习总结（基本上是对React官方教程做了一遍个人翻译），初步掌握React主要思想和上手方法，后续将尝试使用React进行项目实际开发，并学习另外主流前端框架以做对比，比如Vue、Angular等。</p>
+<h4 id="node-npm"><a href="#node-npm" class="headerlink" title="node&amp;npm"></a>node&amp;npm</h4><p>npm相比node只能算的上工具，而非技术，但如今介于软件工程的“复用”思想和实际生产的快速迭代要求，“用轮子”的思想是职场必备技能，技术固然可以深入研究，但生产最关注的是产出，在这样的背景下，npm这样的“大社区”为众多前端开发者提供了便利而有力（powerful）的帮助。</p>
+<p>讲到node，便会提到“全栈”这样的字眼，node的诞生意味着javascript这样的脚本语言可以挑战“沉重”的java而成为web开发主要语言成为可能。然而Node的威力却不仅仅如此，关于node生态的学习才刚刚开始，而它的出现及魅力竟足以让我学习java转而投奔node大家族的怀抱。</p>
+<h4 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h4><p>这是一门易懂难精的语言，也是一门未来的语言（因为Node的出现），在学习的过程中，一句MDN的话印象很深刻“它是一门松散的语言，同时也因为其松散而长期被认为是上不了台面的语言，但如今它却有可能因为其松散的特性而变得十分强大”。尤其是伴随着2015发布的ES6的出现，其实是对javascript的“松散”打了“补丁”，简单来说，就是曾经的js的确有很多方面的缺陷而很难成为值得人信赖的web开发语言，但是ES出现的块级域、类概念使得其仅有的缺点从此结束，继而变得优秀。</p>
+<h4 id="浏览器缓存"><a href="#浏览器缓存" class="headerlink" title="浏览器缓存"></a>浏览器缓存</h4><p>缓存技术是前端性能中的关键技术点，软件的实现是第一步，而从软件使用体验的角度，“性能问题”不可忽视，尤其是如今网络应用的访问流量越来越大，高并发的场景随处可见（微博被鹿晗搞炸）。所以相比十年前，五年前的web仅仅需要完成内容展示即可，如今的web更强调“用户体验”。</p>
+<h4 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h4><p>这是后端技术栈的核心部分，不过前端也需要懂些数据库知识，因为毕竟内容的展示依赖数据的流转，而且如今的chrome浏览器也会有websql、localstorage这样的技术存在，所以互联网行业内几乎没有什么可以单独讨论而与其他技术无关联的技术。</p>
+<h4 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a>网络基础</h4><p>网络传输相当于web的“硬件”载体，因为web只是软件，说白了就是指令集合，而web被人们所使用，总要基于网络的传输，无论是通过浏览器还是本地客户端，如果没有网络知识的web应用就像是一个没有血肉的骨架</p>
+<h4 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h4><p>这可以算是纯后端的技术，maven相当于前端中的NPM，之所以写maven相关的总结，是因为工作需要。工作中要对父子工程进行重构，涉及到父子工程的包依赖问题，遂整理此文以对其原理有更深入的理解，从而不止是简单地做一枚“搬运工”。</p>
+<h4 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h4><p>这个技术算不上前端，也算不上后端，因为它是系统级的技术，作为一名开发工作者，相比离不开与服务器打交道，从而对于linux的学习以不至于面对服务器操作时显得手忙脚乱，因为长期的Windows用户级系统的使用。</p>
+<h4 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h4><p>对于虚拟机的折腾主要是为了在本地搭建linux环境及熟悉MacOS的使用，都算是工具级别的学习，没什么含量。</p>
+<h4 id="tensorflow"><a href="#tensorflow" class="headerlink" title="tensorflow"></a>tensorflow</h4><p>2017年是人工智能火热的一年，作为技术爱好者，难以仅拘泥于工作所用技术，本着天下技术是一家的想法，新东西也想摸摸，指不定就是未来的主流，对于新技术保持敏锐的嗅觉，总比永远比时代慢一拍要强。</p>
+<h4 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h4><p>这个东西我原本认为属于后端技术栈，但学习以后（阅读《大话设计模式》一书），觉得设计模式其实就是生活，就是生活中总结出的规律，以避免做重复的事情或是低效的事情。设计模式就是编程中的模板，俗话讲的“套路”，编程诞生这么多年，如此之多的优秀coder写了无数代码后整理出的一套经久可用的“代码块”，或说代码结构，对于提高编程效率和编程思想有着很大的帮助。</p>
+<h4 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h4><p>和tensorflow一样，这也算是一门很潮的“骚”技术，为了不食剩食，永远不被新技术碾压，学习技术之余，对于这门可能改变未来的技术也有所涉猎，翻译了一篇国外关于区块链研究很早（2011年），但今天开来仍旧参考价值相当之大的文章，目前翻译尚未完成，应该完成了近2&#x2F;5的进度。</p>
+<h4 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h4><p>这同样是一项工具技术，相当于后端中的jar，或者Jenkins，我不知道该如何准确地形容它，总之它是一个打包器，但是为什么需要打包器，因为随着前端技术的发展，前端代码的规模量也变得不少于后端代码，而数量大，就需要软件工程式的科学化的整理方式，而将不同的代码块按照特定分类，打成不同的包，即一个个模块，这样一来，整个前端方面的代码的可维护性和可复用性便会得到质的飞跃。</p>
+<h4 id="API"><a href="#API" class="headerlink" title="API"></a>API</h4><p>这是前端和后端的枢纽，优秀的API设计需要丰富的软件整体性思想和远见，良好的API设计可以使得后续开发变得高效可控，所以API设计其实是合理的软件开发的第一步。</p>
+<h4 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a>markdown</h4><p>这门标记语言，其实也称不上一门语言，因为它并不用来编程，而只是一种用于排版和呈现内容的低门槛HTML，由于建立个人博客而结识这个遍历的工具，作为新一代文本格式，它使得良好可观的排版可以简单快速地生成。</p>
+<h4 id="git"><a href="#git" class="headerlink" title="git"></a>git</h4><p>这既是一门版本管理艺术的技术，又是一项近乎必备的团队协作工具，因其优异于SVN的设计理念，而成为新一代无可匹敌的版本管理工具，同时与其完美配合的最大开源社区github是众多开源爱好开发者思维碰撞的乌托邦</p>
+<h4 id="负载均衡-反向代理"><a href="#负载均衡-反向代理" class="headerlink" title="负载均衡&amp;反向代理"></a>负载均衡&amp;反向代理</h4><p>一开始认为这仅仅属于后端技术，但现在这应该分类于web技术，因为前端开发并不应该“两耳不闻后端事，一心只习前端术”，而应该站在整个web生态的角度，纵观互联网应用的整个生命。尤其是伴随着node的出现，可能带来的一门语言贯穿web，而不分前后端、只有全栈的可能。</p>
+<h4 id="java"><a href="#java" class="headerlink" title="java"></a>java</h4><p>这是我入门编程在学院习得的技术，也是我打开web世界的入口。何况作为如今难逃整个国内仍使用它作为后端基石的现状，毕竟node还尚未撼动其成为主流，鉴于对于web历史的尊重，掌握java也是理解其他语言的前置条件之一。</p>
+<h4 id="python"><a href="#python" class="headerlink" title="python"></a>python</h4><p>这本是我区别于java准备主修的第二门语言，但鉴于javascript的持续火热和前端在国内快速地发展，它便成为我业余编程作为工具的备用语言，我在Coursera完成了python一个学期的学习，并以满分获得在线认证证书，也算是作为python学习的一次考核。</p>
+<h4 id="es6"><a href="#es6" class="headerlink" title="es6"></a>es6</h4><p>这其实应该算是前端开发的核心技术，如果说在2017年，它还算是一门新技术的话，那么站在2018年再看，它其实已经广泛应用于众多前端开发之中，因为有类似Babel这样的东西的存在，es6投入生产的使用变得不再难以接受。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>纵观2017年的学习，不多不少，完成了从后端转为前端的技术栈学习。2018年的计划将是对于某几个前端核心技术进行更加深度地学习，对于前端的技术栈进行更进一步的完善和更多的实践。</p>
+<p>To be learned Items:</p>
+<ul>
+<li><p>Vue</p>
+</li>
+<li><p>angular</p>
+</li>
+<li><p>es6</p>
+</li>
+<li><p>html5&amp;css3</p>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/wilson-blog/categories/%E6%80%BB%E7%BB%93/" class="category-chain-item">总结</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/%E7%9B%98%E7%82%B9/">#盘点</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2017年个人技术盘点</div>
+      <div>https://barnett617.github.io/wilson-blog/2018/02/09/2017年个人技术盘点/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>February 9, 2018</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/02/12/%E5%85%B3%E4%BA%8Ejavascript%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%EF%BC%88use%20strict%EF%BC%89/" title="关于javascript的严格模式（use strict）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">关于javascript的严格模式（use strict）</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/02/07/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/" title="linux常用命令(长期更新)">
+                        <span class="hidden-mobile">linux常用命令(长期更新)</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

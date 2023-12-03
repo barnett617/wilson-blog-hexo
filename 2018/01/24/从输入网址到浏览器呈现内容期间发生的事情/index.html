@@ -1,0 +1,742 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wilson">
+  <meta name="keywords" content="Wilson">
+  
+    <meta name="description" content="主线流程 浏览器地址栏输入网址www.coder.com  浏览器发送一个UDP包给DNS服务器  DNS服务器返回coder.com的IP  （optional）浏览器将该IP缓存起来，以提高下次访问速度（Chrome通过chrome:&#x2F;&#x2F;net-internals&#x2F;#dns查看）  浏览器利用获取到的IP发起HTTP请求，但是HTTP Request&#x2F;R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从输入网址到浏览器呈现内容期间发生的事情">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2018/01/24/%E4%BB%8E%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E5%91%88%E7%8E%B0%E5%86%85%E5%AE%B9%E6%9C%9F%E9%97%B4%E5%8F%91%E7%94%9F%E7%9A%84%E4%BA%8B%E6%83%85/index.html">
+<meta property="og:site_name" content="Wilson&#39;s Blog">
+<meta property="og:description" content="主线流程 浏览器地址栏输入网址www.coder.com  浏览器发送一个UDP包给DNS服务器  DNS服务器返回coder.com的IP  （optional）浏览器将该IP缓存起来，以提高下次访问速度（Chrome通过chrome:&#x2F;&#x2F;net-internals&#x2F;#dns查看）  浏览器利用获取到的IP发起HTTP请求，但是HTTP Request&#x2F;R">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-01-24T09:49:03.000Z">
+<meta property="article:modified_time" content="2023-12-03T13:26:57.943Z">
+<meta property="article:author" content="Wilson">
+<meta property="article:tag" content="浏览器">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>从输入网址到浏览器呈现内容期间发生的事情 - Wilson&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/wilson-blog/js/utils.js" ></script>
+  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/wilson-blog/">
+      <strong>Wilson&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/wilson-blog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="从输入网址到浏览器呈现内容期间发生的事情"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-01-24 09:49" pubdate>
+          Wednesday, January 24, 2018 9:49 AM
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          2 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">从输入网址到浏览器呈现内容期间发生的事情</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="主线流程"><a href="#主线流程" class="headerlink" title="主线流程"></a>主线流程</h3><ol>
+<li><p>浏览器地址栏输入网址<a target="_blank" rel="noopener" href="http://www.coder.com/">www.coder.com</a></p>
+</li>
+<li><p>浏览器发送一个UDP包给DNS服务器</p>
+</li>
+<li><p>DNS服务器返回coder.com的IP</p>
+</li>
+<li><p>（optional）浏览器将该IP缓存起来，以提高下次访问速度（Chrome通过chrome:&#x2F;&#x2F;net-internals&#x2F;#dns查看）</p>
+</li>
+<li><p>浏览器利用获取到的IP发起HTTP请求，但是HTTP Request&#x2F;Response必须在TCP这个“虚拟的连接”上发送和接收</p>
+</li>
+<li><p>建立“虚拟的”TCP连接需要<strong>本机IP</strong>、<strong>本机端口</strong>、<strong>服务器IP</strong>、<strong>服务器端口</strong></p>
+</li>
+<li><p>本机端口由操作系统给浏览器随机分配</p>
+</li>
+<li><p>服务器端口使用相应服务的端口，例如HTTP服务：80</p>
+</li>
+<li><p>三次握手后，客户端与服务器建立TCP连接</p>
+</li>
+<li><p>一个HTTP GET请求经过多个路由器转发，达到服务器端（HTTP数据包可能被下层分片传输）</p>
+</li>
+<li><p>web服务器处理请求（三种方式）</p>
+<ul>
+<li><p>用一个线程处理所有请求，但同一时刻只能处理一个，性能问题严重</p>
+</li>
+<li><p>为每个请求分配一个进程&#x2F;线程，但当连接太多时，服务器端的进程&#x2F;线程耗费大量内存资源，进程&#x2F;线程切换导致CPU不堪重负</p>
+</li>
+<li><p>复用I&#x2F;O：众多Web服务器采用复用结构，例如通过epoll方式监视所有连接，当连接状态发生变化（如有数据可读），才用一个进程&#x2F;线程对该连接进行处理，处理完继续监视，等待下次变化。该方式可用少量进程&#x2F;线程应对大量的连接请求</p>
+</li>
+</ul>
+</li>
+<li><p>以Nginx为例，对于HTTP GET请求，Nginx利用epoll方式读取出来，Nginx判断该请求是静态or动态</p>
+</li>
+<li><p>若为静态（HTML、JavaScript、CSS、图片等），依赖于Nginx配置，可能转发到其他缓存服务器，可能读取本机硬盘上相关文件直接返回</p>
+</li>
+<li><p>若为动态，需要后端服务器（如Tomcat）处理后返回，则转发到Tomcat，若后端Tomcat不止一个，则按策略选取一个，Nginx选取方式</p>
+<ul>
+<li><p>轮询：按照次序依次向服务器转发</p>
+</li>
+<li><p>权重：每个后端服务器指定一个权重，决定向每个服务器转发的几率</p>
+</li>
+<li><p>ip_hash：根据IP进行hash，找到要转发的服务器，则同一个客户端IP总会被转发到同一个后端服务器</p>
+</li>
+<li><p>fair：根据后端服务器相应时间分配请求，响应时间短的优先分配</p>
+</li>
+</ul>
+</li>
+<li><p>无论哪种策略，Nginx需要将HTTPRequest转发给后端Tomcat，并把Tomcat输出的HttpResponse转发给浏览器</p>
+</li>
+<li><p>Http Request到达Tomcat（由Java编写，可处理Servlet&#x2F;JSP的容器），Tomcat可能为每个请求分配一个线程进行处理，即BIO模式（Blocking I&#x2F;O）或I&#x2F;O多路复用模式或仅使用若干线程处理所有请求（NIO模式）</p>
+</li>
+<li><p>Http Request被交给某个Servlet处理，Servlet将请求转换，变成后端框架所用参数格式，分发给某个Controller(Spring)或Action(Struts)</p>
+</li>
+<li><p>后端处理，包括和缓存、数据库等组件交互，最终返回Http Response，本例即为一个HTML页面</p>
+</li>
+<li><p>Nginx将Http Response发送给浏览器，若使用HTTP1.1，该TCP连接默认为keep-alive，即不能关闭</p>
+</li>
+<li><p>若HTTP1.0，需根据HTTP Request中是否有Connection:keep-alive判断该TCP连接是否能关闭</p>
+</li>
+<li><p>浏览器收到Http Response，读取HTML页面</p>
+</li>
+<li><p>该页面引用大量其他资源，例如js、css、图片等，这些资源位于服务器端，并且在另一个域名static.coder.com下</p>
+</li>
+<li><p>浏览器需要一一下载，从DNS获取IP开始，重复上述操作，除去Tomcat处理</p>
+</li>
+<li><p>由于要下载的资源众多，浏览器会建立多个TCP连接，并行下载</p>
+</li>
+<li><p>但同一时间对同一域名的请求数量不能太多，否则服务器访问量太大无法承受</p>
+</li>
+<li><p>因此浏览器做限制，例如Chrome在HTTP1.1只能并行下载6个资源</p>
+</li>
+<li><p>当服务器给浏览器发送静态文件，会声明过期时间（Cache-Control或Expire），浏览器可将文件缓存到本地，第二次请求相同文件时，若不过期则直接从本地读取</p>
+</li>
+<li><p>若过期，浏览器询问服务器端，文件是否变更（根据上一次服务器回传的Last-Modified和ETag），若未修改（304 Not Modified），则可使用本次缓存，否则服务器将最新的文件发回浏览器</p>
+</li>
+<li><p>若按Ctrl+F5则强制发出GET请求，无视缓存（Chrome使用chrome:&#x2F;&#x2F;view-http-cache查看缓存）</p>
+</li>
+<li><p>浏览器得到HTML（浏览器将其变成DOM Tree）、CSS（浏览器将其变成CSS Rule Tree）、JavaScript（可修改DOM Tree）</p>
+</li>
+<li><p>浏览器通过DOM Tree和CSS Rule Tree生成“Render Tree”，计算每个元素的位置和大小，进行布局，然后调用操作系统的API进行绘制</p>
+</li>
+</ol>
+<p>参考：<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s/V1fUjSP3BwJ1CbEM0MC6pw">http://mp.weixin.qq.com/s/V1fUjSP3BwJ1CbEM0MC6pw</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/wilson-blog/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" class="category-chain-item">浏览器</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/wilson-blog/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">#浏览器</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>从输入网址到浏览器呈现内容期间发生的事情</div>
+      <div>https://barnett617.github.io/wilson-blog/2018/01/24/从输入网址到浏览器呈现内容期间发生的事情/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Wilson</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 24, 2018</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>December 3, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/01/24/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%8A%EF%BC%89/" title="设计模式学习笔记（上）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">设计模式学习笔记（上）</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/wilson-blog/2018/01/23/%E4%BD%BF%E7%94%A8vmware%E5%AE%89%E8%A3%85macOS/" title="使用vmware安装macOS">
+                        <span class="hidden-mobile">使用vmware安装macOS</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/wilson-blog/js/events.js" ></script>
+<script  src="/wilson-blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/wilson-blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/wilson-blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
