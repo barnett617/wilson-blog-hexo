@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
-  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog-hexo/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog-hexo/img/avatar.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,12 +19,12 @@
     <meta name="description" content="js异步编程的4种方式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js异步编程">
-<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2018/03/06/js%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog-hexo/2018/03/06/js%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Wilson&#39;s Blog">
 <meta property="og:description" content="js异步编程的4种方式">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2018-03-06T19:10:33.000Z">
-<meta property="article:modified_time" content="2023-12-03T13:33:56.150Z">
+<meta property="article:modified_time" content="2023-12-03T13:53:07.600Z">
 <meta property="article:author" content="Wilson">
 <meta property="article:tag" content="javascript">
 <meta name="twitter:card" content="summary_large_image">
@@ -55,12 +55,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+<link  rel="stylesheet" href="/wilson-blog-hexo/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog-hexo/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog-hexo/css/highlight-dark.css" />
   
 
 
@@ -69,15 +69,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog-hexo/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog-hexo/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/wilson-blog/js/utils.js" ></script>
-  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  <script  src="/wilson-blog-hexo/js/utils.js" ></script>
+  <script  src="/wilson-blog-hexo/js/color-schema.js" ></script>
   
 
 
@@ -94,7 +94,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/wilson-blog/">
+    <a class="navbar-brand" href="/wilson-blog-hexo/">
       <strong>Wilson&#39;s Blog</strong>
     </a>
 
@@ -113,7 +113,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/wilson-blog/">
+              <a class="nav-link" href="/wilson-blog-hexo/">
                 <i class="iconfont icon-home-fill"></i>
                 <span>Home</span>
               </a>
@@ -125,7 +125,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/wilson-blog/archives/">
+              <a class="nav-link" href="/wilson-blog-hexo/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>Archives</span>
               </a>
@@ -137,7 +137,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/wilson-blog/categories/">
+              <a class="nav-link" href="/wilson-blog-hexo/categories/">
                 <i class="iconfont icon-category-fill"></i>
                 <span>Categories</span>
               </a>
@@ -149,7 +149,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/wilson-blog/tags/">
+              <a class="nav-link" href="/wilson-blog-hexo/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>Tags</span>
               </a>
@@ -161,7 +161,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/wilson-blog/about/">
+              <a class="nav-link" href="/wilson-blog-hexo/about/">
                 <i class="iconfont icon-user-fill"></i>
                 <span>About</span>
               </a>
@@ -191,7 +191,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+     style="background: url('/wilson-blog-hexo/img/article.jpeg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -450,7 +450,7 @@
     
       <span class="category-chain">
         
-  <a href="/wilson-blog/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  <a href="/wilson-blog-hexo/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
   
   
 
@@ -465,7 +465,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/wilson-blog/tags/javascript/">#javascript</a>
+        <a href="/wilson-blog-hexo/tags/javascript/">#javascript</a>
       
     </div>
   
@@ -478,7 +478,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>js异步编程</div>
-      <div>https://barnett617.github.io/wilson-blog/2018/03/06/js异步编程/</div>
+      <div>https://barnett617.github.io/wilson-blog-hexo/2018/03/06/js异步编程/</div>
     </div>
     <div class="license-meta">
       
@@ -527,7 +527,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/wilson-blog/2018/08/23/git-use/" title="再品Git, 深度解读">
+                      <a href="/wilson-blog-hexo/2018/08/23/git-use/" title="再品Git, 深度解读">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">再品Git, 深度解读</span>
                         <span class="visible-mobile">Previous</span>
@@ -537,7 +537,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/wilson-blog/2018/02/25/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%85%B3%E4%BA%8E%E8%BF%90%E8%A1%8Credux%E7%A4%BA%E4%BE%8B%E5%90%AF%E5%8A%A8%E9%94%99%E8%AF%AF%E7%9A%84%E5%88%86%E6%9E%90/" title="记一次关于运行redux示例启动错误的分析">
+                      <a href="/wilson-blog-hexo/2018/02/25/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%85%B3%E4%BA%8E%E8%BF%90%E8%A1%8Credux%E7%A4%BA%E4%BE%8B%E5%90%AF%E5%8A%A8%E9%94%99%E8%AF%AF%E7%9A%84%E5%88%86%E6%9E%90/" title="记一次关于运行redux示例启动错误的分析">
                         <span class="hidden-mobile">记一次关于运行redux示例启动错误的分析</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -654,8 +654,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/wilson-blog/js/events.js" ></script>
-<script  src="/wilson-blog/js/plugins.js" ></script>
+<script  src="/wilson-blog-hexo/js/events.js" ></script>
+<script  src="/wilson-blog-hexo/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -677,7 +677,7 @@
 
 
   
-    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+    <script  src="/wilson-blog-hexo/js/img-lazyload.js" ></script>
   
 
 
@@ -776,7 +776,7 @@
 
   <script>Fluid.plugins.imageCaption();</script>
 
-  <script  src="/wilson-blog/js/local-search.js" ></script>
+  <script  src="/wilson-blog-hexo/js/local-search.js" ></script>
 
 
 
@@ -784,7 +784,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/wilson-blog/js/boot.js" ></script>
+<script  src="/wilson-blog-hexo/js/boot.js" ></script>
 
 
   

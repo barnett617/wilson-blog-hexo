@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog/img/avatar.jpg">
-  <link rel="icon" href="/wilson-blog/img/avatar.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/wilson-blog-hexo/img/avatar.jpg">
+  <link rel="icon" href="/wilson-blog-hexo/img/avatar.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,13 +19,13 @@
     <meta name="description" content="从理解pom.xml探析Maven">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Apache项目Maven官方文档学习及翻译（译）">
-<meta property="og:url" content="https://barnett617.github.io/wilson-blog/2018/01/29/%E5%85%B3%E4%BA%8EMaven/index.html">
+<meta property="og:url" content="https://barnett617.github.io/wilson-blog-hexo/2018/01/29/%E5%85%B3%E4%BA%8EMaven/index.html">
 <meta property="og:site_name" content="Wilson&#39;s Blog">
 <meta property="og:description" content="从理解pom.xml探析Maven">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://trigolds.com/maven_lifecircle.png">
 <meta property="article:published_time" content="2018-01-29T14:34:24.000Z">
-<meta property="article:modified_time" content="2023-12-03T13:33:56.154Z">
+<meta property="article:modified_time" content="2023-12-03T13:53:07.604Z">
 <meta property="article:author" content="Wilson">
 <meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary_large_image">
@@ -57,12 +57,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/wilson-blog/css/main.css" />
+<link  rel="stylesheet" href="/wilson-blog-hexo/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/wilson-blog/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/wilson-blog-hexo/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/wilson-blog-hexo/css/highlight-dark.css" />
   
 
 
@@ -71,15 +71,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog/local-search.xml"};
+    var CONFIG = {"hostname":"barnett617.github.io","root":"/wilson-blog-hexo/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/wilson-blog-hexo/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/wilson-blog/js/utils.js" ></script>
-  <script  src="/wilson-blog/js/color-schema.js" ></script>
+  <script  src="/wilson-blog-hexo/js/utils.js" ></script>
+  <script  src="/wilson-blog-hexo/js/color-schema.js" ></script>
   
 
 
@@ -96,7 +96,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/wilson-blog/">
+    <a class="navbar-brand" href="/wilson-blog-hexo/">
       <strong>Wilson&#39;s Blog</strong>
     </a>
 
@@ -115,7 +115,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/wilson-blog/">
+              <a class="nav-link" href="/wilson-blog-hexo/">
                 <i class="iconfont icon-home-fill"></i>
                 <span>Home</span>
               </a>
@@ -127,7 +127,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/wilson-blog/archives/">
+              <a class="nav-link" href="/wilson-blog-hexo/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>Archives</span>
               </a>
@@ -139,7 +139,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/wilson-blog/categories/">
+              <a class="nav-link" href="/wilson-blog-hexo/categories/">
                 <i class="iconfont icon-category-fill"></i>
                 <span>Categories</span>
               </a>
@@ -151,7 +151,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/wilson-blog/tags/">
+              <a class="nav-link" href="/wilson-blog-hexo/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>Tags</span>
               </a>
@@ -163,7 +163,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/wilson-blog/about/">
+              <a class="nav-link" href="/wilson-blog-hexo/about/">
                 <i class="iconfont icon-user-fill"></i>
                 <span>About</span>
               </a>
@@ -193,7 +193,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/wilson-blog/img/article.jpeg') no-repeat center center; background-size: cover;">
+     style="background: url('/wilson-blog-hexo/img/article.jpeg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -305,7 +305,7 @@
 <p>官网的形容是：pom是关乎工程的“一站式商店（one-stop-store）”，所以对工程的配置仅需一个pom.xml文件</p>
 <h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs Maven">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;<br>  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;<br>  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0<br>                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;<br>  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;<br><br>  &lt;!-- The Basics --&gt;<br>  &lt;groupId&gt;...&lt;/groupId&gt;<br>  &lt;artifactId&gt;...&lt;/artifactId&gt;<br>  &lt;version&gt;...&lt;/version&gt;<br>  &lt;packaging&gt;...&lt;/packaging&gt;<br>  &lt;dependencies&gt;...&lt;/dependencies&gt;<br>  &lt;parent&gt;...&lt;/parent&gt;<br>  &lt;dependencyManagement&gt;...&lt;/dependencyManagement&gt;<br>  &lt;modules&gt;...&lt;/modules&gt;<br>  &lt;properties&gt;...&lt;/properties&gt;<br><br>  &lt;!-- Build Settings --&gt;<br>  &lt;build&gt;...&lt;/build&gt;<br>  &lt;reporting&gt;...&lt;/reporting&gt;<br><br>  &lt;!-- More Project Information --&gt;<br>  &lt;name&gt;...&lt;/name&gt;<br>  &lt;description&gt;...&lt;/description&gt;<br>  &lt;url&gt;...&lt;/url&gt;<br>  &lt;inceptionYear&gt;...&lt;/inceptionYear&gt;<br>  &lt;licenses&gt;...&lt;/licenses&gt;<br>  &lt;organization&gt;...&lt;/organization&gt;<br>  &lt;developers&gt;...&lt;/developers&gt;<br>  &lt;contributors&gt;...&lt;/contributors&gt;<br><br>  &lt;!-- Environment Settings --&gt;<br>  &lt;issueManagement&gt;...&lt;/issueManagement&gt;<br>  &lt;ciManagement&gt;...&lt;/ciManagement&gt;<br>  &lt;mailingLists&gt;...&lt;/mailingLists&gt;<br>  &lt;scm&gt;...&lt;/scm&gt;<br>  &lt;prerequisites&gt;...&lt;/prerequisites&gt;<br>  &lt;repositories&gt;...&lt;/repositories&gt;<br>  &lt;pluginRepositories&gt;...&lt;/pluginRepositories&gt;<br>  &lt;distributionManagement&gt;...&lt;/distributionManagement&gt;<br>  &lt;profiles&gt;...&lt;/profiles&gt;<br>&lt;/project&gt;<br></code></pre></td></tr></table></figure>
 
-<p><img src="http://trigolds.com/maven_lifecircle.png" srcset="/wilson-blog/img/loading.gif" lazyload></p>
+<p><img src="http://trigolds.com/maven_lifecircle.png" srcset="/wilson-blog-hexo/img/loading.gif" lazyload></p>
 <p>modelVersion是必填参数，4.0.0当前仅支持Maven2及Maven3版本</p>
 <p>通览整个pom文件，分为一下几部分配置：</p>
 <ol>
@@ -584,7 +584,7 @@
     
       <span class="category-chain">
         
-  <a href="/wilson-blog/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  <a href="/wilson-blog-hexo/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
   
   
 
@@ -599,7 +599,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/wilson-blog/tags/java/">#java</a>
+        <a href="/wilson-blog-hexo/tags/java/">#java</a>
       
     </div>
   
@@ -612,7 +612,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Apache项目Maven官方文档学习及翻译（译）</div>
-      <div>https://barnett617.github.io/wilson-blog/2018/01/29/关于Maven/</div>
+      <div>https://barnett617.github.io/wilson-blog-hexo/2018/01/29/关于Maven/</div>
     </div>
     <div class="license-meta">
       
@@ -661,7 +661,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/wilson-blog/2018/02/01/mysql%E8%AF%AF%E5%88%A0%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/" title="mysql误删数据恢复">
+                      <a href="/wilson-blog-hexo/2018/02/01/mysql%E8%AF%AF%E5%88%A0%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/" title="mysql误删数据恢复">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">mysql误删数据恢复</span>
                         <span class="visible-mobile">Previous</span>
@@ -671,7 +671,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/wilson-blog/2018/01/25/%E5%85%B3%E4%BA%8E%E5%9F%9F%E5%90%8D/" title="关于域名">
+                      <a href="/wilson-blog-hexo/2018/01/25/%E5%85%B3%E4%BA%8E%E5%9F%9F%E5%90%8D/" title="关于域名">
                         <span class="hidden-mobile">关于域名</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -788,8 +788,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/wilson-blog/js/events.js" ></script>
-<script  src="/wilson-blog/js/plugins.js" ></script>
+<script  src="/wilson-blog-hexo/js/events.js" ></script>
+<script  src="/wilson-blog-hexo/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -811,7 +811,7 @@
 
 
   
-    <script  src="/wilson-blog/js/img-lazyload.js" ></script>
+    <script  src="/wilson-blog-hexo/js/img-lazyload.js" ></script>
   
 
 
@@ -910,7 +910,7 @@
 
   <script>Fluid.plugins.imageCaption();</script>
 
-  <script  src="/wilson-blog/js/local-search.js" ></script>
+  <script  src="/wilson-blog-hexo/js/local-search.js" ></script>
 
 
 
@@ -918,7 +918,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/wilson-blog/js/boot.js" ></script>
+<script  src="/wilson-blog-hexo/js/boot.js" ></script>
 
 
   
